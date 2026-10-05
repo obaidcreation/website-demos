@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forge Fitness Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: industrial gym poster — oversized condensed type, hard edges, concrete ground, one cobalt accent, a striped hazard rule */
+:root{
+  --concrete:#E7E5E0; --slab:#D6D3CC; --ink:#151617; --ink-soft:#4C4F53;
+  --cobalt:#2546F0; --cobalt-deep:#1631B8; --chalk:#FAFAF8;
+  --display:"Big Shoulders Display", "Impact", "Arial Narrow", sans-serif;
+  --body:"Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--concrete);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.92;margin:0;letter-spacing:.01em;text-wrap:balance}
+.label{font-weight:700;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt)}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:700 .95rem var(--body);text-transform:uppercase;letter-spacing:.08em;padding:15px 26px;background:var(--cobalt);color:var(--chalk);border:0;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn:hover{background:var(--cobalt-deep)}
+.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.line:hover{background:var(--ink);color:var(--chalk)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--ink);color:var(--chalk)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--chalk);font-family:var(--display);font-weight:900;font-size:1.6rem;text-transform:uppercase;letter-spacing:.04em}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-weight:600;text-transform:uppercase;font-size:.88rem;letter-spacing:.08em}
+.nav ul a{color:var(--chalk);text-decoration:none;opacity:.8}.nav ul a:hover{opacity:1}
+.nav .btn{padding:10px 18px}
+@media (max-width:800px){.nav ul{display:none}}
+.hazard{height:12px;background:repeating-linear-gradient(-45deg,var(--cobalt) 0 14px,var(--ink) 14px 28px)}
+
+.hero{padding-block:48px 64px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:36px;align-items:end}
+.hero h1{font-size:clamp(4rem,13vw,10rem)}
+.hero h1 span{color:var(--cobalt);display:block}
+.hero p{font-size:1.15rem;max-width:44ch;color:var(--ink-soft);margin:22px 0 28px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.board{background:var(--ink);color:var(--chalk);padding:26px}
+.board h3{font-size:1.6rem;margin-bottom:16px}
+.board .open{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;color:#9FB0FF}
+.board .open i{width:9px;height:9px;border-radius:50%;background:#5CE18A;display:inline-block}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#33363a;margin-top:18px}
+.stats div{background:var(--ink);padding:14px 0}
+.stats b{display:block;font-family:var(--display);font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.stats small{opacity:.7;text-transform:uppercase;letter-spacing:.1em;font-size:.72rem}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+
+.sec{padding-block:72px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap;margin-bottom:34px}
+.sec-head h2{font-size:clamp(2.6rem,6vw,4.6rem)}
+.dark{background:var(--ink);color:var(--chalk)}
+.dark .label{color:#9FB0FF}
+
+/* programs */
+.programs{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--slab)}
+.prog{background:var(--concrete);padding:26px 22px;min-width:0;display:flex;flex-direction:column;gap:12px;transition:background .15s}
+.prog:hover{background:var(--chalk)}
+.prog .n{font-family:var(--display);font-weight:800;font-size:1rem;color:var(--cobalt)}
+.prog h3{font-size:2rem}
+.prog p{margin:0;color:var(--ink-soft);font-size:.95rem}
+.prog svg{width:44px;height:44px}
+@media (max-width:900px){.programs{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.programs{grid-template-columns:1fr}}
+
+/* timetable */
+.days{display:flex;gap:4px;flex-wrap:wrap}
+.days button{background:transparent;border:2px solid #3a3d42;color:var(--chalk);font:700 .85rem var(--body);text-transform:uppercase;letter-spacing:.08em;padding:9px 14px;cursor:pointer}
+.days button[aria-pressed="true"]{background:var(--cobalt);border-color:var(--cobalt)}
+.tt-wrap{overflow-x:auto}
+.tt{width:100%;border-collapse:collapse;min-width:560px}
+.tt th{text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.14em;opacity:.6;padding:10px 12px;border-bottom:1px solid #3a3d42}
+.tt td{padding:16px 12px;border-bottom:1px solid #2a2d31;font-variant-numeric:tabular-nums}
+.tt td:first-child{font-family:var(--display);font-size:1.5rem;font-weight:800}
+.lvl{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border:1px solid currentColor}
+.lvl.b{color:#5CE18A}.lvl.i{color:#FFC94D}.lvl.a{color:#FF7A7A}
+.spots{font-weight:600}
+
+/* plans */
+.toggle{display:inline-flex;background:var(--slab);padding:4px}
+.toggle button{border:0;background:transparent;font:700 .85rem var(--body);text-transform:uppercase;letter-spacing:.08em;padding:10px 16px;cursor:pointer;color:var(--ink)}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--chalk)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:var(--chalk);padding:30px 26px;display:flex;flex-direction:column;gap:14px;min-width:0;border:2px solid transparent}
+.plan.hot{border-color:var(--cobalt);position:relative}
+.plan.hot::before{content:"Most popular";position:absolute;top:-14px;left:26px;background:var(--cobalt);color:var(--chalk);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 10px}
+.plan h3{font-size:2rem}
+.amt{font-family:var(--display);font-weight:900;font-size:clamp(2.4rem,4vw,3rem);line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.amt small{font-family:var(--body);font-size:.95rem;font-weight:600;color:var(--ink-soft)}
+.save{font-size:.85rem;font-weight:700;color:var(--cobalt);min-height:1.3em}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:.96rem}
+.plan li{display:flex;gap:10px}
+.plan li::before{content:"";flex:none;width:14px;height:14px;margin-top:5px;background:var(--cobalt);clip-path:polygon(14% 52%,0 66%,38% 100%,100% 22%,86% 8%,38% 72%)}
+.plan .btn{margin-top:auto;justify-content:center}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+
+/* bmi */
+.bmi{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.bmi form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bmi label{display:block;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.bmi input,.join input,.join select{width:100%;font:500 1rem var(--body);padding:13px 14px;border:2px solid #3a3d42;background:#1f2124;color:var(--chalk)}
+.meter{position:relative;height:16px;background:linear-gradient(90deg,#7FB2FF 0 14%,#5CE18A 14% 40%,#FFC94D 40% 60%,#FF7A7A 60%);margin:22px 0 8px}
+.pin{position:absolute;top:-8px;width:4px;height:32px;background:var(--chalk);transition:left .3s}
+.scale{position:relative;height:1.2em;font-size:.75rem;opacity:.7;font-variant-numeric:tabular-nums}
+.bmi-out b{font-family:var(--display);font-size:5rem;line-height:1;display:block;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.bmi{grid-template-columns:1fr}}
+
+/* coaches */
+.coaches{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.coach{min-width:0}
+.coach .ph{aspect-ratio:1/1;max-width:100%;background:var(--slab);position:relative;overflow:hidden;display:grid;place-items:end center}
+.coach .ph svg{width:80%;height:auto}
+.coach h3{font-size:1.8rem;margin-top:14px}
+.coach p{margin:4px 0 0;color:var(--ink-soft)}
+@media (max-width:860px){.coaches{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.coaches{grid-template-columns:1fr}}
+
+.join{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.join form{display:grid;gap:14px}
+.join label{display:block;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.note{min-height:1.4em;font-weight:600;color:#9FB0FF}
+.contact-list{display:grid;gap:14px;margin-top:22px}
+.contact-list div{border-top:1px solid #3a3d42;padding-top:12px}
+.contact-list small{display:block;opacity:.6;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem}
+@media (max-width:860px){.join{grid-template-columns:1fr}}
+footer{background:var(--ink);color:#9a9ea4;padding-block:26px;font-size:.88rem;border-top:1px solid #2a2d31}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#2546F0"/><path d="M6 13h3v6H6zM23 13h3v6h-3zM9 11h3v10H9zM20 11h3v10h-3zM12 15h8v2h-8z" fill="#FAFAF8"/></svg>Forge</a>
+    <ul><li><a href="#programs">Programs</a></li><li><a href="#schedule">Schedule</a></li><li><a href="#plans">Plans</a></li><li><a href="#join">Contact</a></li></ul>
+    <a class="btn" href="#join">Free trial</a>
+  </div>
+</header>
+<div class="hazard"></div>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="label">Strength · Conditioning · Since 2019</p>
+        <h1>Train hard. <span>Stay strong.</span></h1>
+        <p>A serious gym for serious progress. Free weights, coached classes and a separate ladies' floor, open 6 am to 11 pm.</p>
+        <div class="ctas"><a class="btn" href="#plans">See membership</a><a class="btn line" href="#schedule">Class schedule</a></div>
+      </div>
+      <aside class="board">
+        <span class="open"><i></i>Open now · till 11:00 pm</span>
+        <h3 style="margin-top:12px">Forge in numbers</h3>
+        <div class="stats">
+          <div><b>12,000</b><small>sq ft floor</small></div>
+          <div><b>18</b><small>classes a week</small></div>
+          <div><b>6</b><small>certified coaches</small></div>
+          <div><b>650+</b><small>members</small></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="programs" style="padding-bottom:72px">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="label">Programs</p><h2>Pick your path</h2></div></div>
+      <div class="programs">
+        <article class="prog"><svg viewBox="0 0 48 48" fill="none" stroke="#151617" stroke-width="3"><path d="M6 20v8M12 15v18M36 15v18M42 20v8M12 24h24"/></svg><span class="n">Program A</span><h3>Strength</h3><p>Barbell basics, progressive overload and form checks every session.</p></article>
+        <article class="prog"><svg viewBox="0 0 48 48" fill="none" stroke="#151617" stroke-width="3"><path d="M4 26h8l5-12 8 22 6-14 4 4h9"/></svg><span class="n">Program B</span><h3>HIIT</h3><p>Forty-five minute circuits that burn fat and build stamina.</p></article>
+        <article class="prog"><svg viewBox="0 0 48 48" fill="none" stroke="#151617" stroke-width="3"><circle cx="24" cy="9" r="4"/><path d="M24 14v14M14 22l10-4 10 4M18 42l6-14 6 14"/></svg><span class="n">Program C</span><h3>Ladies' fit</h3><p>Women-only floor and coaches, with morning and evening batches.</p></article>
+        <article class="prog"><svg viewBox="0 0 48 48" fill="none" stroke="#151617" stroke-width="3"><path d="M10 38c4-10 6-16 14-16s10 6 14 16M24 22V8M17 13l7-5 7 5"/></svg><span class="n">Program D</span><h3>Fat loss</h3><p>12-week plan with diet chart, weekly weigh-ins and coaching.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="schedule" class="dark">
+    <div class="wrap sec">
+      <div class="sec-head"><div><p class="label">Weekly schedule</p><h2>Class timetable</h2></div>
+        <div class="days" role="group" aria-label="Choose day"></div></div>
+      <div class="tt-wrap"><table class="tt"><thead><tr><th>Time</th><th>Class</th><th>Coach</th><th>Level</th><th>Spots left</th></tr></thead><tbody id="ttBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="plans">
+    <div class="wrap sec">
+      <div class="sec-head"><div><p class="label">Membership</p><h2>Simple pricing</h2></div>
+        <div class="toggle" role="group" aria-label="Billing period"><button type="button" aria-pressed="true" data-p="m">Monthly</button><button type="button" aria-pressed="false" data-p="y">Yearly</button></div></div>
+      <div class="plans" id="plans-grid"></div>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="wrap sec bmi">
+      <div>
+        <p class="label">Free tool</p><h2 style="font-size:clamp(2.6rem,6vw,4.6rem);margin-bottom:22px">Check your BMI</h2>
+        <form id="bmiForm">
+          <div><label for="h">Height (cm)</label><input id="h" type="number" value="172" min="100" max="230"></div>
+          <div><label for="w">Weight (kg)</label><input id="w" type="number" value="78" min="30" max="250"></div>
+        </form>
+      </div>
+      <div class="bmi-out" aria-live="polite">
+        <b id="bmiVal">26.4</b><span id="bmiTxt" style="font-weight:700;text-transform:uppercase;letter-spacing:.1em">Overweight</span>
+        <div class="meter"><div class="pin" id="pin"></div></div>
+        <div class="scale"><span style="position:absolute;left:0">15</span><span style="position:absolute;left:14%;transform:translateX(-50%)">18.5</span><span style="position:absolute;left:40%;transform:translateX(-50%)">25</span><span style="position:absolute;left:60%;transform:translateX(-50%)">30</span><span style="position:absolute;right:0">40</span></div>
+        <p style="opacity:.75;margin-top:16px" id="bmiTip">Our fat loss program fits this range. Ask for a free body assessment.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap sec">
+      <div class="sec-head"><div><p class="label">Coaches</p><h2>Meet the team</h2></div></div>
+      <div class="coaches">
+        <article class="coach"><div class="ph"><svg viewBox="0 0 200 220"><circle cx="100" cy="70" r="36" fill="#151617"/><path d="M30 220c0-60 30-92 70-92s70 32 70 92z" fill="#2546F0"/></svg></div><h3>Coach Bilal</h3><p>Head coach · Strength & powerlifting</p></article>
+        <article class="coach"><div class="ph"><svg viewBox="0 0 200 220"><circle cx="100" cy="70" r="36" fill="#151617"/><path d="M30 220c0-60 30-92 70-92s70 32 70 92z" fill="#4C4F53"/></svg></div><h3>Coach Sana</h3><p>Ladies' fit · Nutrition</p></article>
+        <article class="coach"><div class="ph"><svg viewBox="0 0 200 220"><circle cx="100" cy="70" r="36" fill="#151617"/><path d="M30 220c0-60 30-92 70-92s70 32 70 92z" fill="#1631B8"/></svg></div><h3>Coach Hamza</h3><p>HIIT · Conditioning</p></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="hazard"></div>
+  <section id="join" class="dark">
+    <div class="wrap sec join">
+      <div>
+        <p class="label">Start today</p><h2 style="font-size:clamp(2.6rem,6vw,4.6rem)">Book a free trial</h2>
+        <p style="opacity:.75;max-width:42ch">One free session with a coach, a body assessment and a gym tour. No card, no pressure.</p>
+        <div class="contact-list">
+          <div><small>Address</small>Kamra Road, Attock City</div>
+          <div><small>Phone / WhatsApp</small>0300 0000000</div>
+          <div><small>Hours</small>Mon–Sat 6:00 am – 11:00 pm · Sun 9:00 am – 2:00 pm</div>
+        </div>
+      </div>
+      <form id="joinForm" novalidate>
+        <div><label for="jn">Full name</label><input id="jn" type="text" placeholder="Ali Raza" required></div>
+        <div><label for="jp">Phone</label><input id="jp" type="tel" placeholder="03xx xxxxxxx" required></div>
+        <div><label for="jg">Program</label><select id="jg"><option>Strength</option><option>HIIT</option><option>Ladies' fit</option><option>Fat loss</option></select></div>
+        <div><label for="jt">Preferred time</label><select id="jt"><option>Morning (6–10 am)</option><option>Afternoon (2–6 pm)</option><option>Evening (6–11 pm)</option></select></div>
+        <button class="btn" type="submit" style="justify-content:center">Book my free trial</button>
+        <p class="note" id="joinNote" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© Forge Fitness Club, Attock</span><span>Concept website · designed by Obaid Creation</span></div></footer>
+
+<script>
+const days=["Mon","Tue","Wed","Thu","Fri","Sat"];
+const classes={
+ Mon:[["06:30","Strength 101","Bilal","b",6],["08:00","Ladies' fit","Sana","b",4],["18:00","HIIT Burn","Hamza","i",2],["20:00","Powerlifting","Bilal","a",5]],
+ Tue:[["07:00","Mobility","Sana","b",10],["17:30","Fat loss circuit","Hamza","i",3],["19:30","Strength 101","Bilal","b",7]],
+ Wed:[["06:30","HIIT Burn","Hamza","i",1],["08:00","Ladies' fit","Sana","b",6],["18:00","Olympic lifts","Bilal","a",4],["20:00","Core & abs","Hamza","b",8]],
+ Thu:[["07:00","Mobility","Sana","b",9],["18:00","Fat loss circuit","Hamza","i",5],["19:30","Powerlifting","Bilal","a",3]],
+ Fri:[["06:30","Strength 101","Bilal","b",6],["16:00","Ladies' fit","Sana","b",5],["21:00","HIIT Burn","Hamza","i",4]],
+ Sat:[["09:00","Bootcamp","Hamza","i",12],["11:00","Ladies' fit","Sana","b",6],["17:00","Open lifting","Bilal","a",15]]};
+const lv={b:"Beginner",i:"Intermediate",a:"Advanced"};
+const dEl=document.querySelector(".days");
+dEl.innerHTML=days.map((d,i)=>`<button type="button" aria-pressed="${i===0}" data-d="${d}">${d}</button>`).join("");
+function tt(d){document.getElementById("ttBody").innerHTML=classes[d].map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td><td><span class="lvl ${c[3]}">${lv[c[3]]}</span></td><td class="spots">${c[4]<=2?c[4]+" · almost full":c[4]}</td></tr>`).join("");}
+dEl.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;dEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");tt(b.dataset.d);});tt("Mon");
+
+const plans=[["Basic",4500,["Gym floor access","Locker room","1 fitness assessment"],false],["Pro",7500,["Everything in Basic","All group classes","Monthly diet chart","Body composition scan"],true],["Personal",15000,["Everything in Pro","12 personal training sessions","Weekly check-ins on WhatsApp"],false]];
+const fmt=n=>"Rs "+n.toLocaleString("en-PK");
+function pl(p){document.getElementById("plans-grid").innerHTML=plans.map(x=>{const m=x[1],y=Math.round(m*12*0.8/12/50)*50;const v=p==="m"?m:y;return `<article class="plan ${x[3]?"hot":""}"><h3>${x[0]}</h3><div class="amt">${fmt(v)} <small>/ month</small></div><div class="save">${p==="y"?"Billed yearly: "+fmt(v*12)+" · save 20%":"Billed monthly, cancel anytime"}</div><ul>${x[2].map(i=>`<li>${i}</li>`).join("")}</ul><a class="btn ${x[3]?"":"line"}" href="#join">Choose ${x[0]}</a></article>`}).join("");}
+document.querySelector(".toggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll(".toggle button").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");pl(b.dataset.p);});pl("m");
+
+function bmi(){const h=+document.getElementById("h").value/100,w=+document.getElementById("w").value;if(!h||!w)return;const v=w/(h*h);
+ const cat=v<18.5?["Underweight","Our strength program helps you build healthy muscle."]:v<25?["Healthy","Great range. Keep it with strength training 3 days a week."]:v<30?["Overweight","Our fat loss program fits this range. Ask for a free body assessment."]:["Obese","Start with our coached fat loss plan and a doctor's advice."];
+ bmiVal.textContent=v.toFixed(1);bmiTxt.textContent=cat[0];bmiTip.textContent=cat[1];const pos=Math.min(100,Math.max(0,(v-15)/25*100));pin.style.left="calc("+pos+"% - 2px)";}
+document.getElementById("bmiForm").addEventListener("input",bmi);document.getElementById("bmiForm").addEventListener("submit",e=>e.preventDefault());bmi();
+document.getElementById("joinForm").addEventListener("submit",e=>{e.preventDefault();const n=jn.value.trim(),p=jp.value.trim();joinNote.textContent=!n||!p?"Please add your name and phone number.":"Thanks "+n+". This is a demo form, so no booking was sent.";});
+</script>
+
+</body>
+</html>

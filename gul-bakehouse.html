@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gul Bakehouse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&display=swap">
+<style>
+/* Layout: playful single-column bakery shop — wavy section edges, sticker-like product cards, one live cake builder */
+:root{
+  --pista:#EEF4E2; --pista-deep:#C9DDA8; --berry:#E2445F; --berry-soft:#FBD9DF;
+  --cocoa:#3A221D; --cocoa-soft:#6E524B; --butter:#FFE9A8; --white:#FFFFFF;
+  --display:"Shrikhand", "Georgia", serif;
+  --body:"Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--pista);color:var(--cocoa);font-family:var(--body);font-size:16px;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:balance;margin:0}
+.eyebrow{font-weight:800;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--berry)}
+:focus-visible{outline:3px solid var(--berry);outline-offset:3px;border-radius:6px}
+
+/* nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--pista) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--pista-deep)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand b{font-family:var(--display);font-weight:400;font-size:1.45rem;color:var(--berry)}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-weight:600}
+.nav ul a{text-decoration:none}
+.nav ul a:hover{color:var(--berry)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:800 .95rem var(--body);padding:12px 22px;border-radius:999px;background:var(--berry);color:var(--white);text-decoration:none;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--cocoa);box-shadow:inset 0 0 0 2px var(--cocoa)}
+@media (max-width:760px){.nav ul{display:none}}
+
+/* hero */
+.hero{padding-block:56px 80px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,6vw,4.6rem);color:var(--cocoa)}
+.hero h1 em{font-style:normal;color:var(--berry)}
+.hero p.lead{font-size:1.15rem;color:var(--cocoa-soft);max-width:46ch;margin:18px 0 28px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin-top:34px;font-size:.9rem;color:var(--cocoa-soft)}
+.facts strong{display:block;font-size:1.4rem;color:var(--cocoa);font-weight:800}
+.cake-stage{position:relative;aspect-ratio:1;max-width:100%;background:var(--berry-soft);border-radius:50%;display:grid;place-items:center}
+.cake-stage svg{width:78%;height:auto}
+.tag{position:absolute;background:var(--white);border-radius:16px;padding:10px 14px;font-size:.85rem;box-shadow:0 8px 24px rgba(58,34,29,.12);font-weight:600}
+.tag b{color:var(--berry)}
+.tag.t1{top:8%;left:-4%;transform:rotate(-5deg)}
+.tag.t2{bottom:10%;right:-2%;transform:rotate(4deg)}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.cake-stage{max-width:420px;margin-inline:auto;width:100%}.tag.t1{left:0}.tag.t2{right:0}}
+
+/* wave */
+.wave{display:block;width:100%;height:40px}
+section{scroll-margin-top:80px}
+.band{background:var(--white)}
+.sec{padding-block:72px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head h2{font-size:clamp(2rem,4vw,3rem)}
+
+/* menu */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tabs button{border:2px solid var(--cocoa);background:transparent;color:var(--cocoa);border-radius:999px;padding:8px 16px;font:700 .9rem var(--body);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--cocoa);color:var(--white)}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:20px}
+.item{background:var(--pista);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.item .pic{aspect-ratio:4/3;border-radius:16px;display:grid;place-items:center}
+.item .pic svg{width:58%;height:auto}
+.item h3{font-family:var(--body);font-weight:800;font-size:1.1rem}
+.item p{margin:0;color:var(--cocoa-soft);font-size:.92rem}
+.item .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.price{font-weight:800;font-variant-numeric:tabular-nums}
+.add{border:0;background:var(--berry);color:var(--white);width:38px;height:38px;border-radius:50%;font-size:1.3rem;cursor:pointer;line-height:1}
+.badge{align-self:flex-start;background:var(--butter);font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;letter-spacing:.06em;text-transform:uppercase}
+
+/* builder */
+.builder{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.panel{background:var(--white);border-radius:26px;padding:28px;min-width:0}
+.field{margin-bottom:22px}
+.field > label,.field > span{display:block;font-weight:800;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips label{border:2px solid var(--pista-deep);border-radius:14px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:.92rem}
+.chips input:checked + label{border-color:var(--berry);background:var(--berry-soft)}
+.chips input:focus-visible + label{outline:3px solid var(--berry);outline-offset:2px}
+input[type=text],input[type=tel],input[type=date],select,textarea{width:100%;font:inherit;padding:12px 14px;border-radius:12px;border:2px solid var(--pista-deep);background:var(--white);color:var(--cocoa)}
+input[type=range]{width:100%;accent-color:var(--berry)}
+.summary{background:var(--cocoa);color:var(--white);border-radius:26px;padding:28px;position:sticky;top:96px}
+.summary h3{font-size:1.8rem;margin-bottom:6px}
+.summary dl{display:grid;grid-template-columns:1fr auto;gap:8px 16px;margin:20px 0;font-size:.95rem}
+.summary dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.summary .total{border-top:1px dashed rgba(255,255,255,.4);padding-top:14px;display:flex;justify-content:space-between;align-items:baseline}
+.summary .total b{font-family:var(--display);font-weight:400;font-size:2.2rem;color:var(--butter)}
+.summary small{opacity:.75}
+.mini-cake{display:flex;justify-content:center;margin-block:8px 4px}
+@media (max-width:860px){.builder{grid-template-columns:1fr}.summary{position:static}}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why div{padding:6px 0}
+.why .ico{width:52px;height:52px;border-radius:16px;background:var(--berry-soft);display:grid;place-items:center;margin-bottom:12px}
+.why h3{font-family:var(--body);font-weight:800;font-size:1.05rem}
+.why p{margin:6px 0 0;color:var(--cocoa-soft);font-size:.93rem}
+@media (max-width:860px){.why{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.why{grid-template-columns:1fr}}
+
+/* reviews */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.quote{background:var(--pista);border-radius:22px;padding:24px;min-width:0}
+.quote p{margin:0 0 14px;font-size:1.02rem}
+.quote footer{font-weight:800;font-size:.9rem}
+.stars{color:var(--berry);letter-spacing:2px}
+@media (max-width:860px){.quotes{grid-template-columns:1fr}}
+
+/* visit */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.hours{width:100%;border-collapse:collapse}
+.hours td{padding:10px 0;border-bottom:1px dashed var(--pista-deep);font-variant-numeric:tabular-nums}
+.hours td:last-child{text-align:right;font-weight:700}
+.map{border-radius:26px;background:var(--pista-deep);min-height:280px;position:relative;overflow:hidden}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:860px){.visit{grid-template-columns:1fr}}
+
+footer.site{background:var(--cocoa);color:var(--pista);padding-block:40px;font-size:.9rem}
+footer.site .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer.site b{font-family:var(--display);font-weight:400;font-size:1.4rem;color:var(--butter)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(120px);background:var(--cocoa);color:var(--white);padding:12px 20px;border-radius:999px;font-weight:700;transition:transform .3s;z-index:50;visibility:hidden}
+.toast.show{transform:translateX(-50%) translateY(0);visibility:visible}
+.cart-count{background:var(--white);color:var(--berry);border-radius:999px;padding:0 8px;font-size:.8rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="cake" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="176" rx="82" ry="10" fill="#3A221D" opacity=".12"/>
+      <rect x="30" y="110" width="140" height="60" rx="14" fill="#F7C6CF"/>
+      <rect x="30" y="140" width="140" height="10" fill="#E2445F" opacity=".35"/>
+      <rect x="48" y="66" width="104" height="50" rx="12" fill="#FFFFFF"/>
+      <path d="M48 84c10 10 18 10 26 0s18-10 26 0 18 10 26 0 16-10 26 0v-6H48z" fill="#E2445F"/>
+      <rect x="96" y="30" width="8" height="34" rx="3" fill="#FFE9A8"/>
+      <path d="M100 14c6 8 6 14 0 18-6-4-6-10 0-18z" fill="#F29A3C"/>
+      <circle cx="70" cy="128" r="5" fill="#FFFFFF"/><circle cx="100" cy="124" r="5" fill="#FFFFFF"/><circle cx="130" cy="128" r="5" fill="#FFFFFF"/>
+    </symbol>
+    <symbol id="cupcake" viewBox="0 0 100 100">
+      <path d="M24 52h52l-8 38H32z" fill="#E2445F"/>
+      <path d="M30 56l4 30M42 56l2 32M58 56l-2 32M70 56l-4 30" stroke="#FFFFFF" stroke-width="2" opacity=".5"/>
+      <path d="M20 54c-4-14 8-24 18-22 2-12 22-14 26-2 12-2 20 10 16 24z" fill="#FFF6F8"/>
+      <circle cx="50" cy="22" r="7" fill="#C21E3E"/>
+    </symbol>
+    <symbol id="cookie" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="38" fill="#D9A066"/>
+      <circle cx="36" cy="38" r="5" fill="#3A221D"/><circle cx="60" cy="34" r="4" fill="#3A221D"/><circle cx="52" cy="58" r="6" fill="#3A221D"/><circle cx="32" cy="62" r="4" fill="#3A221D"/><circle cx="68" cy="60" r="4" fill="#3A221D"/>
+    </symbol>
+    <symbol id="loaf" viewBox="0 0 100 100">
+      <path d="M14 70V48c0-20 16-30 36-30s36 10 36 30v22a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8z" fill="#C98A4B"/>
+      <path d="M32 34l8 10M48 30l6 12M64 32l4 12" stroke="#FFE9A8" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="donut" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="38" fill="#D9A066"/>
+      <path d="M50 16a34 34 0 1 1 0 68 34 34 0 0 1 0-68z" fill="#F7C6CF"/>
+      <circle cx="50" cy="50" r="12" fill="#FFFFFF"/>
+      <path d="M30 34l4 3M64 30l3 4M70 58l-4 2M34 64l4-1M50 24l0 4" stroke="#E2445F" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Gul Bakehouse home">
+      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#E2445F"/><path d="M20 9c3 4 8 4 8 10a8 8 0 0 1-16 0c0-6 5-6 8-10z" fill="#FFFFFF"/><circle cx="20" cy="20" r="3" fill="#E2445F"/></svg>
+      <b>Gul Bakehouse</b>
+    </a>
+    <ul>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#custom">Custom cakes</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <a class="btn" href="#menu">Order <span class="cart-count" id="cartCount">0</span></a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Fresh every morning · Attock</p>
+        <h1>Baked with love, <em>shared with smiles.</em></h1>
+        <p class="lead">Soft sponge cakes, buttery cookies and fresh bread from our oven at 6 am. Order online, pick up warm or get it delivered within the city.</p>
+        <div class="ctas">
+          <a class="btn" href="#menu">See today's menu</a>
+          <a class="btn ghost" href="#custom">Design your cake</a>
+        </div>
+        <div class="facts">
+          <div><strong>40+</strong>items daily</div>
+          <div><strong>2 lb</strong>cakes from Rs 2,400</div>
+          <div><strong>45 min</strong>city delivery</div>
+        </div>
+      </div>
+      <div class="cake-stage">
+        <svg viewBox="0 0 200 200" role="img" aria-label="Strawberry cream cake"><use href="#cake"/></svg>
+        <div class="tag t1">Today's special: <b>Strawberry Cream</b></div>
+        <div class="tag t2">Eggless options <b>available</b></div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V20C120 0 240 0 360 20s240 20 360 0 240-20 360 0 240 20 360 0v20z" fill="#FFFFFF"/></svg>
+  <section id="menu" class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <div><p class="eyebrow">Our menu</p><h2>Pick your favourite</h2></div>
+        <div class="tabs" role="group" aria-label="Filter menu">
+          <button type="button" aria-pressed="true" data-f="all">All</button>
+          <button type="button" aria-pressed="false" data-f="cakes">Cakes</button>
+          <button type="button" aria-pressed="false" data-f="sweet">Cupcakes & donuts</button>
+          <button type="button" aria-pressed="false" data-f="bread">Bread & cookies</button>
+        </div>
+      </div>
+      <div class="menu" id="menuGrid"></div>
+    </div>
+  </section>
+  <svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0v20c120 20 240 20 360 0s240-20 360 0 240 20 360 0 240-20 360 0V0z" fill="#FFFFFF"/></svg>
+
+  <section id="custom">
+    <div class="wrap sec">
+      <div class="sec-head"><div><p class="eyebrow">Custom cake builder</p><h2>Design your own cake</h2></div><p style="max-width:40ch;margin:0;color:var(--cocoa-soft)">Choose size, flavour and topping. The price updates as you go. Order 24 hours before.</p></div>
+      <div class="builder">
+        <form class="panel" id="cakeForm">
+          <div class="field">
+            <label for="size">Size: <span id="sizeOut">2 lb</span> <small style="font-weight:600;color:var(--cocoa-soft)">(serves <span id="serves">8–10</span>)</small></label>
+            <input type="range" id="size" min="1" max="6" step="1" value="2">
+          </div>
+          <div class="field"><span>Flavour</span>
+            <div class="chips" id="flavours"></div>
+          </div>
+          <div class="field"><span>Topping</span>
+            <div class="chips" id="toppings"></div>
+          </div>
+          <div class="field">
+            <label for="msg">Message on cake</label>
+            <input type="text" id="msg" maxlength="30" placeholder="Happy Birthday Ayesha">
+          </div>
+          <div class="field">
+            <label for="date">Pickup date</label>
+            <input type="date" id="date">
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label for="phone">WhatsApp number</label>
+            <input type="tel" id="phone" placeholder="03xx xxxxxxx">
+          </div>
+        </form>
+        <aside class="summary" aria-live="polite">
+          <p class="eyebrow" style="color:var(--butter)">Your cake</p>
+          <h3 id="sumTitle">Strawberry Cream</h3>
+          <div class="mini-cake"><svg width="120" height="120" viewBox="0 0 200 200" aria-hidden="true"><use href="#cake"/></svg></div>
+          <dl>
+            <dt>Base price</dt><dd id="sBase">Rs 2,400</dd>
+            <dt>Topping</dt><dd id="sTop">Rs 0</dd>
+            <dt>Message</dt><dd id="sMsg">Free</dd>
+          </dl>
+          <div class="total"><span>Total</span><b id="sTotal">Rs 2,400</b></div>
+          <p><small>50% advance on WhatsApp. Pay the rest at pickup.</small></p>
+          <button class="btn" style="width:100%;justify-content:center;background:var(--butter);color:var(--cocoa)" id="placeOrder" type="button">Place order</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V20C120 0 240 0 360 20s240 20 360 0 240-20 360 0 240 20 360 0v20z" fill="#FFFFFF"/></svg>
+  <section class="band">
+    <div class="wrap sec">
+      <div class="why">
+        <div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E2445F" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Baked at 6 am</h3><p>Nothing sits overnight. What you buy today was made today.</p></div>
+        <div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E2445F" stroke-width="2"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11z"/></svg></div><h3>Real butter & cream</h3><p>No margarine, no shortcuts. Pure dairy from local farms.</p></div>
+        <div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E2445F" stroke-width="2"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><h3>45 minute delivery</h3><p>Anywhere in Attock city, packed in a cool box.</p></div>
+        <div><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E2445F" stroke-width="2"><path d="M4 12l5 5L20 6"/></svg></div><h3>Eggless on request</h3><p>Most cakes can be made eggless. Just mention it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="band">
+    <div class="wrap sec" style="padding-top:0">
+      <div class="sec-head"><div><p class="eyebrow">Sample reviews</p><h2>Sweet words</h2></div></div>
+      <div class="quotes">
+        <blockquote class="quote" style="margin:0"><div class="stars">★★★★★</div><p>The birthday cake was soft and not too sweet. Everyone asked where we ordered from.</p><footer>Customer review · sample</footer></blockquote>
+        <blockquote class="quote" style="margin:0"><div class="stars">★★★★★</div><p>Fresh bread every morning, still warm. The chocolate chip cookies are the best in town.</p><footer>Customer review · sample</footer></blockquote>
+        <blockquote class="quote" style="margin:0"><div class="stars">★★★★★</div><p>Ordered on WhatsApp at 3 pm, cake was ready by 7. Exactly the design I wanted.</p><footer>Customer review · sample</footer></blockquote>
+      </div>
+    </div>
+  </section>
+  <svg class="wave" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0v20c120 20 240 20 360 0s240-20 360 0 240 20 360 0 240-20 360 0V0z" fill="#FFFFFF"/></svg>
+
+  <section id="visit">
+    <div class="wrap sec visit">
+      <div>
+        <p class="eyebrow">Visit us</p>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:18px">Come say hello</h2>
+        <p style="margin:0 0 18px;color:var(--cocoa-soft)">Main Bazaar Road, near Fawara Chowk, Attock City<br>Phone / WhatsApp: <b style="color:var(--cocoa)">0300 0000000</b></p>
+        <table class="hours">
+          <tr><td>Monday – Thursday</td><td>7:00 am – 10:00 pm</td></tr>
+          <tr><td>Friday</td><td>7:00 am – 12:30 pm, 2:30 – 10:30 pm</td></tr>
+          <tr><td>Saturday – Sunday</td><td>8:00 am – 11:00 pm</td></tr>
+        </table>
+      </div>
+      <div class="map" role="img" aria-label="Map illustration of the bakery location">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#C9DDA8"/><path d="M0 200 L400 120" stroke="#FFFFFF" stroke-width="22"/><path d="M150 0 L210 300" stroke="#FFFFFF" stroke-width="16"/><path d="M0 60 L400 80" stroke="#FFFFFF" stroke-width="10"/><circle cx="185" cy="160" r="30" fill="#FFFFFF"/><circle cx="185" cy="160" r="14" fill="#E2445F"/><rect x="230" y="190" width="70" height="44" rx="8" fill="#EEF4E2"/><rect x="40" y="90" width="80" height="60" rx="8" fill="#EEF4E2"/><rect x="250" y="20" width="110" height="50" rx="8" fill="#EEF4E2"/></svg>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div><b>Gul Bakehouse</b><br>Fresh cakes, cookies & bread in Attock.</div>
+    <div>Concept website · designed by Obaid Creation</div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const items=[
+ {n:"Strawberry Cream Cake",d:"Vanilla sponge, fresh cream, strawberry filling. 2 lb.",p:2400,c:"cakes",i:"cake",bg:"#FBD9DF",b:"Bestseller"},
+ {n:"Chocolate Fudge Cake",d:"Three layers of dark chocolate with ganache. 2 lb.",p:2800,c:"cakes",i:"cake",bg:"#F1E2D8"},
+ {n:"Red Velvet Cake",d:"Cream cheese frosting, cocoa sponge. 2 lb.",p:3000,c:"cakes",i:"cake",bg:"#FBD9DF",b:"New"},
+ {n:"Berry Cupcakes (6)",d:"Soft cupcakes with whipped cream swirl.",p:900,c:"sweet",i:"cupcake",bg:"#FFF1C9"},
+ {n:"Glazed Donuts (4)",d:"Pink glaze with rainbow sprinkles.",p:650,c:"sweet",i:"donut",bg:"#FBD9DF"},
+ {n:"Choco Chip Cookies (12)",d:"Crispy edge, chewy middle, real chocolate.",p:750,c:"bread",i:"cookie",bg:"#F1E2D8",b:"Bestseller"},
+ {n:"Milky Bread Loaf",d:"Soft white loaf, baked every morning.",p:220,c:"bread",i:"loaf",bg:"#FFF1C9"},
+ {n:"Coffee Walnut Cake",d:"Coffee sponge with crunchy walnuts. 2 lb.",p:2900,c:"cakes",i:"cake",bg:"#F1E2D8"}
+];
+const fmt=n=>"Rs "+n.toLocaleString("en-PK");
+const grid=document.getElementById("menuGrid");let cart=0;
+function render(f){grid.innerHTML=items.filter(x=>f==="all"||x.c===f).map(x=>`
+ <article class="item"><div class="pic" style="background:${x.bg}"><svg viewBox="0 0 ${x.i==='cake'?200:100} ${x.i==='cake'?200:100}" aria-hidden="true"><use href="#${x.i}"/></svg></div>
+ ${x.b?`<span class="badge">${x.b}</span>`:""}<h3>${x.n}</h3><p>${x.d}</p>
+ <div class="row"><span class="price">${fmt(x.p)}</span><button class="add" type="button" aria-label="Add ${x.n}" data-n="${x.n}">+</button></div></article>`).join("");}
+render("all");
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");render(b.dataset.f);}));
+const toast=document.getElementById("toast");let tt;
+function say(t){toast.textContent=t;toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),2200);}
+grid.addEventListener("click",e=>{const b=e.target.closest(".add");if(!b)return;cart++;document.getElementById("cartCount").textContent=cart;say(b.dataset.n+" added to order");});
+
+const flav=[["Strawberry Cream",1200],["Chocolate Fudge",1400],["Red Velvet",1500],["Pineapple",1100],["Coffee Walnut",1450]];
+const tops=[["Fresh cream",0],["Chocolate drip",350],["Fresh fruit",450],["Fondant design",900]];
+const chips=(el,arr,name)=>{el.innerHTML=arr.map((a,i)=>`<input type="radio" name="${name}" id="${name}${i}" value="${i}" ${i===0?"checked":""}><label for="${name}${i}">${a[0]}</label>`).join("");};
+chips(document.getElementById("flavours"),flav,"fl");chips(document.getElementById("toppings"),tops,"tp");
+const serves={1:"4–6",2:"8–10",3:"12–15",4:"16–20",5:"22–26",6:"28–32"};
+function calc(){const s=+size.value;const f=flav[+document.querySelector('[name=fl]:checked').value];const t=tops[+document.querySelector('[name=tp]:checked').value];
+ const base=f[1]*s, top=t[1]*Math.ceil(s/2), m=msg.value.trim()?0:0;
+ sizeOut.textContent=s+" lb";document.getElementById("serves").textContent=serves[s];
+ sumTitle.textContent=f[0]+" · "+s+" lb";sBase.textContent=fmt(base);sTop.textContent=fmt(top);sMsg.textContent=msg.value.trim()?"“"+msg.value.trim()+"”":"None";sTotal.textContent=fmt(base+top+m);}
+const size=document.getElementById("size"),msg=document.getElementById("msg");
+document.getElementById("cakeForm").addEventListener("input",calc);document.getElementById("cakeForm").addEventListener("submit",e=>e.preventDefault());calc();
+document.getElementById("placeOrder").addEventListener("click",()=>{const p=document.getElementById("phone").value.trim();say(p?"Demo: order details ready for "+p:"Add your WhatsApp number first");});
+</script>
+
+</body>
+</html>

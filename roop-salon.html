@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roop Beauty Lounge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: boutique salon — soft rose-mist ground, deep wine type, thin gold hairlines, arched image frames; a service picker that totals time and price */
+:root{
+  --mist:#F8EFF1; --blush:#EFD9DE; --wine:#561C33; --wine-soft:#7E5463; --gold:#B88A4A;
+  --mauve:#B47A8C; --paper:#FFFBFB;
+  --display:"Cormorant Garamond", "Garamond", "Times New Roman", serif;
+  --body:"Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--mist);color:var(--wine);font-family:var(--body);font-size:16px;line-height:1.65}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.05;margin:0;text-wrap:balance}
+h1 em,h2 em{font-style:italic;color:var(--mauve)}
+.over{font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:500 .9rem var(--body);letter-spacing:.12em;text-transform:uppercase;padding:14px 28px;border:0;background:var(--wine);color:var(--paper);text-decoration:none;cursor:pointer;border-radius:999px;transition:background .15s}
+.btn:hover{background:#3F1325}
+.btn.out{background:transparent;color:var(--wine);box-shadow:inset 0 0 0 1px var(--wine)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--mist) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--blush)}
+.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-block:16px}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase}
+.nav ul a{text-decoration:none;color:var(--wine-soft)}.nav ul a:hover{color:var(--wine)}
+.logo{text-align:center;text-decoration:none;color:var(--wine);font-family:var(--display);font-size:1.9rem;line-height:1}
+.logo small{display:block;font-family:var(--body);font-size:.6rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.nav .right{justify-self:end}
+@media (max-width:820px){.nav{grid-template-columns:1fr auto}.nav ul{display:none}.logo{text-align:left}}
+
+.hero{padding-block:56px 72px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(3rem,7vw,5.6rem)}
+.hero p{font-size:1.1rem;color:var(--wine-soft);max-width:42ch;margin:20px 0 30px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.arches{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end}
+.arch{border-radius:999px 999px 18px 18px;overflow:hidden;aspect-ratio:3/4.4;max-width:100%;position:relative}
+.arch.tall{aspect-ratio:3/5}
+.arch svg{position:absolute;inset:0;width:100%;height:100%}
+.arch span{position:absolute;left:14px;bottom:14px;background:var(--paper);color:var(--wine);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:999px}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border:0;margin:0}
+.sec{padding-block:76px}
+.sec-head{text-align:center;max-width:620px;margin:0 auto 40px}
+.sec-head h2{font-size:clamp(2.4rem,5vw,3.6rem);margin-top:10px}
+.sec-head p{color:var(--wine-soft);margin:12px 0 0}
+
+/* services + picker */
+.cats{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:28px}
+.cats button{border:1px solid var(--blush);background:var(--paper);color:var(--wine);font:500 .82rem var(--body);letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border-radius:999px;cursor:pointer}
+.cats button[aria-pressed="true"]{background:var(--wine);color:var(--paper);border-color:var(--wine)}
+.svc-grid{display:grid;grid-template-columns:1.4fr .6fr;gap:28px;align-items:start}
+.list{background:var(--paper);border-radius:24px;padding:10px 26px;min-width:0}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--blush)}
+.row:last-child{border-bottom:0}
+.row h3{font-size:1.45rem}
+.row p{margin:2px 0 0;font-size:.88rem;color:var(--wine-soft)}
+.row .pr{font-variant-numeric:tabular-nums;text-align:right;font-weight:500;white-space:nowrap}
+.row .pr small{display:block;color:var(--wine-soft);font-weight:400;font-size:.78rem}
+.pick{width:40px;height:40px;border-radius:50%;border:1px solid var(--wine);background:transparent;color:var(--wine);cursor:pointer;font-size:1.2rem;line-height:1}
+.pick[aria-pressed="true"]{background:var(--wine);color:var(--paper)}
+.bag{background:var(--wine);color:var(--paper);border-radius:24px;padding:26px;position:sticky;top:100px}
+.bag h3{font-size:1.9rem}
+.bag ul{list-style:none;margin:14px 0;padding:0;display:grid;gap:8px;font-size:.92rem}
+.bag li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:8px}
+.bag li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bag .tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}
+.bag .tot b{font-family:var(--display);font-size:2.4rem;font-weight:500;color:#F3D7A6;font-variant-numeric:tabular-nums}
+.bag .meta{font-size:.85rem;opacity:.8;margin:4px 0 18px}
+.bag .btn{width:100%;background:var(--paper);color:var(--wine)}
+.bag .empty{opacity:.75;font-size:.92rem}
+@media (max-width:880px){.svc-grid{grid-template-columns:1fr}.bag{position:static}}
+@media (max-width:480px){.row{grid-template-columns:1fr auto}.row .pr{grid-column:1;text-align:left}.row .pick{grid-row:1 / span 2;grid-column:2}}
+
+/* bridal */
+.bridal{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pkg{background:var(--paper);border-radius:24px;padding:30px 26px;display:flex;flex-direction:column;gap:14px;border:1px solid var(--blush);min-width:0}
+.pkg.star{background:var(--blush);border-color:var(--gold)}
+.pkg h3{font-size:2rem}
+.pkg .amt{font-family:var(--display);font-size:2.6rem;font-variant-numeric:tabular-nums;line-height:1}
+.pkg ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:.95rem}
+.pkg li::before{content:"✦";color:var(--gold);margin-right:10px;font-size:.8rem}
+.pkg .btn{margin-top:auto}
+@media (max-width:880px){.bridal{grid-template-columns:1fr}}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g{aspect-ratio:1;border-radius:20px;overflow:hidden;position:relative;max-width:100%}
+.g svg{width:100%;height:100%;display:block}
+.g span{position:absolute;bottom:12px;left:12px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;background:var(--paper);padding:4px 10px;border-radius:999px}
+@media (max-width:760px){.gallery{grid-template-columns:1fr 1fr}}
+
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.hours{width:100%;border-collapse:collapse}
+.hours td{padding:12px 0;border-bottom:1px solid var(--blush);font-variant-numeric:tabular-nums}
+.hours td:last-child{text-align:right}
+.quote{font-family:var(--display);font-style:italic;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.25;margin:0}
+footer{border-top:1px solid var(--blush);padding-block:30px;font-size:.88rem;color:var(--wine-soft)}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--wine);color:var(--paper);padding:12px 22px;border-radius:999px;z-index:40;visibility:hidden;opacity:0;transition:opacity .25s}
+.toast.show{visibility:visible;opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <ul><li><a href="#services">Services</a></li><li><a href="#bridal">Bridal</a></li><li><a href="#gallery">Gallery</a></li></ul>
+    <a class="logo" href="#top">Roop<small>Beauty Lounge</small></a>
+    <a class="btn right" href="#services">Book now</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="over">Ladies only · Hair · Skin · Bridal</p>
+        <h1>Feel beautiful, <em>every single day.</em></h1>
+        <p>A calm, private salon for women. Expert stylists, branded products and bridal looks that last from baraat to rukhsati.</p>
+        <div class="ctas"><a class="btn" href="#services">Choose services</a><a class="btn out" href="#bridal">Bridal packages</a></div>
+      </div>
+      <div class="arches">
+        <div class="arch"><svg viewBox="0 0 300 440" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8C3CC"/><stop offset="1" stop-color="#B47A8C"/></linearGradient></defs><rect width="300" height="440" fill="url(#ga)"/><circle cx="150" cy="170" r="62" fill="#F8E6E3"/><path d="M80 175c0-60 30-90 70-90s72 30 72 92c0 40-10 80-4 120H86c6-40-6-80-6-122z" fill="#561C33"/><circle cx="150" cy="175" r="48" fill="#F3D3C8"/><path d="M60 440c4-80 40-118 90-118s86 38 90 118z" fill="#FFFBFB"/></svg><span>Hair styling</span></div>
+        <div class="arch tall"><svg viewBox="0 0 300 500" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#561C33"/><stop offset="1" stop-color="#8C3A55"/></linearGradient></defs><rect width="300" height="500" fill="url(#gb)"/><circle cx="150" cy="190" r="52" fill="#F3D3C8"/><path d="M92 170c6-50 32-70 58-70s54 20 58 70c-20-24-36-30-58-30s-38 6-58 30z" fill="#2E0E1B"/><path d="M98 120h104" stroke="#D9B26F" stroke-width="6" stroke-linecap="round"/><circle cx="150" cy="118" r="10" fill="#D9B26F"/><path d="M50 500c6-110 46-170 100-170s94 60 100 170z" fill="#C2405F"/><path d="M80 380c30 20 110 20 140 0" stroke="#D9B26F" stroke-width="4" fill="none"/></svg><span>Bridal makeup</span></div>
+      </div>
+    </div>
+  </section>
+  <hr class="rule">
+
+  <section id="services">
+    <div class="wrap sec">
+      <div class="sec-head"><p class="over">Service menu</p><h2>Build your <em>visit</em></h2><p>Add services to see the total time and price. We confirm your slot on WhatsApp.</p></div>
+      <div class="cats" role="group" aria-label="Service category"></div>
+      <div class="svc-grid">
+        <div class="list" id="svcList"></div>
+        <aside class="bag" aria-live="polite">
+          <p class="over" style="color:#F3D7A6">Your visit</p>
+          <h3 id="bagTitle">2 services</h3>
+          <ul id="bagList"></ul>
+          <div class="tot"><span>Total</span><b id="bagTotal">Rs 0</b></div>
+          <p class="meta" id="bagTime"></p>
+          <button class="btn" type="button" id="bookBtn">Request booking</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <hr class="rule">
+
+  <section id="bridal">
+    <div class="wrap sec">
+      <div class="sec-head"><p class="over">Bridal & party</p><h2>Packages for your <em>big days</em></h2><p>Includes a trial session one week before. Home service available in Attock city.</p></div>
+      <div class="bridal">
+        <article class="pkg"><p class="over">Mehndi</p><h3>Mehndi glow</h3><div class="amt">Rs 18,000</div><ul><li>Soft glam makeup</li><li>Hair styling with flowers</li><li>Hand mehndi design</li></ul><a class="btn out" href="#services">Ask about this</a></article>
+        <article class="pkg star"><p class="over">Most booked</p><h3>Baraat bride</h3><div class="amt">Rs 45,000</div><ul><li>HD airbrush makeup</li><li>Dupatta setting & jewellery</li><li>Lashes and nail paint</li><li>Free trial session</li></ul><a class="btn" href="#services">Ask about this</a></article>
+        <article class="pkg"><p class="over">Walima</p><h3>Walima elegance</h3><div class="amt">Rs 35,000</div><ul><li>Elegant soft-glam look</li><li>Hairdo of your choice</li><li>Facial 3 days before</li></ul><a class="btn out" href="#services">Ask about this</a></article>
+      </div>
+    </div>
+  </section>
+  <hr class="rule">
+
+  <section id="gallery">
+    <div class="wrap sec">
+      <div class="sec-head"><p class="over">Gallery</p><h2>Our <em>work</em></h2></div>
+      <div class="gallery">
+        <div class="g"><svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#EFD9DE"/><circle cx="50" cy="44" r="18" fill="#561C33"/><circle cx="50" cy="46" r="13" fill="#F3D3C8"/><path d="M22 100c2-22 14-34 28-34s26 12 28 34z" fill="#B47A8C"/></svg><span>Hair</span></div>
+        <div class="g"><svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#561C33"/><circle cx="50" cy="50" r="30" fill="none" stroke="#D9B26F" stroke-width="2"/><circle cx="50" cy="50" r="20" fill="none" stroke="#D9B26F" stroke-width="1"/><path d="M50 20v60M20 50h60" stroke="#D9B26F" stroke-width="1"/><circle cx="50" cy="50" r="5" fill="#D9B26F"/></svg><span>Mehndi</span></div>
+        <div class="g"><svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#B47A8C"/><path d="M30 40q20-14 40 0q-20 18-40 0z" fill="#FFFBFB"/><circle cx="50" cy="40" r="6" fill="#561C33"/><path d="M28 36q22-20 44 0" stroke="#2E0E1B" stroke-width="2" fill="none"/><path d="M36 70q14 8 28 0" stroke="#C2405F" stroke-width="5" stroke-linecap="round" fill="none"/></svg><span>Makeup</span></div>
+        <div class="g"><svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#F8E6E3"/><g fill="#C2405F"><rect x="22" y="30" width="10" height="28" rx="5"/><rect x="38" y="24" width="10" height="34" rx="5"/><rect x="54" y="26" width="10" height="32" rx="5"/><rect x="70" y="34" width="10" height="24" rx="5"/></g><path d="M16 56h70v20c0 8-6 14-14 14H30c-8 0-14-6-14-14z" fill="#F3D3C8"/></svg><span>Nails</span></div>
+      </div>
+    </div>
+  </section>
+  <hr class="rule">
+
+  <section>
+    <div class="wrap sec visit">
+      <div><p class="over">Visit us</p><p class="quote" style="margin-top:12px">“Come as you are, leave feeling like the best version of you.”</p><p style="color:var(--wine-soft);margin-top:18px">Pindi Road, near Shahbaz Market, Attock City<br>WhatsApp: 0300 0000000</p></div>
+      <table class="hours">
+        <tr><td>Monday – Thursday</td><td>11:00 am – 8:00 pm</td></tr>
+        <tr><td>Friday</td><td>3:00 pm – 9:00 pm</td></tr>
+        <tr><td>Saturday – Sunday</td><td>10:00 am – 9:00 pm</td></tr>
+        <tr><td>Bridal bookings</td><td>Any time, on appointment</td></tr>
+      </table>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© Roop Beauty Lounge, Attock</span><span>Concept website · designed by Obaid Creation</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const S=[
+ {c:"Hair",n:"Haircut & blow-dry",d:"Wash, cut of your choice and a smooth blow-dry",p:2500,m:60},
+ {c:"Hair",n:"Hair colour",d:"Global colour with branded ammonia-free products",p:7500,m:120},
+ {c:"Hair",n:"Keratin treatment",d:"Frizz-free, shiny hair for up to 4 months",p:16000,m:180},
+ {c:"Skin",n:"Hydra facial",d:"Deep cleanse, exfoliation and hydration",p:6500,m:75},
+ {c:"Skin",n:"Whitening facial",d:"Brightening facial with mask and massage",p:4000,m:60},
+ {c:"Skin",n:"Full face threading",d:"Eyebrows, upper lip and forehead",p:800,m:20},
+ {c:"Hands & feet",n:"Manicure & pedicure",d:"Soak, scrub, nail shaping and polish",p:3500,m:75},
+ {c:"Hands & feet",n:"Gel nails",d:"Long-lasting gel polish, any colour",p:3000,m:60},
+ {c:"Makeup",n:"Party makeup",d:"Full glam look with lashes",p:8000,m:90},
+ {c:"Makeup",n:"Mehndi design",d:"Both hands, front and back",p:2500,m:60}];
+const sel=new Set([0,3]);const cats=["All","Hair","Skin","Hands & feet","Makeup"];let cur="All";
+const fmt=n=>"Rs "+n.toLocaleString("en-PK");const hm=m=>{const h=Math.floor(m/60),r=m%60;return (h?h+" hr ":"")+(r?r+" min":"");};
+const catEl=document.querySelector(".cats");catEl.innerHTML=cats.map(c=>`<button type="button" aria-pressed="${c===cur}" data-c="${c}">${c}</button>`).join("");
+catEl.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cur=b.dataset.c;catEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));list();});
+function list(){svcList.innerHTML=S.map((s,i)=>({s,i})).filter(o=>cur==="All"||o.s.c===cur).map(({s,i})=>`<div class="row"><div><h3>${s.n}</h3><p>${s.d}</p></div><div class="pr">${fmt(s.p)}<small>${hm(s.m)}</small></div><button class="pick" type="button" data-i="${i}" aria-pressed="${sel.has(i)}" aria-label="${sel.has(i)?"Remove":"Add"} ${s.n}">${sel.has(i)?"✓":"+"}</button></div>`).join("");}
+svcList.addEventListener("click",e=>{const b=e.target.closest(".pick");if(!b)return;const i=+b.dataset.i;sel.has(i)?sel.delete(i):sel.add(i);list();bag();});
+function bag(){const L=[...sel].map(i=>S[i]);bagTitle.textContent=L.length?L.length+" service"+(L.length>1?"s":""):"No services yet";
+ bagList.innerHTML=L.length?L.map(s=>`<li><span>${s.n}</span><span>${fmt(s.p)}</span></li>`).join(""):`<li class="empty">Tap + next to a service to add it.</li>`;
+ const t=L.reduce((a,s)=>a+s.p,0),m=L.reduce((a,s)=>a+s.m,0);bagTotal.textContent=fmt(t);bagTime.textContent=L.length?"About "+hm(m)+" in the salon":"";}
+const toast=document.getElementById("toast");let tt;
+bookBtn.addEventListener("click",()=>{toast.textContent=sel.size?"Demo: booking request ready for "+sel.size+" service"+(sel.size>1?"s":""):"Add at least one service first";toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),2400);});
+list();bag();
+</script>
+
+</body>
+</html>
