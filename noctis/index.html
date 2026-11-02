@@ -118,7 +118,55 @@ footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .nogl{position:fixed;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--f-mono);font-size:13px;color:var(--mute);text-align:center;max-width:320px}
 
+
+/* preloader */
+.pre{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;padding:calc(22px + env(safe-area-inset-top,0px)) var(--gut-r) calc(28px + env(safe-area-inset-bottom,0px)) var(--gut-l);transition:transform 1s cubic-bezier(.76,0,.24,1)}
+.pre.out{transform:translateY(-100%)}
+.pre .brand{font-size:13px}
+.pre-n{font-family:var(--f-disp);font-size:clamp(72px,16vw,220px);line-height:.9;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.pre-n small{font-size:.22em;color:var(--mute);margin-left:.3em;vertical-align:top}
+.pre-bar{height:1px;background:var(--line);margin-top:18px;overflow:hidden}
+.pre-bar i{display:block;height:100%;background:var(--blue);transform-origin:left;transform:scaleX(0);transition:transform .3s}
+.pre-row{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:12px}
+/* nav tools */
+.nav-r{display:flex;align-items:center;gap:10px}
+.cur{appearance:none;-webkit-appearance:none;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23eef1f4' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--line);border-radius:999px;color:var(--ink);font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;padding:10px 30px 10px 14px;cursor:pointer}
+.cur option{background:#101216;color:var(--ink)}
+.units{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:2px;margin-bottom:16px}
+.units button{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:99px;color:var(--mute)}
+.units button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+/* reservation */
+.rv-scrim{position:fixed;inset:0;z-index:40;background:rgba(3,4,6,.7);opacity:0;pointer-events:none;transition:opacity .35s}
+.rv{position:fixed;z-index:41;top:0;right:0;bottom:0;width:min(480px,100%);background:#0b0d10;border-left:1px solid var(--line);transform:translateX(102%);transition:transform .6s cubic-bezier(.2,.75,.2,1);overflow:auto;
+  padding:calc(24px + env(safe-area-inset-top,0px)) max(24px, env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 24px}
+.rv-open .rv-scrim{opacity:1;pointer-events:auto}
+.rv-open .rv{transform:none}
+.rv .x{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));right:max(18px, env(safe-area-inset-right,0px));width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+.rv .x svg{width:14px;height:14px}
+.rv h3{font-family:var(--f-disp);font-weight:400;font-size:24px;margin:34px 0 8px;letter-spacing:.02em}
+.rv > p{color:var(--mute);margin:0 0 22px;font-size:14px}
+.fld{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.fld label{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.fld input,.fld select{background:#12151a;border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;font-size:15px;padding:13px 14px}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--blue)}
+.fld .err{font-size:12px;color:#ff8a96;min-height:0}
+.fins{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fins button{border:1px solid var(--line);border-radius:12px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px}
+.fins button i{width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.fins button[aria-pressed="true"]{border-color:var(--ink);background:rgba(238,241,244,.06)}
+.dep{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-top:1px solid var(--line);margin-top:6px}
+.dep span{color:var(--mute);font-size:13px}
+.dep b{font-family:var(--f-disp);font-weight:400;font-size:22px}
+.rv .cta{width:100%;justify-content:center}
+.fine{font-size:12px;color:var(--mute);margin-top:14px}
+.done-card{text-align:left}
+.done-card .code{font-family:var(--f-mono);font-size:13px;letter-spacing:.14em;color:var(--blue);margin:18px 0 6px}
+.done-card dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:20px 0;font-size:14px}
+.done-card dt{color:var(--mute)}
+.done-card dd{margin:0}
 @media (max-width:760px){
+  .cur{padding:9px 26px 9px 10px;font-size:11px}
+  .nav-r .reserve{padding:9px 12px}
   .chapters{display:none}
   .ch{height:150vh}
   .pin{flex-direction:column;justify-content:flex-end;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
@@ -136,7 +184,7 @@ footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
 </style>
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 </head>
 <body>
 
@@ -146,8 +194,14 @@ footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font
 <header class="nav">
   <div class="brand">NOCTIS<i>·</i>GT</div>
   <nav class="chapters" id="chapters" aria-label="Chapters"></nav>
-  <button class="reserve" type="button" data-reserve>Reserve</button>
+  <div class="nav-r"><label class="sr" for="cur" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Currency</label><select class="cur" id="cur"><option>USD</option><option>EUR</option><option>GBP</option><option>AED</option><option>PKR</option></select>
+  <button class="reserve" type="button" data-reserve>Reserve</button></div>
 </header>
+<div class="pre" id="pre" aria-hidden="true">
+  <div class="brand">NOCTIS<i>·</i>GT</div>
+  <div><div class="pre-n"><span id="preN">000</span><small>%</small></div><div class="pre-bar"><i id="preBar"></i></div>
+  <div class="pre-row"><span>Concept 01 · Drawing the car</span><span>Live 3D</span></div></div>
+</div>
 
 <div class="tags" id="tags" aria-hidden="true"></div>
 
@@ -169,7 +223,8 @@ footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font
         <div class="kicker">01 · Blueprint</div>
         <h2>Lines first. Metal second.</h2>
         <p>Every surface started as a single line of light. Keep scrolling and the body fills in, front to tail, panel by panel.</p>
-        <div class="stats">
+        <div class="units" id="units" role="group" aria-label="Units"><button type="button" data-u="m" aria-pressed="true">Metric</button><button type="button" data-u="i" aria-pressed="false">Imperial</button></div>
+        <div class="stats" id="stats1">
           <div><b>2.9 s</b>0–100 km/h</div>
           <div><b>720 kW</b>Peak power</div>
           <div><b>610 km</b>WLTP range</div>
@@ -220,7 +275,7 @@ footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font
         <h2>Choose your finish.</h2>
         <p>Three paints, each with its own cabin. The car behind this text changes the moment you pick one.</p>
         <div class="finishes" id="finishes" role="group" aria-label="Paint finish"></div>
-        <div class="price"><b>$189,000</b><span>Starting from · deliveries spring 2027</span></div>
+        <div class="price"><b id="priceMain">$189,000</b><span>Starting from · deliveries spring 2027</span></div>
         <button class="cta" type="button" data-reserve>Reserve a build <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
       </div>
     </div>
@@ -243,6 +298,25 @@ footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font
     </div>
   </section>
 </main>
+<div class="rv-scrim" id="rvScrim"></div>
+<aside class="rv" id="rv" aria-label="Reserve a build" inert>
+  <button class="x" id="rvClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"/></svg></button>
+  <div id="rvForm">
+    <div class="kicker">Reserve · Concept 01</div>
+    <h3>Reserve your NOCTIS GT</h3>
+    <p>A refundable deposit holds your build slot. We'll confirm the final spec with you before production.</p>
+    <form id="form" novalidate>
+      <div class="fld"><label for="fName">Full name</label><input id="fName" autocomplete="name" placeholder="Your name"><span class="err" id="eName"></span></div>
+      <div class="fld"><label for="fMail">Email</label><input id="fMail" type="email" autocomplete="email" placeholder="you@company.com"><span class="err" id="eMail"></span></div>
+      <div class="fld"><label for="fCountry">Delivery country</label><select id="fCountry"><option>Pakistan</option><option>United Arab Emirates</option><option>Saudi Arabia</option><option>Qatar</option><option>United Kingdom</option><option>Germany</option><option>France</option><option>Italy</option><option>United States</option><option>Canada</option><option>Australia</option><option>Japan</option><option>Singapore</option></select></div>
+      <div class="fld"><label>Finish</label><div class="fins" id="rvFins"></div></div>
+      <div class="dep"><span>Refundable deposit</span><b id="depAmt">$5,000</b></div>
+      <button class="cta" type="submit">Request reservation <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
+      <p class="fine">Concept build by OK Creation: nothing you type here is sent or stored.</p>
+    </form>
+  </div>
+  <div id="rvDone" class="done-card" hidden></div>
+</aside>
 <div class="toast" id="toast" role="status"></div>
 
 <script type="importmap">
@@ -268,7 +342,35 @@ const chs=[...document.querySelectorAll('.ch')];
 chs.forEach((c,i)=>{ const b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label',`Chapter ${i}: ${c.dataset.title}`);
   b.onclick=()=>scrollTo({top:anchorScroll(i),behavior:(reduce||TEST)?'auto':'smooth'}); $('chapters').appendChild(b); });
 let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2800); }
-document.querySelectorAll('[data-reserve]').forEach(b=>b.onclick=()=>toast('Reservations open in the full build. This page is a concept by OK Creation.'));
+/* currency, units, reservation */
+const CUR={USD:[1,'en-US'],EUR:[.92,'de-DE'],GBP:[.79,'en-GB'],AED:[3.67,'en-AE'],PKR:[280,'en-PK']};
+let ccy='USD'; try{ const c=localStorage.getItem('noctis-ccy'); if(CUR[c]) ccy=c; }catch(e){}
+function money(usd){ const [r,l]=CUR[ccy]; let v=Math.round(usd*r/100)*100; return new Intl.NumberFormat(l,{style:'currency',currency:ccy,maximumFractionDigits:0}).format(v); }
+function paintMoney(){ $('priceMain').textContent=money(189000); $('depAmt').textContent=money(5000); }
+$('cur').value=ccy; paintMoney();
+$('cur').addEventListener('change',e=>{ ccy=e.target.value; try{ localStorage.setItem('noctis-ccy',ccy); }catch(_){} paintMoney(); toast(`Prices now in ${ccy} · indicative rates`); });
+const UNITS={m:[['2.9 s','0–100 km/h'],['720 kW','Peak power'],['610 km','WLTP range']],i:[['2.7 s','0–60 mph'],['965 hp','Peak power'],['379 mi','EPA-est. range']]};
+$('units').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; [...$('units').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  $('stats1').innerHTML=UNITS[b.dataset.u].map(([v,l])=>`<div><b>${v}</b>${l}</div>`).join(''); });
+let finSel=0; const FINS=[['Carmine','#9e1020'],['Pearl','#e9e4ea'],['Graphite','#3a3c41']];
+function paintFins(){ $('rvFins').innerHTML=FINS.map((f,i)=>`<button type="button" data-f="${i}" aria-pressed="${i===finSel}"><i style="background:${f[1]}"></i>${f[0]}</button>`).join(''); }
+$('rvFins').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; finSel=+b.dataset.f; paintFins(); const pick=document.querySelectorAll('#finishes .fin')[finSel]; pick&&pick.click(); });
+function rvOpen(on){ document.body.classList.toggle('rv-open',on); $('rv').inert=!on; if(on){ paintFins(); paintMoney(); $('rvForm').hidden=false; $('rvDone').hidden=true; setTimeout(()=>$('fName').focus({preventScroll:true}),400); } }
+document.querySelectorAll('[data-reserve]').forEach(b=>b.onclick=()=>rvOpen(true));
+$('rvClose').onclick=()=>rvOpen(false); $('rvScrim').onclick=()=>rvOpen(false);
+addEventListener('keydown',e=>{ if(e.key==='Escape') rvOpen(false); });
+$('form').addEventListener('submit',e=>{ e.preventDefault();
+  const n=$('fName').value.trim(), m=$('fMail').value.trim(); let ok=true;
+  $('eName').textContent=n.length<2?'Enter your full name.':''; if(n.length<2) ok=false;
+  $('eMail').textContent=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)?'':'Enter an email like name@company.com.'; if($('eMail').textContent) ok=false;
+  if(!ok) return;
+  const code='NX-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+String(Date.now()).slice(-3);
+  $('rvForm').hidden=true; const d=$('rvDone'); d.hidden=false;
+  d.innerHTML=`<div class="kicker">Request received</div><h3>Your build slot is held.</h3><div class="code">${code}</div>
+    <p style="color:var(--mute);margin:0">This is a concept, so no email will arrive. In a live build, the confirmation would land in your inbox within a minute.</p>
+    <dl><dt>Name</dt><dd>${n.replace(/[<>&]/g,'')}</dd><dt>Finish</dt><dd>${FINS[finSel][0]}</dd><dt>Country</dt><dd>${$('fCountry').value}</dd><dt>Deposit</dt><dd>${money(5000)}, refundable</dd></dl>
+    <button class="cta" type="button" id="rvBack">Back to the car</button>`;
+  $('rvBack').onclick=()=>rvOpen(false); });
 
 /* ---------- renderer ---------- */
 let renderer;
@@ -343,13 +445,15 @@ const loadline=$('loadline');
   try{
     const res=await fetch('noctis-car.txt'); if(!res.ok) throw new Error('HTTP '+res.status);
     let txt='';
-    if(res.body&&res.body.getReader){ const rd=res.body.getReader(), dec=new TextDecoder(); for(;;){ const {done,value}=await rd.read(); if(done)break; txt+=dec.decode(value,{stream:true}); loadline.textContent=`Drawing the car · ${Math.min(99,Math.round(txt.length/B64_LEN*100))}%`; } }
+    if(res.body&&res.body.getReader){ const rd=res.body.getReader(), dec=new TextDecoder(); for(;;){ const {done,value}=await rd.read(); if(done)break; txt+=dec.decode(value,{stream:true}); { const pc=Math.min(99,Math.round(txt.length/B64_LEN*100)); loadline.textContent=`Drawing the car · ${pc}%`; preSet(pc); } } }
     else txt=await res.text();
     const bin=atob(txt.trim()), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
     loader.parse(u.buffer,'',g=>{ try{ setup(g); }catch(e){ fail(e); } },fail);
   }catch(e){ fail(e); }
 })();
-function fail(e){ console.error(e); loadline.textContent='The 3D car could not load on this device.'; }
+function fail(e){ console.error(e); loadline.textContent='The 3D car could not load on this device.'; $('pre').classList.add('out'); }
+function preSet(pc){ $('preN').textContent=String(pc).padStart(3,'0'); $('preBar').style.transform=`scaleX(${pc/100})`; }
+setTimeout(()=>$('pre').classList.add('out'),15000);
 
 const W2L=(x,y,z)=>new THREE.Vector3(x,-z,y); // world dir -> car-local (car root is Z-up)
 const EXPLODE={
@@ -399,7 +503,7 @@ function setup(gltf){
     tagList.push({n,c,el}); });
   Promise.all(pending).then(()=>{ buildFinishes(vnames,meshes); });
   ready=true; drawT0=performance.now();
-  loadline.textContent='Drawing the car · 100%'; setTimeout(()=>loadline.classList.add('done'),900);
+  loadline.textContent='Drawing the car · 100%'; setTimeout(()=>loadline.classList.add('done'),900); preSet(100); setTimeout(()=>$('pre').classList.add('out'),350);
 }
 const tagList=[];
 
@@ -409,7 +513,7 @@ function buildFinishes(vnames,meshes){
   const box=$('finishes');
   vnames.forEach((vn,i)=>{ const f=FIN[i]||[vn,'#888']; const b=document.createElement('button'); b.type='button'; b.className='fin'; b.setAttribute('aria-pressed',i===0);
     b.innerHTML=`<i style="background:${f[1]}"></i>${f[0]}`;
-    b.onclick=()=>{ meshes.forEach(o=>{ const m=o.userData.variantMats&&o.userData.variantMats[i]; if(m) o.material=m; }); [...box.children].forEach((x,k)=>x.setAttribute('aria-pressed',k===i)); flash=1; };
+    b.onclick=()=>{ finSel=i; meshes.forEach(o=>{ const m=o.userData.variantMats&&o.userData.variantMats[i]; if(m) o.material=m; }); [...box.children].forEach((x,k)=>x.setAttribute('aria-pressed',k===i)); flash=1; };
     box.appendChild(b); });
 }
 let flash=0;

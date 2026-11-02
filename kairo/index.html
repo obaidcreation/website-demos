@@ -50,7 +50,6 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-stretch:125%;letter-spacing:.14em;font-size:15px}
 .logo svg{width:22px;height:22px}
 .nav-mid{display:flex;gap:28px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.nav-mid span:first-child{color:var(--ink)}
 .bag{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px 14px;border:1px solid var(--line);border-radius:999px;transition:border-color .2s,background .2s}
 .bag:hover{border-color:rgba(239,236,230,.35)}
 .bag b{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-size:11px;font-weight:500}
@@ -153,11 +152,66 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .loader p{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase;margin:12px 0 0}
 .loader p.err{color:var(--glow-soft);text-transform:none;letter-spacing:.02em}
 
+
+/* filters, currency, wishlist, size system */
+.nav-mid button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--mute);padding:6px 0;position:relative;transition:color .2s}
+.nav-mid button:hover{color:var(--ink)}
+.nav-mid button[aria-pressed="true"]{color:var(--ink)}
+.nav-mid button[aria-pressed="true"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--glow)}
+.nav-r{display:flex;align-items:center;gap:8px}
+.cur{appearance:none;-webkit-appearance:none;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23efece6' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--line);border-radius:999px;color:var(--ink);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;padding:9px 30px 9px 14px;cursor:pointer}
+.cur option{background:#15161a;color:var(--ink)}
+.wish{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:border-color .2s,transform .15s}
+.wish:active{transform:scale(.9)}
+.wish svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:1.6;transition:fill .2s,stroke .2s}
+.wish[aria-pressed="true"]{border-color:var(--glow)}
+.wish[aria-pressed="true"] svg{fill:var(--glow);stroke:var(--glow)}
+.price-row .pr{display:flex;align-items:center;gap:12px}
+.sys{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:2px;gap:2px}
+.sys button{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;padding:3px 8px;border-radius:99px;color:var(--mute)}
+.sys button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.label.with-sys{align-items:center}
+/* cart drawer */
+.scrim{position:absolute;inset:0;z-index:60;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .35s}
+.drawer{position:absolute;z-index:61;top:0;right:0;bottom:0;width:min(420px,100%);background:#121316;border-left:1px solid var(--line);transform:translateX(102%);transition:transform .55s cubic-bezier(.2,.75,.2,1);display:flex;flex-direction:column;
+  padding:calc(18px + env(safe-area-inset-top,0px)) max(20px, env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) 20px}
+.cart-open .scrim{opacity:1;pointer-events:auto}
+.cart-open .drawer{transform:none;box-shadow:-30px 0 80px rgba(0,0,0,.5)}
+.dr-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.dr-head h3{margin:0;font-size:14px;letter-spacing:.16em;text-transform:uppercase;font-stretch:118%;font-weight:700}
+.dr-head h3 span{color:var(--mute);font-family:var(--f-mono);font-weight:400;letter-spacing:.06em;margin-left:6px}
+.x{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+.x svg{width:14px;height:14px}
+.ship{padding:14px 0;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--mute)}
+.ship b{color:var(--ink);font-weight:600}
+.meter{height:3px;border-radius:3px;background:var(--line);margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--glow);transform-origin:left;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.lines{flex:1;overflow:auto;padding:4px 0;min-height:0}
+.ln{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center;animation:lnIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes lnIn{from{opacity:0;transform:translateX(16px)}}
+.ln .th{width:72px;height:60px;border-radius:12px;display:grid;place-items:center;background:radial-gradient(80% 70% at 50% 60%,rgba(255,122,26,.18),transparent 70%),#1b1c20}
+.ln .th svg{width:58px}
+.ln b{display:block;font-size:13.5px;font-stretch:115%;letter-spacing:.04em;font-weight:700}
+.ln small{display:block;color:var(--mute);font-size:12px}
+.qty{display:inline-flex;align-items:center;gap:8px;margin-top:8px;border:1px solid var(--line);border-radius:99px;padding:2px 4px;font-family:var(--f-mono);font-size:12px}
+.qty button{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;font-size:14px}
+.qty button:hover{background:rgba(255,255,255,.08)}
+.lp{font-family:var(--f-mono);font-size:13px;text-align:right;align-self:start;padding-top:2px}
+.rm{display:block;margin:10px 0 0 auto;font-size:11px;color:var(--mute);text-decoration:underline;text-underline-offset:3px}
+.empty{padding:48px 0;text-align:center;color:var(--mute);font-size:13px}
+.dr-foot{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:12px}
+.sub{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--mute)}
+.sub b{font-family:var(--f-mono);font-size:20px;font-weight:500;color:var(--ink)}
+.checkout{height:54px;border-radius:12px;background:var(--glow);color:#1a0d02;font-weight:700;font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;font-size:13px;box-shadow:0 10px 40px -12px rgba(255,122,26,.7)}
+.trust{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 @media (max-width:760px){
-  .nav-mid{display:none}
-  .intro{top:calc(66px + env(safe-area-inset-top,0px));max-width:none;right:var(--gut-r)}
+  .nav-mid{position:absolute;left:var(--gut-l);right:var(--gut-r);top:calc(60px + env(safe-area-inset-top,0px));gap:18px;font-size:10.5px;overflow-x:auto;white-space:nowrap}
+  .nav-mid button{flex:none}
+  .cur{padding:8px 26px 8px 10px;font-size:11px}
+  .bag{padding:8px 12px}
+  .intro{top:calc(98px + env(safe-area-inset-top,0px));max-width:none;right:var(--gut-r)}
   .intro h1{font-size:34px;margin:8px 0 6px}
-  .intro p{font-size:13px}
+  .intro p{display:none}
   .legend{display:none}
   .d-head{top:calc(64px + env(safe-area-inset-top,0px));max-width:none;right:var(--gut-r)}
   .back{margin-bottom:6px}
@@ -175,7 +229,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 </style>
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 </head>
 <body>
 
@@ -189,8 +243,9 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19 L12 4 L21 19" stroke="currentColor" stroke-width="2.2"/><path d="M7.5 19h9" stroke="#ff7a1a" stroke-width="2.2"/></svg>
       KAIRO
     </div>
-    <nav class="nav-mid" aria-label="Sections"><span>Collection 04</span><span>Run</span><span>Studio</span><span>Journal</span></nav>
-    <button class="bag" id="bagBtn" type="button" aria-label="Bag, 0 items">Bag <b id="bagCount">0</b></button>
+    <nav class="nav-mid" id="filters" aria-label="Filter the wall"><button type="button" data-c="all" aria-pressed="true">All pairs</button><button type="button" data-c="everyday" aria-pressed="false">Everyday</button><button type="button" data-c="speed" aria-pressed="false">Speed</button><button type="button" data-c="trail" aria-pressed="false">Trail &amp; Night</button></nav>
+    <div class="nav-r"><label class="sr" for="cur">Currency</label><select class="cur" id="cur"><option>USD</option><option>EUR</option><option>GBP</option><option>AED</option><option>PKR</option></select>
+    <button class="bag" id="bagBtn" type="button" aria-label="Bag, 0 items">Bag <b id="bagCount">0</b></button></div>
   </header>
 
   <section class="intro" id="intro">
@@ -199,7 +254,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
     <p>Every shoe here is a live 3D object. Tap a pair to bring it forward.</p>
     <ul class="sr" id="srList"></ul>
   </section>
-  <div class="legend" aria-hidden="true"><strong>10</strong>pairs on the wall</div>
+  <div class="legend" aria-hidden="true"><strong id="legendN">10</strong><span id="legendT">pairs on the wall</span></div>
   <div class="tip" id="tip" aria-hidden="true"><b id="tipName"></b><span id="tipPrice"></span></div>
 
   <section class="detail" id="detail" aria-label="Product details" inert>
@@ -215,7 +270,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
     <aside class="d-panel" aria-label="Buy">
       <div class="price-row">
-        <div class="price" id="dPrice"></div>
+        <div class="pr"><div class="price" id="dPrice"></div><button class="wish" id="wishBtn" type="button" aria-pressed="false" aria-label="Save to wishlist"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.2-8.6C1.2 8.2 3.2 4.8 6.6 4.8c2.1 0 3.6 1.2 5.4 3.1 1.8-1.9 3.3-3.1 5.4-3.1 3.4 0 5.4 3.4 3.8 6.6C19 15.6 12 20 12 20z"/></svg></button></div>
         <div class="cw">Colorway<b id="dColor"></b></div>
       </div>
       <div>
@@ -223,13 +278,13 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
         <div class="swatches" id="swatches"></div>
       </div>
       <div>
-        <div class="label"><span>Size · EU</span><span>Fits true to size</span></div>
+        <div class="label with-sys"><span>Size</span><span class="sys" id="sys" role="group" aria-label="Size system"><button type="button" data-y="EU" aria-pressed="true">EU</button><button type="button" data-y="US" aria-pressed="false">US</button><button type="button" data-y="UK" aria-pressed="false">UK</button></span></div>
         <div class="sizes" id="sizes"></div>
         <div class="hint" id="hint" role="status"></div>
       </div>
       <button class="add" id="addBtn" type="button"><span>Add to bag</span><span id="addPrice"></span></button>
       <div class="specs" id="specs"></div>
-      <p class="note">Free delivery over $150 · 30-day returns</p>
+      <p class="note" id="note"></p>
     </aside>
 
     <div class="drag" aria-hidden="true">Drag to rotate</div>
@@ -250,6 +305,17 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
     <b>3D shoe model</b> — “Materials Variants Shoe” © 2021 Shopify, licensed CC BY 4.0. Colorways recoloured for this concept. Brand, products and prices are fictional.
   </div>
 
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-label="Your bag" inert>
+    <div class="dr-head"><h3>Your bag<span id="drCount"></span></h3><button class="x" id="drClose" type="button" aria-label="Close bag"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"/></svg></button></div>
+    <div class="ship" id="ship"></div>
+    <div class="lines" id="lines"></div>
+    <div class="dr-foot">
+      <div class="sub"><span>Subtotal · duties included</span><b id="subtotal"></b></div>
+      <button class="checkout" id="checkout" type="button">Checkout</button>
+      <div class="trust"><span>Ships to 40+ countries</span><span>30-day returns</span><span>Free exchanges</span></div>
+    </div>
+  </aside>
   <div class="toast" id="toast" role="status"></div>
 
   <div class="loader" id="loader">
@@ -409,9 +475,9 @@ async function build(gltf){
     const hit = new THREE.Mesh(new THREE.BoxGeometry(.38,.2,.2),new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false,colorWrite:false}));
     hit.position.y=.08; hit.userData.i=i;
     g.add(pool,shadow,glow,hit); wall.add(g);
-    slots.push({g,pivot,shoe:s,hit,glow,shadow,hv:0,away:false});
+    slots.push({g,pivot,shoe:s,hit,glow,shadow,pool,hv:0,away:false});
     // screen-reader / keyboard access
-    const li=document.createElement('li'); const b=document.createElement('button'); b.type='button'; b.textContent=`View ${p.name}, ${p.color}, $${p.price}`; b.onclick=()=>open(i); li.appendChild(b); $('srList').appendChild(li);
+    const li=document.createElement('li'); const b=document.createElement('button'); b.type='button'; b.textContent=`View ${p.name}, ${p.color}`; b.onclick=()=>open(i); li.appendChild(b); $('srList').appendChild(li);
   });
   buildDetailUI();
   layout();
@@ -523,12 +589,12 @@ function pick(e){
 }
 $('wall').addEventListener('pointermove',e=>{
   if(detail||!slots.length) return;
-  const i=pick(e); hovered=i; $('wall').style.cursor=i>=0?'pointer':'default';
-  if(i>=0 && e.pointerType==='mouse'){ $('tipName').textContent=P[i].name; $('tipPrice').textContent='$'+P[i].price; tip.classList.add('on'); tip.style.left=e.clientX+'px'; tip.style.top=(e.clientY-14)+'px'; }
+  const i=pick(e); hovered=(i>=0&&inCat(i))?i:-1; if(hovered<0&&i>=0){ $('wall').style.cursor='default'; tip.classList.remove('on'); return; } $('wall').style.cursor=i>=0?'pointer':'default';
+  if(i>=0 && e.pointerType==='mouse'){ $('tipName').textContent=P[i].name; $('tipPrice').textContent=money(P[i].price); tip.classList.add('on'); tip.style.left=e.clientX+'px'; tip.style.top=(e.clientY-14)+'px'; }
   else tip.classList.remove('on');
 });
 $('wall').addEventListener('pointerleave',()=>{ hovered=-1; tip.classList.remove('on'); });
-$('wall').addEventListener('click',e=>{ if(detail||busy) return; const i=pick(e); if(i>=0) open(i); });
+$('wall').addEventListener('click',e=>{ if(detail||busy) return; const i=pick(e); if(i>=0&&inCat(i)) open(i); });
 
 /* ---------- stage animation ---------- */
 function makeStageShoe(i){
@@ -579,7 +645,8 @@ function close(){
 }
 function go(dir,target){
   if(busy||!detail) return; busy=true;
-  const out=stageShoes[0], i=target!==undefined?target:(cur+dir+N)%N, prev=cur;
+  let i=target; if(i===undefined){ i=cur; for(let k=0;k<N;k++){ i=(i+dir+N)%N; if(inCat(i)) break; } }
+  const out=stageShoes[0], prev=cur; if(i===prev){ busy=false; return; }
   cur=i; fillDetail(i,true);
   const g=makeStageShoe(i); stageShoes[0]=g; stageShoes[1]=out;
   const span=stageScale*shoeBox.x*2.2;
@@ -591,6 +658,7 @@ function go(dir,target){
 }
 $('backBtn').onclick=close; $('prevBtn').onclick=()=>go(-1); $('nextBtn').onclick=()=>go(1);
 addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&app.classList.contains('cart-open')){ cartOpen(false); return; }
   if(!detail) return;
   if(e.key==='Escape') close(); else if(e.key==='ArrowRight') go(1); else if(e.key==='ArrowLeft') go(-1);
 });
@@ -607,6 +675,7 @@ function buildDetailUI(){
     b.onclick=()=>{ if(i===cur||busy) return; jump(i); }; $('swatches').appendChild(b); });
   SIZES.forEach(s=>{ const b=document.createElement('button'); b.type='button'; b.className='size'; b.textContent=s; b.dataset.s=s;
     b.onclick=()=>{ size=s; [...$('sizes').children].forEach(x=>x.setAttribute('aria-pressed',x===b)); $('hint').textContent=''; }; $('sizes').appendChild(b); });
+  paintSizes();
 }
 function jump(i){ go(i>cur?1:-1,i); }
 function swapText(el,txt,anim){
@@ -618,9 +687,9 @@ function swapText(el,txt,anim){
 function fillDetail(i,anim){
   const p=P[i];
   swapText($('dName'),p.name,anim); swapText($('dTag'),p.tag,anim);
-  $('dType').textContent=p.type; $('dPrice').textContent='$'+p.price; $('addPrice').textContent='$'+p.price;
+  $('dType').textContent=p.type; $('dPrice').textContent=money(p.price); $('addPrice').textContent=money(p.price); $('wishBtn').setAttribute('aria-pressed',wish.has(i));
   $('dColor').textContent=p.color; $('dSwName').textContent=p.name;
-  $('dCount').innerHTML=`${String(i+1).padStart(2,'0')} <i>/ ${N}</i>`;
+  const vis=P.map((_,k)=>k).filter(inCat); $('dCount').innerHTML=`${String(vis.indexOf(i)+1).padStart(2,'0')} <i>/ ${String(vis.length).padStart(2,'0')}</i>`;
   [...$('swatches').children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
   size=null; $('hint').textContent='';
   [...$('sizes').children].forEach(b=>{ const s=+b.dataset.s; b.disabled=p.out.includes(s); b.setAttribute('aria-pressed','false'); b.title=b.disabled?'Sold out':''; });
@@ -628,12 +697,58 @@ function fillDetail(i,anim){
 }
 $('addBtn').onclick=()=>{
   if(!size){ $('hint').textContent='Pick your size first'; const g=$('sizes'); g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake'); return; }
-  bag++; $('bagCount').textContent=bag; $('bagBtn').setAttribute('aria-label',`Bag, ${bag} item${bag>1?'s':''}`);
-  const b=$('bagBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  toast(`${P[cur].name} · EU ${size} added to your bag`); pedPulse=1;
+  addToCart(cur,size); pedPulse=1;
 };
 let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2200); }
-$('bagBtn').onclick=()=>toast(bag?`${bag} item${bag>1?'s':''} in your bag · checkout is disabled in this concept`:'Your bag is empty. Pick a pair from the wall.');
+$('bagBtn').onclick=()=>cartOpen(true);
+
+/* ---------- international: currency, size systems, wishlist, filters, cart ---------- */
+const CUR={USD:[1,'en-US'],EUR:[.92,'de-DE'],GBP:[.79,'en-GB'],AED:[3.67,'en-AE'],PKR:[280,'en-PK']};
+let ccy='USD'; try{ const c=localStorage.getItem('kairo-ccy'); if(CUR[c]) ccy=c; }catch(e){}
+$('cur').value=ccy;
+function money(usd){ const [r,l]=CUR[ccy]; let v=usd*r; v=ccy==='PKR'?Math.round(v/100)*100:Math.round(v);
+  return new Intl.NumberFormat(l,{style:'currency',currency:ccy,maximumFractionDigits:0}).format(v); }
+function repaintMoney(){ if(cur>=0){ $('dPrice').textContent=money(P[cur].price); $('addPrice').textContent=money(P[cur].price); }
+  $('note').textContent=`Free express shipping over ${money(150)} · 30-day returns`; renderCart(); }
+$('cur').addEventListener('change',e=>{ ccy=e.target.value; try{ localStorage.setItem('kairo-ccy',ccy); }catch(_){} repaintMoney(); toast(`Prices now in ${ccy} · indicative rates`); });
+const SYS={39:[6.5,6],40:[7,6.5],41:[8,7.5],42:[8.5,8],43:[9.5,9],44:[10,9.5],45:[11,10.5],46:[12,11]};
+let sysY='EU';
+const sizeLabel=(eu,y=sysY)=>y==='EU'?eu:(y==='US'?SYS[eu][0]:SYS[eu][1]);
+function paintSizes(){ [...$('sizes').children].forEach(b=>b.textContent=sizeLabel(+b.dataset.s)); [...$('sys').children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.y===sysY)); }
+$('sys').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; sysY=b.dataset.y; paintSizes(); });
+const wish=new Set();
+$('wishBtn').onclick=()=>{ if(cur<0) return; const on=!wish.has(cur); on?wish.add(cur):wish.delete(cur); $('wishBtn').setAttribute('aria-pressed',on); toast(on?`${P[cur].name} saved to your wishlist`:`${P[cur].name} removed from your wishlist`); };
+
+const CATS={all:null,everyday:['Lifestyle runner','Daily trainer','Easy run','Long run'],speed:['Tempo','Speed','Race'],trail:['Night run','Road to trail']};
+let cat='all';
+function inCat(i){ return !CATS[cat]||CATS[cat].includes(P[i].type); }
+$('filters').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b||busy) return; cat=b.dataset.c;
+  [...$('filters').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const n=P.filter((_,i)=>inCat(i)).length; $('legendN').textContent=n; $('legendT').textContent=cat==='all'?'pairs on the wall':`${b.textContent} pairs`;
+  if(detail && !inCat(cur)) close(); });
+
+let cart=[]; try{ cart=JSON.parse(localStorage.getItem('kairo-cart')||'[]').filter(x=>P[x.i]&&SYS[x.s]); }catch(e){ cart=[]; }
+const shoeSvg=hex=>`<svg viewBox="0 0 64 40" aria-hidden="true"><path d="M4 29 Q4 22 12 20 L26 11 Q30 9 33 12 L40 19 Q52 20 58 25 Q61 28 60 31 L6 32 Q4 32 4 29Z" fill="${hex}"/><path d="M26 11 L40 19" stroke="rgba(0,0,0,.25)" stroke-width="1.4"/><path d="M4 30 L60 30 Q61 35 57 36 L8 36 Q4 36 4 30Z" fill="#f2efe8"/></svg>`;
+function saveCart(){ try{ localStorage.setItem('kairo-cart',JSON.stringify(cart)); }catch(e){} }
+function renderCart(){
+  const n=cart.reduce((a,x)=>a+x.q,0), tot=cart.reduce((a,x)=>a+x.q*P[x.i].price,0);
+  $('bagCount').textContent=n; $('bagBtn').setAttribute('aria-label',`Bag, ${n} item${n===1?'':'s'}`); $('drCount').textContent=n?`(${n})`:'';
+  $('subtotal').textContent=money(tot);
+  const left=150-tot; $('ship').innerHTML=(left>0?`You're <b>${money(left)}</b> away from free express shipping`:`<b>Free express shipping</b> unlocked, to 40+ countries`)+`<div class="meter"><i style="transform:scaleX(${Math.min(1,tot/150)})"></i></div>`;
+  $('lines').innerHTML=cart.length?cart.map((x,k)=>{ const p=P[x.i]; return `<div class="ln"><div class="th">${shoeSvg(p.hex)}</div><div><b>${p.name}</b><small>${p.color}</small><small>EU ${x.s} · US ${SYS[x.s][0]} · UK ${SYS[x.s][1]}</small>
+    <span class="qty"><button type="button" data-k="${k}" data-d="-1" aria-label="Fewer">−</button><span>${x.q}</span><button type="button" data-k="${k}" data-d="1" aria-label="More">+</button></span></div>
+    <div><div class="lp">${money(p.price*x.q)}</div><button class="rm" type="button" data-rm="${k}">Remove</button></div></div>`; }).join(''):'<div class="empty">Your bag is empty.<br>Pick a pair from the wall.</div>';
+}
+$('lines').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.rm!==undefined){ cart.splice(+b.dataset.rm,1); }
+  else { const x=cart[+b.dataset.k]; x.q=Math.max(0,Math.min(9,x.q+(+b.dataset.d))); if(!x.q) cart.splice(+b.dataset.k,1); }
+  saveCart(); renderCart(); });
+function addToCart(i,s){ const x=cart.find(c=>c.i===i&&c.s===s); x?x.q++:cart.unshift({i,s,q:1}); saveCart(); renderCart();
+  const b=$('bagBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); setTimeout(()=>cartOpen(true),350); }
+function cartOpen(on){ app.classList.toggle('cart-open',on); $('drawer').inert=!on; if(on) $('drClose').focus({preventScroll:true}); }
+$('drClose').onclick=()=>cartOpen(false); $('scrim').onclick=()=>cartOpen(false);
+$('checkout').onclick=()=>toast(cart.length?'Checkout is switched off in this concept build':'Add a pair first');
+repaintMoney();
 $('creditsBtn').onclick=()=>{ const p=$('creditsPop'); p.hidden=!p.hidden; };
 
 /* ---------- loop ---------- */
@@ -651,8 +766,9 @@ function loop(now){
     const delay = clamp(ti*1.6-(i%5)*.08-Math.floor(i/5)*.12,0,1), e=easeOut(delay);
     s.pivot.position.y = s.hv*.035 + (1-e)*.08;
     s.pivot.rotation.y = SHOE_ROT + s.hv*.38 + Math.sin(now/1400+i)*.015;
-    s.pivot.scale.setScalar((1+s.hv*.07)*(.9+.1*e));
-    s.shoe.visible = !s.away && e>0; s.shadow.visible = !s.away;
+    s.on=(s.on===undefined?1:s.on); { const tg=inCat(i)?1:0; s.on+=(tg-s.on)*Math.min(1,dt*7); if(Math.abs(tg-s.on)<.02) s.on=tg; } const on=easeOut(clamp(s.on,0,1));
+    s.pivot.scale.setScalar(Math.max(.0001,(1+s.hv*.07)*(.9+.1*e)*on)); s.pivot.position.y-=(1-on)*.06;
+    s.shoe.visible = !s.away && e>0 && on>.01; s.shadow.visible = !s.away && on>.01; s.shadow.material.opacity=.85*on; s.pool.material.opacity=.55*(.25+.75*on);
     s.glow.material.opacity = s.hv*.9;
   });
   const wallStill = detail && !busy;

@@ -104,19 +104,88 @@ a{color:inherit}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+
+/* nav tools */
+.links button{color:var(--mute);font-size:13px;padding:4px 0;transition:color .2s}
+.links button:hover,.links button[aria-current="true"]{color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:14px}
+.cur{appearance:none;-webkit-appearance:none;border:1px solid var(--line);border-radius:999px;padding:7px 28px 7px 12px;font-family:var(--f-mono);font-size:11.5px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23141414' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 10px center;cursor:pointer}
+.filters button{font-size:12px;padding:6px 12px;border:1px solid var(--line);border-radius:99px;color:var(--mute);transition:background .2s,color .2s,border-color .2s}
+.filters button:hover{border-color:rgba(20,20,20,.3);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fig.gone{opacity:0!important;pointer-events:none}
+.fig .art{width:100%;height:100%}
+.fig.active .art{animation:breathe 4.5s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes breathe{50%{transform:scaleY(1.006) translateY(-1px)}}
+.fig .art.swap{animation:swap .5s ease}
+@keyframes swap{from{filter:brightness(1.25) saturate(.6);opacity:.6}}
+/* try-on swatches */
+.opts{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}
+.opt{width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);position:relative;transition:transform .15s}
+.opt:hover{transform:scale(1.15)}
+.opt[aria-pressed="true"]::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--ink)}
+.row2{display:flex;align-items:center;gap:8px;margin-top:8px}
+.addone{font-size:12px;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:1px}
+.tryon{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+/* drawer + modal */
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(20,20,20,.38);opacity:0;pointer-events:none;transition:opacity .35s}
+.open-cart .scrim,.open-modal .scrim{opacity:1;pointer-events:auto}
+.drawer{position:fixed;z-index:61;top:0;right:0;bottom:0;width:min(430px,100%);background:#fff;transform:translateX(102%);transition:transform .55s cubic-bezier(.2,.75,.2,1);display:flex;flex-direction:column;
+  padding:calc(20px + env(safe-area-inset-top,0px)) max(22px, env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) 22px;box-shadow:-30px 0 80px rgba(20,20,20,.18)}
+.open-cart .drawer{transform:none}
+.dr-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.dr-head h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em}
+.dr-head h3 span{font-family:var(--f-mono);font-size:12px;color:var(--mute);font-weight:400;margin-left:6px}
+.x{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+.x svg{width:14px;height:14px}
+.ship{padding:14px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--mute)}
+.ship b{color:var(--ink);font-weight:600}
+.meter{height:3px;border-radius:3px;background:#ececea;margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--ink);transform-origin:left;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.lines{flex:1;overflow:auto;min-height:0}
+.ln{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center;animation:lnIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes lnIn{from{opacity:0;transform:translateX(16px)}}
+.ln .thumb{width:64px;height:76px}
+.ln b{display:block;font-size:14px;font-weight:600}
+.ln small{display:block;color:var(--mute);font-size:12.5px}
+.qty{display:inline-flex;align-items:center;gap:8px;margin-top:8px;border:1px solid var(--line);border-radius:99px;padding:2px 4px;font-family:var(--f-mono);font-size:12px}
+.qty button{width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
+.qty button:hover{background:rgba(20,20,20,.06)}
+.lp{font-family:var(--f-mono);font-size:13px;text-align:right}
+.lp s{display:block;color:var(--mute);font-size:11.5px}
+.rm{display:block;margin:10px 0 0 auto;font-size:11.5px;color:var(--mute);text-decoration:underline;text-underline-offset:3px}
+.empty{padding:48px 0;text-align:center;color:var(--mute);font-size:14px}
+.dr-foot{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.sum{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.sum.big{color:var(--ink);font-size:14px;align-items:baseline}
+.sum.big b{font-family:var(--f-mono);font-size:22px;font-weight:500}
+.sum em{font-style:normal;color:#2f7a4a;font-family:var(--f-mono)}
+.checkout{height:54px;border-radius:14px;background:var(--ink);color:#fff;font-weight:600;font-size:14.5px}
+.trust{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.modal{position:fixed;z-index:62;left:50%;top:50%;width:min(520px,calc(100% - 32px));max-height:calc(100% - 64px);overflow:auto;background:#fff;border-radius:22px;padding:26px;transform:translate(-50%,-46%);opacity:0;pointer-events:none;transition:opacity .3s,transform .45s cubic-bezier(.2,.75,.2,1);box-shadow:0 40px 100px -30px rgba(20,20,20,.4)}
+.open-modal .modal{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
+.modal h3{margin:0 0 4px;font-size:22px;letter-spacing:-.02em}
+.modal p{margin:0 0 16px;color:var(--mute);font-size:14px}
+.modal table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.modal th{text-align:left;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:400;padding:8px 6px;border-bottom:1px solid var(--line)}
+.modal td{padding:10px 6px;border-bottom:1px solid var(--line)}
+.modal .x{position:absolute;top:18px;right:18px}
+.tw{overflow-x:auto}
 @media (max-width:980px){
   .links{display:none}
+  .head{flex-direction:column;align-items:flex-start}
   .wrap{grid-template-columns:minmax(0,1fr)}
   .rail{position:relative;top:0}
   .stage{min-height:0;height:68vh;max-height:640px;flex:none;cursor:auto}
   .fig button{cursor:pointer}
   .cursor{display:none}
   .fig{height:74%;bottom:13%}
-  .filters{display:none}
+  .filters{overflow-x:auto;flex-wrap:nowrap;max-width:100%}
+  .filters button{flex:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
 </style>
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 </head>
 <body>
 
@@ -139,8 +208,9 @@ a{color:inherit}
 
 <header class="nav">
   <div class="logo">OLMO</div>
-  <nav class="links" aria-label="Sections"><span>New in</span><span>Men</span><span>Women</span><span>Looks</span><span>Journal</span></nav>
-  <button class="bag" id="bagBtn" type="button" aria-label="Bag, 0 items">Bag <b id="bagCount">0</b></button>
+  <nav class="links" aria-label="Help"><button type="button" aria-current="true">Looks</button><button type="button" data-m="size">Size guide</button><button type="button" data-m="ship">Worldwide shipping</button></nav>
+  <div class="nav-r"><label class="sr" for="cur">Currency</label><select class="cur" id="cur"><option>USD</option><option>EUR</option><option>GBP</option><option>AED</option><option>PKR</option></select>
+  <button class="bag" id="bagBtn" type="button" aria-label="Bag, 0 items">Bag <b id="bagCount">0</b></button></div>
 </header>
 
 <div class="wrap">
@@ -150,7 +220,7 @@ a{color:inherit}
         <h1>Try the Look</h1>
         <p>Eight outfits styled by the OLMO studio. Swipe the lineup, pick a look, and shop every piece in one tap.</p>
       </div>
-      <div class="filters" aria-hidden="true"><span>All looks</span><span>Weekend</span><span>Studio</span><span>Street</span></div>
+      <div class="filters" id="filters" role="group" aria-label="Filter looks"><button type="button" data-t="all" aria-pressed="true">All looks</button><button type="button" data-t="weekend" aria-pressed="false">Weekend</button><button type="button" data-t="studio" aria-pressed="false">Studio</button><button type="button" data-t="street" aria-pressed="false">Street</button></div>
     </div>
     <div class="stage" id="stage" aria-roledescription="carousel" aria-label="Outfit lineup">
       <div class="lookname" id="lookName" aria-live="polite"></div>
@@ -166,10 +236,11 @@ a{color:inherit}
 
   <aside class="rail" aria-label="In this look">
     <div class="rail-top"><h2>In this look</h2><span id="pieces"></span></div>
+    <div class="tryon" style="margin-top:-8px">Tap a colour to try it on the model</div>
     <div class="items" id="items"></div>
     <div class="total"><span>Complete look</span><div><s id="was"></s><b id="total"></b></div></div>
     <button class="add" type="button" id="addLook"><span>Add full look to bag</span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
-    <p class="note"><span>10% off when you buy the full look</span><span>Free returns</span><span>Ships in 2–4 days</span></p>
+    <p class="note"><span>10% off when you buy the full look</span><span>Ships to 40+ countries</span><span>Duties included</span></p>
   </aside>
 
   <footer class="foot">
@@ -179,6 +250,20 @@ a{color:inherit}
     <span>Brand, products and prices are fictional. Illustrations drawn in code.</span>
   </footer>
 </div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your bag" inert>
+  <div class="dr-head"><h3>Your bag<span id="drCount"></span></h3><button class="x" id="drClose" type="button" aria-label="Close bag"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"/></svg></button></div>
+  <div class="ship" id="ship"></div>
+  <div class="lines" id="lines"></div>
+  <div class="dr-foot">
+    <div class="sum"><span>Subtotal</span><span id="sumSub"></span></div>
+    <div class="sum"><span>Full-look savings</span><em id="sumSave"></em></div>
+    <div class="sum big"><span>Total · duties included</span><b id="sumTot"></b></div>
+    <button class="checkout" id="checkout" type="button">Checkout</button>
+    <div class="trust"><span>Ships to 40+ countries</span><span>Free returns</span><span>Secure payments</span></div>
+  </div>
+</aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" inert><button class="x" id="mClose" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"/></svg></button><div id="mBody"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -369,72 +454,155 @@ function thumb(L,kind){
 /* ---------- UI ---------- */
 const $=id=>document.getElementById(id);
 const figsEl=$('figs'), N=LOOKS.length;
-let cur=2, bag=0;
-const els=LOOKS.map((L,i)=>{ const d=document.createElement('div'); d.className='fig'; d.innerHTML=figure(L,i)+`<button type="button" aria-label="Show look ${i+1}, ${L.name}"></button>`;
-  d.querySelector('button').addEventListener('click',()=>{ if(!dragMoved && i!==cur) set(i); }); figsEl.appendChild(d); return d; });
+const TAGS=[['weekend'],['street'],['street'],['studio'],['studio'],['street','weekend'],['studio','weekend'],['weekend']];
+const OPT={
+  top:{crew:[['Heather Grey','#b9b9b5'],['Navy','#2d3652'],['Brick Red','#ae2f2a'],['Oat','#d7c8ae'],['Black','#1f1f21']],
+       tee:[['Chalk','#f2f1ec'],['Black','#1f1f21'],['Sage','#9aa892'],['Sky','#a9c4dc']],
+       hoodie:[['Navy','#2d3652'],['Sage','#9aa892'],['Charcoal','#3b3b3d'],['Clay','#b97a5c']],
+       over:[['Moss','#77744f'],['Camel','#b08a5a'],['Ink','#2a2f3a']]},
+  bottom:{jeans:[['Light Wash',DENIM.light,'light'],['Mid Wash',DENIM.mid,'mid'],['Rinse',DENIM.dark,'dark'],['Washed Black',DENIM.black,'black']],
+       cargo:[['Olive','#6b6a45'],['Stone','#b9ac90'],['Black','#2a2a2c']],
+       trouser:[['Stone Grey','#8e8e8b'],['Fog','#cfcfcb'],['Navy','#2d3447']]},
+  shoes:[['Off White',['#f4f4f2','#e4e4e0']],['Black / White',['#1d1d1f','#f0f0ec']],['Cream',['#efe7d6','#d9cdb4']],['Tobacco',['#8b5c3c','#efe6d6']]],
+  cap:[['Black','#1b1b1d'],['Ash','#8e8f8c'],['Navy','#2d3652']],
+  tote:[['Natural','#e9e3d3'],['Black','#2a2a2e']],
+};
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+function optsFor(L,k){ if(k==='top') return OPT.top[L.top[0]]; if(k==='bottom') return OPT.bottom[L.bottom[0]]; if(k==='shoes') return OPT.shoes; return L.bag?OPT.tote:OPT.cap; }
+LOOKS.forEach(L=>{ L.sel={};
+  L.items.forEach((it,j)=>{ const k=it[2];
+    const own = k==='top'?[it[1],L.top[1]] : k==='bottom'?[it[1],L.bottom[1],L.bottom[2]] : k==='shoes'?[it[1],L.shoes] : [it[1],L.bag||L.hair[1]];
+    it.opts=[own,...optsFor(L,k).filter(o=>!same(o[1],own[1]))].slice(0,4); L.sel[j]=0; }); });
+function styled(L){ const X={...L,top:L.top.slice(),bottom:L.bottom.slice(),shoes:L.shoes.slice(),hair:L.hair.slice()};
+  L.items.forEach((it,j)=>{ const o=it.opts[L.sel[j]], k=it[2];
+    if(k==='top') X.top[1]=o[1]; else if(k==='bottom'){ X.bottom[1]=o[1]; if(o[2]) X.bottom[2]=o[2]; } else if(k==='shoes') X.shoes=o[1]; else if(X.bag) X.bag=o[1]; else X.hair[1]=o[1]; });
+  return X; }
+const swHex=o=>Array.isArray(o[1])?o[1][0]:o[1];
 
+/* currency */
+const CUR={USD:[1,'en-US'],EUR:[.92,'de-DE'],GBP:[.79,'en-GB'],AED:[3.67,'en-AE'],PKR:[280,'en-PK']};
+let ccy='USD'; try{ const c=localStorage.getItem('olmo-ccy'); if(CUR[c]) ccy=c; }catch(e){}
+$('cur').value=ccy;
+function money(usd){ const [r,l]=CUR[ccy]; let v=usd*r; v=ccy==='PKR'?Math.round(v/100)*100:Math.round(v);
+  return new Intl.NumberFormat(l,{style:'currency',currency:ccy,maximumFractionDigits:0}).format(v); }
+$('cur').addEventListener('change',e=>{ ccy=e.target.value; try{ localStorage.setItem('olmo-ccy',ccy); }catch(_){} fill(false); renderCart(); toast(`Prices now in ${ccy} · indicative rates`); });
+
+/* lineup */
+let order=[...Array(N).keys()], pos=2, dragX=0;
+const curI=()=>order[pos];
+const els=LOOKS.map((L,i)=>{ const d=document.createElement('div'); d.className='fig';
+  d.innerHTML=`<div class="art">${figure(styled(L),i)}</div><button type="button" aria-label="Show look ${i+1}, ${L.name}"></button>`;
+  d.querySelector('button').addEventListener('click',()=>{ const p=order.indexOf(i); if(!dragMoved && p>=0 && p!==pos) set(p); }); figsEl.appendChild(d); return d; });
+function redraw(i){ const a=els[i].querySelector('.art'); a.innerHTML=figure(styled(LOOKS[i]),i); a.classList.remove('swap'); void a.offsetWidth; a.classList.add('swap'); }
+function gapW(){ const w=$('stage').clientWidth; return w<620 ? w*.36 : Math.min(w*.155,190); }
 function layout(){
-  const w=$('stage').clientWidth, mob=w<620;
-  const gap = mob ? w*.36 : Math.min(w*.155,190);
+  const gap=gapW(), M=order.length;
   els.forEach((el,i)=>{
-    let k=i-cur; if(k>N/2) k-=N; if(k<-N/2) k+=N;
-    const a=Math.abs(k), sc = k===0?1:Math.max(.6,.86-(a-1)*.08), x=k*gap + (k===0?0:Math.sign(k)*gap*.06);
+    const p=order.indexOf(i);
+    if(p<0){ el.classList.add('gone'); el.classList.remove('active'); el.style.transform='translateX(-50%) scale(.5)'; el.setAttribute('aria-hidden','true'); el.querySelector('button').tabIndex=-1; return; }
+    el.classList.remove('gone');
+    let k=p-pos; if(k>M/2) k-=M; if(k<-M/2) k+=M;
+    const a=Math.abs(k), sc=k===0?1:Math.max(.6,.86-(a-1)*.08), x=k*gap+(k===0?0:Math.sign(k)*gap*.06);
     el.style.transform=`translateX(calc(-50% + ${x+dragX}px)) scale(${sc})`;
-    el.style.filter = a===0?'none':`blur(${Math.min(5,a*1.5)}px) saturate(${1-a*.12})`;
-    el.style.opacity = a>3?0:(a===0?1:1-a*.17);
-    el.style.zIndex = 10-a;
-    el.querySelector('button').tabIndex = a===0?-1:0;
-    el.setAttribute('aria-hidden', a>3);
+    el.style.filter=a===0?'none':`blur(${Math.min(5,a*1.5)}px) saturate(${1-a*.12})`;
+    el.style.opacity=a>3?0:(a===0?1:1-a*.17);
+    el.style.zIndex=10-a; el.classList.toggle('active',a===0);
+    el.querySelector('button').tabIndex=a===0?-1:0; el.setAttribute('aria-hidden',a>3);
   });
 }
-function money(n){ return '$'+n.toLocaleString('en-US'); }
 function fill(anim){
-  const L=LOOKS[cur];
-  $('lookName').innerHTML=`Look ${String(cur+1).padStart(2,'0')}<b>${L.name}</b>`;
-  $('count').innerHTML=`${String(cur+1).padStart(2,'0')} <i>/ ${String(N).padStart(2,'0')}</i>`;
+  const i=curI(), L=LOOKS[i], M=order.length;
+  $('lookName').innerHTML=`Look ${String(i+1).padStart(2,'0')}<b>${L.name}</b>`;
+  $('count').innerHTML=`${String(pos+1).padStart(2,'0')} <i>/ ${String(M).padStart(2,'0')}</i>`;
   const render=()=>{
+    const S=styled(L);
     $('items').innerHTML=L.items.map(([n,c,k,p],j)=>{
-      const sizes = k==='shoes'?[40,41,42,43,44,45]:k==='acc'?['One size']:['XS','S','M','L','XL'];
-      const def = k==='shoes'?42:k==='acc'?'One size':'M';
-      return `<div class="item"><div class="thumb">${thumb(L,k)}</div><div class="meta"><b>${n}</b><small>${c}</small>
-        <label class="sr" for="sz-${cur}-${j}">Size for ${n}</label><select id="sz-${cur}-${j}">${sizes.map(s=>`<option${s==def?' selected':''}>${s}</option>`).join('')}</select></div><div class="price">${money(p)}</div></div>`; }).join('');
-    const sum=L.items.reduce((a,x)=>a+x[3],0), deal=Math.round(sum*.9);
-    $('was').textContent=money(sum); $('total').textContent=money(deal); $('pieces').textContent=`${L.items.length} pieces`;
+      const sizes=k==='shoes'?['EU 40','EU 41','EU 42','EU 43','EU 44','EU 45']:k==='acc'?['One size']:['XS','S','M','L','XL'];
+      const def=k==='shoes'?'EU 42':k==='acc'?'One size':'M';
+      const opts=L.items[j].opts;
+      return `<div class="item"><div class="thumb">${thumb(S,k)}</div><div class="meta"><b>${n}</b><small>${opts[L.sel[j]][0]}</small>
+        <div class="opts" role="group" aria-label="Colour for ${n}">${opts.map((op,q)=>`<button type="button" class="opt" style="background:${swHex(op)}" data-j="${j}" data-q="${q}" aria-pressed="${q===L.sel[j]}" aria-label="${op[0]}" title="${op[0]}"></button>`).join('')}</div>
+        <div class="row2"><label class="sr" for="sz-${i}-${j}">Size for ${n}</label><select id="sz-${i}-${j}">${sizes.map(s=>`<option${s==def?' selected':''}>${s}</option>`).join('')}</select><button type="button" class="addone" data-add="${j}">Add</button></div></div><div class="price">${money(p)}</div></div>`; }).join('');
+    const sum=L.items.reduce((a,x)=>a+x[3],0);
+    $('was').textContent=money(sum); $('total').textContent=money(sum*.9); $('pieces').textContent=`${L.items.length} pieces`;
     $('items').classList.remove('fade');
   };
   if(anim){ $('items').classList.add('fade'); setTimeout(render,220); } else render();
 }
-function set(i){ cur=(i+N)%N; dragX=0; layout(); fill(true); }
-$('prev').onclick=()=>set(cur-1); $('next').onclick=()=>set(cur+1);
-addEventListener('keydown',e=>{ if(e.target.tagName==='SELECT') return; if(e.key==='ArrowRight') set(cur+1); if(e.key==='ArrowLeft') set(cur-1); });
+$('items').addEventListener('click',e=>{
+  const o=e.target.closest('.opt'), i=curI(), L=LOOKS[i];
+  if(o){ L.sel[+o.dataset.j]=+o.dataset.q; redraw(i); fill(false); return; }
+  const a=e.target.closest('[data-add]'); if(a){ const j=+a.dataset.add; addLine(i,j,false); openCart(true); }
+});
+function set(p){ const M=order.length; pos=((p%M)+M)%M; dragX=0; layout(); fill(true); }
+$('prev').onclick=()=>set(pos-1); $('next').onclick=()=>set(pos+1);
+addEventListener('keydown',e=>{ if(e.key==='Escape'){ openCart(false); openModal(null); return; } if(e.target.tagName==='SELECT'||document.body.classList.contains('open-cart')) return; if(e.key==='ArrowRight') set(pos+1); if(e.key==='ArrowLeft') set(pos-1); });
+$('filters').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const t=b.dataset.t, keep=curI();
+  [...$('filters').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  order=[...Array(N).keys()].filter(i=>t==='all'||TAGS[i].includes(t));
+  pos=Math.max(0,order.indexOf(keep)); if(order.indexOf(keep)<0) pos=0; layout(); fill(true); });
 
 /* drag / swipe */
 const stage=$('stage'), cursor=$('cursor');
-let dragX=0, down=false, sx=0, dragMoved=false;
+let down=false, sx=0, dragMoved=false;
 stage.addEventListener('pointerdown',e=>{ if(e.target.closest('.pager')) return; down=true; dragMoved=false; sx=e.clientX; cursor.classList.add('press'); });
 addEventListener('pointermove',e=>{
   const r=stage.getBoundingClientRect();
   if(e.pointerType==='mouse'){ const inside=e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom&&!e.target.closest('.pager');
-    cursor.classList.toggle('on',inside); cursor.style.transform=''; cursor.style.left=(e.clientX-r.left)+'px'; cursor.style.top=(e.clientY-r.top)+'px'; }
+    cursor.classList.toggle('on',inside); cursor.style.left=(e.clientX-r.left)+'px'; cursor.style.top=(e.clientY-r.top)+'px'; }
   if(!down) return; const dx=e.clientX-sx; if(Math.abs(dx)>6) dragMoved=true; dragX=dx*.9;
   els.forEach(el=>el.style.transition='none'); layout();
 });
-const up=e=>{ if(!down) return; down=false; cursor.classList.remove('press'); els.forEach(el=>el.style.transition='');
-  const w=stage.clientWidth, gap=w<620?w*.36:Math.min(w*.155,190); const steps=Math.round(-dragX/gap*1.1);
-  if(steps) set(cur+steps); else { dragX=0; layout(); }
+const up=()=>{ if(!down) return; down=false; cursor.classList.remove('press'); els.forEach(el=>el.style.transition='');
+  const steps=Math.round(-dragX/gapW()*1.1); if(steps) set(pos+steps); else { dragX=0; layout(); }
   setTimeout(()=>dragMoved=false,0); };
 addEventListener('pointerup',up); addEventListener('pointercancel',up);
 stage.addEventListener('pointerleave',()=>cursor.classList.remove('on'));
 
 /* bag */
 let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2400); }
-$('addLook').onclick=()=>{ const L=LOOKS[cur]; bag+=L.items.length; $('bagCount').textContent=bag; $('bagBtn').setAttribute('aria-label',`Bag, ${bag} items`);
-  const b=$('bagBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  toast(`${L.name} added · ${L.items.length} pieces for ${$('total').textContent}`); };
-$('bagBtn').onclick=()=>toast(bag?`${bag} pieces in your bag · checkout is off in this concept`:'Your bag is empty. Add a full look to start.');
+let cart=[]; try{ cart=JSON.parse(localStorage.getItem('olmo-cart')||'[]'); if(!Array.isArray(cart)) cart=[]; }catch(e){ cart=[]; }
+const saveCart=()=>{ try{ localStorage.setItem('olmo-cart',JSON.stringify(cart)); }catch(e){} };
+function addLine(i,j,bundle){ const L=LOOKS[i], it=L.items[j], S=styled(L), sel=document.getElementById(`sz-${i}-${j}`);
+  const size=sel?sel.value:'M', color=it.opts[L.sel[j]][0], key=[it[0],color,size,bundle].join('|');
+  const x=cart.find(c=>c.key===key); if(x) x.q++; else cart.unshift({key,name:it[0],color,size,usd:it[3],q:1,bundle,svg:thumb(S,it[2])});
+  saveCart(); renderCart(); const b=$('bagBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+function renderCart(){
+  const n=cart.reduce((a,x)=>a+x.q,0), sub=cart.reduce((a,x)=>a+x.q*x.usd,0), save=cart.reduce((a,x)=>a+(x.bundle?x.q*x.usd*.1:0),0), tot=sub-save;
+  $('bagCount').textContent=n; $('bagBtn').setAttribute('aria-label',`Bag, ${n} items`); $('drCount').textContent=n?`(${n})`:'';
+  $('sumSub').textContent=money(sub); $('sumSave').textContent=save?'− '+money(save):money(0); $('sumTot').textContent=money(tot);
+  const left=200-tot; $('ship').innerHTML=(left>0?`Add <b>${money(left)}</b> more for free express shipping`:`<b>Free express shipping</b> unlocked worldwide`)+`<div class="meter"><i style="transform:scaleX(${Math.min(1,tot/200)})"></i></div>`;
+  $('lines').innerHTML=cart.length?cart.map((x,k)=>`<div class="ln"><div class="thumb">${x.svg}</div><div><b>${x.name}</b><small>${x.color} · ${x.size}</small>
+    <span class="qty"><button type="button" data-k="${k}" data-d="-1" aria-label="Fewer">−</button><span>${x.q}</span><button type="button" data-k="${k}" data-d="1" aria-label="More">+</button></span></div>
+    <div><div class="lp">${money(x.usd*x.q*(x.bundle?.9:1))}${x.bundle?`<s>${money(x.usd*x.q)}</s>`:''}</div><button class="rm" type="button" data-rm="${k}">Remove</button></div></div>`).join(''):'<div class="empty">Your bag is empty.<br>Pick a look and add it in one tap.</div>';
+}
+$('lines').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.rm!==undefined) cart.splice(+b.dataset.rm,1); else { const x=cart[+b.dataset.k]; x.q=Math.max(0,Math.min(9,x.q+(+b.dataset.d))); if(!x.q) cart.splice(+b.dataset.k,1); }
+  saveCart(); renderCart(); });
+function openCart(on){ document.body.classList.toggle('open-cart',on); $('drawer').inert=!on; }
+$('addLook').onclick=()=>{ const i=curI(), L=LOOKS[i]; L.items.forEach((_,j)=>addLine(i,j,true)); toast(`${L.name} added · ${L.items.length} pieces, 10% off`); setTimeout(()=>openCart(true),300); };
+$('bagBtn').onclick=()=>openCart(true);
+$('drClose').onclick=()=>openCart(false);
+$('scrim').onclick=()=>{ openCart(false); openModal(null); };
+$('checkout').onclick=()=>toast(cart.length?'Checkout is switched off in this concept build':'Add a look first');
+
+/* help modals */
+const SYS=[['EU 40','7','6.5'],['EU 41','8','7.5'],['EU 42','8.5','8'],['EU 43','9.5','9'],['EU 44','10','9.5'],['EU 45','11','10.5']];
+const MOD={
+  size:`<h3 id="mTitle">Size guide</h3><p>Our fits are relaxed. If you are between sizes, take the smaller one.</p>
+    <div class="tw"><table><tr><th>Size</th><th>Chest cm</th><th>Chest in</th><th>Waist cm</th></tr>
+    ${[['XS','86–91','34–36','71–76'],['S','91–96','36–38','76–81'],['M','96–102','38–40','81–86'],['L','102–107','40–42','86–91'],['XL','107–112','42–44','91–97']].map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>
+    <p style="margin-top:18px">Shoes</p><div class="tw"><table><tr><th>EU</th><th>US</th><th>UK</th></tr>${SYS.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`,
+  ship:()=>`<h3 id="mTitle">Worldwide shipping</h3><p>Duties and taxes are included in the price you see. Free returns within 30 days.</p>
+    <div class="tw"><table><tr><th>Region</th><th>Delivery</th><th>Free over</th></tr>
+    ${[['Pakistan','2–4 days',60],['UAE & GCC','3–5 days',150],['UK & Europe','4–7 days',200],['USA & Canada','5–8 days',200],['Rest of world','6–10 days',250]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${money(r[2])}</td></tr>`).join('')}</table></div>`,
+};
+function openModal(k){ const on=!!k; document.body.classList.toggle('open-modal',on); $('modal').inert=!on; if(on){ const c=MOD[k]; $('mBody').innerHTML=typeof c==='function'?c():c; $('mClose').focus({preventScroll:true}); } }
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>openModal(b.dataset.m));
+$('mClose').onclick=()=>openModal(null);
 
 addEventListener('resize',layout);
-layout(); fill(false);
+layout(); fill(false); renderCart();
 </script>
 
 </body>
