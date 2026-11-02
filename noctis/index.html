@@ -37,7 +37,7 @@ a{color:inherit}
 .shade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
   linear-gradient(180deg,rgba(5,6,8,.55) 0,transparent 18%,transparent 70%,rgba(5,6,8,.7) 100%)}
 
-.nav{position:fixed;z-index:10;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:16px;
+.nav{position:fixed;z-index:10;top:0;left:0;right:0;background:linear-gradient(180deg,rgba(5,6,8,.92) 0,rgba(5,6,8,.6) 60%,rgba(5,6,8,0) 100%);display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:calc(16px + env(safe-area-inset-top,0px)) var(--gut-r) 16px var(--gut-l)}
 .brand{font-family:var(--f-disp);font-size:14px;letter-spacing:.32em}
 .brand i{font-style:normal;color:var(--red)}
@@ -54,7 +54,7 @@ main{position:relative;z-index:2}
 .ch.outro{height:150vh}
 .pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;padding:calc(88px + env(safe-area-inset-top,0px)) var(--gut-r) calc(40px + env(safe-area-inset-bottom,0px)) var(--gut-l);pointer-events:none}
 .pin > *{pointer-events:auto}
-.copy{max-width:420px;align-self:center;text-shadow:0 2px 24px rgba(0,0,0,.65);transition:opacity .5s,transform .7s cubic-bezier(.2,.7,.2,1)}
+.copy{max-width:420px;align-self:center;text-shadow:0 2px 24px rgba(0,0,0,.65);transition:opacity .3s,transform .6s cubic-bezier(.2,.7,.2,1)}
 .right .copy{margin-left:auto}
 .ch:not(.on) .copy,.ch:not(.on) .giant{opacity:0;transform:translateY(24px)}
 .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);display:flex;gap:10px;align-items:center}
@@ -454,7 +454,7 @@ function frame(){
 
   // chapter activity
   const near=Math.round(u);
-  chs.forEach((c,i)=>{ const on=Math.abs(u-i)<.42; c.classList.toggle('on',on); });
+  chs.forEach((c,i)=>{ const on=Math.abs(u-i)<.34; c.classList.toggle('on',on); });
   [...$('chapters').children].forEach((b,i)=>b.setAttribute('aria-current',i===near));
 
   // camera
