@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%23050608%22/%3E%3Cpath%20d%3D%22M4%2015c3-5%2013-5%2016%200%22%20stroke%3D%22%238fe4ff%22%20stroke-width%3D%221.8%22%20fill%3D%22none%22/%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2217%22%20r%3D%222%22%20fill%3D%22%23e3263c%22/%3E%3C/svg%3E">
+<meta name="author" content="OK Creation">
+<title>NOCTIS GT</title>
+<meta name="description" content="NOCTIS GT, Concept 01 — a scroll-driven 3D story: drawn in light, built in metal, deconstructed and reborn. Concept project by OK Creation.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one fixed WebGL stage behind seven sticky chapters; scroll position drives camera, light, doors and explosion */
+:root{
+  --bg:#050608;
+  --ink:#eef1f4;
+  --mute:#8d95a1;
+  --line:rgba(238,241,244,.14);
+  --blue:#8fe4ff;
+  --red:#e3263c;
+  --f-disp:"Michroma","Eurostile","Arial Black",sans-serif;
+  --f-body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+a{color:inherit}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0}
+.shade{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(180deg,rgba(5,6,8,.55) 0,transparent 18%,transparent 70%,rgba(5,6,8,.7) 100%)}
+
+.nav{position:fixed;z-index:10;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(16px + env(safe-area-inset-top,0px)) var(--gut-r) 16px var(--gut-l)}
+.brand{font-family:var(--f-disp);font-size:14px;letter-spacing:.32em}
+.brand i{font-style:normal;color:var(--red)}
+.chapters{display:flex;gap:6px;align-items:center}
+.chapters button{width:26px;height:20px;display:grid;place-items:center}
+.chapters button::before{content:"";width:18px;height:2px;border-radius:2px;background:var(--line);transition:background .3s,width .3s}
+.chapters button[aria-current="true"]::before{background:var(--ink);width:26px}
+.reserve{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:10px 16px;border:1px solid var(--line);border-radius:999px;transition:background .2s,border-color .2s}
+.reserve:hover{background:rgba(238,241,244,.08);border-color:rgba(238,241,244,.4)}
+
+main{position:relative;z-index:2}
+.ch{position:relative;height:160vh}
+.ch.hero{height:130vh}
+.ch.outro{height:150vh}
+.pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;padding:calc(88px + env(safe-area-inset-top,0px)) var(--gut-r) calc(40px + env(safe-area-inset-bottom,0px)) var(--gut-l);pointer-events:none}
+.pin > *{pointer-events:auto}
+.copy{max-width:420px;align-self:center;text-shadow:0 2px 24px rgba(0,0,0,.65);transition:opacity .5s,transform .7s cubic-bezier(.2,.7,.2,1)}
+.right .copy{margin-left:auto}
+.ch:not(.on) .copy,.ch:not(.on) .giant{opacity:0;transform:translateY(24px)}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);display:flex;gap:10px;align-items:center}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+h1,h2{font-family:var(--f-disp);font-weight:400;letter-spacing:.02em;line-height:1.08;text-wrap:balance;margin:16px 0 14px}
+h2{font-size:clamp(26px,3.1vw,42px)}
+.copy p{color:var(--mute);margin:0 0 20px;max-width:40ch}
+.stats{display:grid;grid-template-columns:repeat(3,auto);gap:22px;border-top:1px solid var(--line);padding-top:18px;justify-content:start}
+.stats div{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.stats b{display:block;font-family:var(--f-disp);font-weight:400;font-size:24px;color:var(--ink);letter-spacing:0;margin-bottom:4px;font-variant-numeric:tabular-nums}
+
+/* hero */
+.hero .pin{flex-direction:column;justify-content:flex-end}
+.hero h1{font-size:clamp(46px,12.2vw,190px);line-height:.9;margin:0;letter-spacing:.01em;white-space:nowrap}
+.hero h1 span{color:transparent;-webkit-text-stroke:1px rgba(238,241,244,.55)}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:20px;flex-wrap:wrap}
+.hero-row p{margin:0;color:var(--mute);max-width:38ch}
+.cue{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:12px}
+.cue i{display:block;width:1px;height:38px;background:linear-gradient(var(--ink),transparent);animation:cue 1.8s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.loadline{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;transition:opacity .6s}
+.loadline.done{opacity:0}
+
+/* giant words */
+.giant{position:absolute;left:var(--gut-l);right:var(--gut-r);bottom:calc(36px + env(safe-area-inset-bottom,0px));font-family:var(--f-disp);font-size:clamp(34px,8.2vw,150px);line-height:.95;letter-spacing:0;white-space:nowrap;transition:opacity .6s,transform .8s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.giant.red{color:var(--red);text-shadow:0 0 60px rgba(227,38,60,.45)}
+.giant.outline{color:transparent;-webkit-text-stroke:1px rgba(238,241,244,.6)}
+.split .copy{align-self:flex-start;margin-top:4vh}
+
+/* labels for exploded parts */
+.tags{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .4s}
+.tags.on{opacity:1}
+.tag{position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;will-change:transform}
+.tag::before{content:"";width:9px;height:9px;border-radius:50%;border:1.5px solid var(--blue);background:rgba(143,228,255,.25);box-shadow:0 0 14px rgba(143,228,255,.7)}
+.tag span{padding:4px 8px;border:1px solid rgba(143,228,255,.35);border-radius:6px;background:rgba(5,6,8,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+/* finish picker */
+.finishes{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 22px}
+.fin{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border:1px solid var(--line);border-radius:999px;font-size:14px;transition:border-color .2s,background .2s}
+.fin i{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.fin[aria-pressed="true"]{border-color:var(--ink);background:rgba(238,241,244,.08)}
+.price{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.price b{font-family:var(--f-disp);font-weight:400;font-size:28px}
+.price span{font-size:13px;color:var(--mute)}
+.cta{display:inline-flex;align-items:center;gap:14px;padding:16px 24px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;letter-spacing:.02em;transition:transform .15s,box-shadow .2s}
+.cta:hover{box-shadow:0 10px 40px -8px rgba(238,241,244,.45)}
+.cta:active{transform:scale(.98)}
+.cta svg{width:16px;height:16px}
+
+.outro .pin{flex-direction:column;align-items:center;justify-content:flex-end;text-align:center}
+.outro .copy{align-self:center;max-width:620px;margin-bottom:8vh}
+.outro h2{font-size:clamp(28px,4.2vw,58px)}
+.outro .copy p{margin-left:auto;margin-right:auto}
+footer.foot{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--mute)}
+.foot a{text-decoration:none;border-bottom:1px solid var(--line)}
+.foot a:hover{color:var(--ink)}
+.foot .chip{padding:3px 9px;border:1px solid var(--line);border-radius:99px;text-transform:uppercase;letter-spacing:.14em}
+.credits{max-width:520px;margin:10px auto 0;font-size:11px;color:var(--mute);line-height:1.5}
+
+.toast{position:fixed;z-index:20;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;padding:13px 18px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:500;transition:opacity .3s,transform .4s;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.nogl{position:fixed;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--f-mono);font-size:13px;color:var(--mute);text-align:center;max-width:320px}
+
+@media (max-width:760px){
+  .chapters{display:none}
+  .ch{height:150vh}
+  .pin{flex-direction:column;justify-content:flex-end;padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+  .copy,.right .copy,.split .copy{align-self:stretch;margin:0;max-width:none;padding:18px 0 0;background:linear-gradient(180deg,transparent,rgba(5,6,8,.75) 30%)}
+  .copy p{font-size:14.5px}
+  h2{font-size:24px;margin:10px 0 10px}
+  .stats{gap:16px}
+  .stats b{font-size:19px}
+  .giant{bottom:auto;top:calc(76px + env(safe-area-inset-top,0px));font-size:13vw}
+  .giant.outline{font-size:6.4vw}
+  .hero h1{font-size:15.5vw}
+  .hero-row{margin-top:12px}
+  .cue{display:none}
+  .outro .copy{margin-bottom:2vh;background:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<canvas id="gl" aria-label="Interactive 3D model of the NOCTIS GT concept car"></canvas>
+<div class="shade"></div>
+
+<header class="nav">
+  <div class="brand">NOCTIS<i>·</i>GT</div>
+  <nav class="chapters" id="chapters" aria-label="Chapters"></nav>
+  <button class="reserve" type="button" data-reserve>Reserve</button>
+</header>
+
+<div class="tags" id="tags" aria-hidden="true"></div>
+
+<main id="main">
+  <section class="ch hero on" data-title="Drawn in light">
+    <div class="pin">
+      <div class="loadline" id="loadline">Drawing the car · 0%</div>
+      <h1>NOCTIS <span>GT</span></h1>
+      <div class="hero-row">
+        <p>An all-electric grand tourer, drawn in light before it was ever built in metal. Scroll to build it.</p>
+        <div class="cue"><i></i>Scroll</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" data-title="Blueprint">
+    <div class="pin">
+      <div class="copy">
+        <div class="kicker">01 · Blueprint</div>
+        <h2>Lines first. Metal second.</h2>
+        <p>Every surface started as a single line of light. Keep scrolling and the body fills in, front to tail, panel by panel.</p>
+        <div class="stats">
+          <div><b>2.9 s</b>0–100 km/h</div>
+          <div><b>720 kW</b>Peak power</div>
+          <div><b>610 km</b>WLTP range</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch right" data-title="Open">
+    <div class="pin">
+      <div class="copy">
+        <div class="kicker">02 · Open</div>
+        <h2>A cabin you step into, not down into.</h2>
+        <p>Wide-swing doors, a front clamshell and a lifting tail open the whole car to the light. Carmine leather wraps both seats.</p>
+        <div class="stats">
+          <div><b>2+0</b>Seats</div>
+          <div><b>94°</b>Door swing</div>
+          <div><b>1,148 mm</b>Height</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch split" data-title="Deconstructed">
+    <div class="pin">
+      <div class="copy">
+        <div class="kicker">03 · Deconstructed</div>
+        <p style="margin-top:14px">Around a hundred parts, pulled apart in real time. Nothing here is a video. It is all code, rendered live in your browser.</p>
+      </div>
+      <div class="giant outline">DECONSTRUCTED.</div>
+    </div>
+  </section>
+
+  <section class="ch split" data-title="Reborn">
+    <div class="pin">
+      <div class="copy">
+        <div class="kicker">04 · Reborn</div>
+        <p style="margin-top:14px">Back together in under a second. Low, wide, and lit from behind.</p>
+      </div>
+      <div class="giant red">REBORN.</div>
+    </div>
+  </section>
+
+  <section class="ch" data-title="Finish">
+    <div class="pin">
+      <div class="copy">
+        <div class="kicker">05 · Finish</div>
+        <h2>Choose your finish.</h2>
+        <p>Three paints, each with its own cabin. The car behind this text changes the moment you pick one.</p>
+        <div class="finishes" id="finishes" role="group" aria-label="Paint finish"></div>
+        <div class="price"><b>$189,000</b><span>Starting from · deliveries spring 2027</span></div>
+        <button class="cta" type="button" data-reserve>Reserve a build <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch outro" data-title="Purpose">
+    <div class="pin">
+      <div class="copy">
+        <div class="kicker" style="justify-content:center">NOCTIS GT · Concept 01</div>
+        <h2>Every part, a purpose.</h2>
+        <p>From one line of light to a car you can take apart with your thumb.</p>
+        <button class="cta" type="button" data-reserve>Reserve a build <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
+      </div>
+      <footer class="foot">
+        <span class="chip">Concept project</span>
+        <span>© OK Creation</span>
+        <a href="https://wa.me/923101530011" target="_blank" rel="noopener">WhatsApp OK Creation</a>
+      </footer>
+      <p class="credits">3D model: “Car Concept” © 2024 Darmstadt Graphics Group (model and textures by Eric Chadwick), CC BY 4.0, based on a CC0 model by Unity Fan. Logos removed. Brand, specs and prices are fictional.</p>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { Reflector } from 'three/addons/objects/Reflector.js';
+
+const $=id=>document.getElementById(id);
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const sstep=(a,b,x)=>{ const t=clamp((x-a)/(b-a),0,1); return t*t*t*(t*(t*6-15)+10); };
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse=matchMedia('(pointer: coarse)').matches;
+const TEST=location.search.includes('slow');
+
+/* ---------- chapters UI ---------- */
+const chs=[...document.querySelectorAll('.ch')];
+chs.forEach((c,i)=>{ const b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label',`Chapter ${i}: ${c.dataset.title}`);
+  b.onclick=()=>scrollTo({top:anchorScroll(i),behavior:(reduce||TEST)?'auto':'smooth'}); $('chapters').appendChild(b); });
+let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2800); }
+document.querySelectorAll('[data-reserve]').forEach(b=>b.onclick=()=>toast('Reservations open in the full build. This page is a concept by OK Creation.'));
+
+/* ---------- renderer ---------- */
+let renderer;
+try{ renderer=new THREE.WebGLRenderer({canvas:$('gl'),antialias:true,powerPreference:'high-performance'}); }
+catch(e){ const d=document.createElement('div'); d.className='nogl'; d.textContent='This story needs WebGL. Open it in Chrome, Safari or Firefox to see the car.'; document.body.appendChild(d); $('loadline').classList.add('done'); throw e; }
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.0;
+renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.localClippingEnabled=true;
+const LITE = coarse || innerWidth<760 || location.search.includes('lite');
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x050608);
+const env=new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(),0.04).texture;
+scene.environment=env;
+const cam=new THREE.PerspectiveCamera(32,1,.1,80);
+
+const top=new THREE.DirectionalLight(0xffffff,1.2); top.position.set(0,6,1); scene.add(top);
+const rimRed=new THREE.DirectionalLight(0xff1e3c,0); rimRed.position.set(0,1.6,-6); scene.add(rimRed);
+const rimRed2=new THREE.PointLight(0xff2a40,0,14,1.4); rimRed2.position.set(0,1.2,-3.2); scene.add(rimRed2);
+const cool=new THREE.DirectionalLight(0x9fdcff,.5); cool.position.set(-5,2,4); scene.add(cool);
+
+function canvasTex(w,h,draw){ const c=document.createElement('canvas'); c.width=w; c.height=h; draw(c.getContext('2d'),w,h); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; }
+const radial=(stops,w=256,h=256)=>canvasTex(w,h,(x)=>{ const g=x.createRadialGradient(w/2,h/2,0,w/2,h/2,w/2); stops.forEach(s=>g.addColorStop(...s)); x.fillStyle=g; x.fillRect(0,0,w,h); });
+
+/* floor: mirror under a dark glaze (desktop), plain glaze on phones */
+if(!LITE){
+  const mirror=new Reflector(new THREE.PlaneGeometry(40,40),{clipBias:.003,textureWidth:Math.round(innerWidth*.6),textureHeight:Math.round(innerHeight*.6),color:0x8a8f99});
+  mirror.rotation.x=-Math.PI/2; mirror.position.y=-.002; scene.add(mirror);
+}
+const glaze=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.MeshBasicMaterial({
+  map:radial([[0,LITE?'rgba(14,16,20,1)':'rgba(5,6,8,.62)'],[.18,LITE?'rgba(8,9,12,1)':'rgba(5,6,8,.8)'],[.5,'rgba(5,6,8,1)'],[1,'rgba(5,6,8,1)']]),transparent:true,depthWrite:false,toneMapped:false}));
+glaze.rotation.x=-Math.PI/2; glaze.position.y=0; scene.add(glaze);
+const contact=new THREE.Mesh(new THREE.PlaneGeometry(3.4,6.2),new THREE.MeshBasicMaterial({map:radial([[0,'rgba(0,0,0,.85)'],[.55,'rgba(0,0,0,.45)'],[1,'rgba(0,0,0,0)']]),transparent:true,depthWrite:false}));
+contact.rotation.x=-Math.PI/2; contact.position.set(0,.003,.24); scene.add(contact);
+
+/* blueprint grid */
+const gridMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{uO:{value:0},uC:{value:new THREE.Color(0x8fe4ff)}},
+  vertexShader:`varying vec3 vP; void main(){ vec4 w=modelMatrix*vec4(position,1.); vP=w.xyz; gl_Position=projectionMatrix*viewMatrix*w; }`,
+  fragmentShader:`varying vec3 vP; uniform float uO; uniform vec3 uC;
+    float grid(vec2 p,float s){ vec2 q=p/s; vec2 g=abs(fract(q-.5)-.5)/fwidth(q); return 1.-min(min(g.x,g.y),1.); }
+    void main(){ vec2 p=vP.xz; float f=1.-smoothstep(2.5,10.,length(p-vec2(0.,.25)));
+      float a=(grid(p,.5)*.28+grid(p,2.5)*.75)*f*uO; gl_FragColor=vec4(uC*1.6,a); }`});
+const grid=new THREE.Mesh(new THREE.PlaneGeometry(26,26),gridMat); grid.rotation.x=-Math.PI/2; grid.position.y=.004; scene.add(grid);
+
+/* scan sheet for the line -> metal sweep */
+const scan=new THREE.Mesh(new THREE.PlaneGeometry(3.4,1.9),new THREE.MeshBasicMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,
+  map:canvasTex(64,256,(x,w,h)=>{ const g=x.createLinearGradient(0,0,0,h); g.addColorStop(0,'rgba(143,228,255,0)'); g.addColorStop(.5,'rgba(143,228,255,.5)'); g.addColorStop(1,'rgba(143,228,255,0)'); x.fillStyle=g; x.fillRect(0,0,w,h); })}));
+scan.position.y=.75; scan.visible=false; scene.add(scan);
+const scanLine=new THREE.Mesh(new THREE.PlaneGeometry(3.6,.012),new THREE.MeshBasicMaterial({color:new THREE.Color(2.5,4,5),transparent:true,depthWrite:false}));
+scanLine.rotation.x=-Math.PI/2; scanLine.position.y=.006; scene.add(scanLine); scanLine.visible=false;
+
+/* reborn atmosphere */
+const halo=new THREE.Mesh(new THREE.PlaneGeometry(16,7),new THREE.MeshBasicMaterial({map:radial([[0,'rgba(255,40,60,.9)'],[.35,'rgba(200,20,40,.35)'],[1,'rgba(120,0,20,0)']]),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+halo.position.set(0,1.4,-5.5); scene.add(halo);
+const streaks=new THREE.Group(); scene.add(streaks);
+const streakMat=new THREE.MeshBasicMaterial({map:canvasTex(16,256,(x,w,h)=>{ const g=x.createLinearGradient(0,0,0,h); g.addColorStop(0,'rgba(255,60,80,0)'); g.addColorStop(.7,'rgba(255,90,100,.9)'); g.addColorStop(1,'rgba(255,240,240,1)'); x.fillStyle=g; x.fillRect(0,0,w,h); }),
+  transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0});
+for(let i=0;i<34;i++){ const m=new THREE.Mesh(new THREE.PlaneGeometry(.018,1.6+Math.random()*2.4),streakMat); m.rotation.x=-Math.PI/2;
+  const side=i%2?1:-1; m.position.set(side*(1.5+Math.random()*5.5),.01+Math.random()*.02,Math.random()*24-12); m.userData.v=10+Math.random()*12; streaks.add(m); }
+
+/* ---------- clipping planes ---------- */
+const solidPlane=new THREE.Plane(new THREE.Vector3(0,0,1),-9); // solid visible where z >= s
+const linePlaneDraw=new THREE.Plane(new THREE.Vector3(0,0,1),-9); // lines visible where z >= d
+const linePlaneHide=new THREE.Plane(new THREE.Vector3(0,0,-1),9); // lines visible where z <= s
+const lineMat=new THREE.LineBasicMaterial({color:new THREE.Color(.45,1.25,1.7),transparent:true,opacity:.75,blending:THREE.AdditiveBlending,depthWrite:false,clippingPlanes:[linePlaneDraw,linePlaneHide],toneMapped:true});
+
+/* ---------- load the car ---------- */
+const B64_LEN=3515712;
+const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+let car=null, parts={}, variantMats={}, ready=false, drawT0=0;
+const loadline=$('loadline');
+(async()=>{
+  try{
+    const res=await fetch('noctis-car.txt'); if(!res.ok) throw new Error('HTTP '+res.status);
+    let txt='';
+    if(res.body&&res.body.getReader){ const rd=res.body.getReader(), dec=new TextDecoder(); for(;;){ const {done,value}=await rd.read(); if(done)break; txt+=dec.decode(value,{stream:true}); loadline.textContent=`Drawing the car · ${Math.min(99,Math.round(txt.length/B64_LEN*100))}%`; } }
+    else txt=await res.text();
+    const bin=atob(txt.trim()), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+    loader.parse(u.buffer,'',g=>{ try{ setup(g); }catch(e){ fail(e); } },fail);
+  }catch(e){ fail(e); }
+})();
+function fail(e){ console.error(e); loadline.textContent='The 3D car could not load on this device.'; }
+
+const W2L=(x,y,z)=>new THREE.Vector3(x,-z,y); // world dir -> car-local (car root is Z-up)
+const EXPLODE={
+  BodyDoorLColor1:[1.55,.35,.15], BodyDoorRColor1:[-1.55,.35,.15],
+  BodyHood:[0,.85,1.35], BodyRearPanelsColor1:[0,.95,-1.35],
+  BodyRoofPanel:[0,1.75,0], BodyPillars:[0,1.3,0],
+  BodyWindshield:[0,1.25,.55], BodyWindshieldGasket:[0,1.25,.55], BodyWindshieldWipers:[0,1.1,.9], BodyWindshieldWipersBase:[0,1.1,.9],
+  BodyPanelsColor2:[0,.6,0],
+  WheelFrontL:[1.1,0,.35], WheelFrontR:[-1.1,0,.35], WheelRearL:[1.1,0,-.35], WheelRearR:[-1.1,0,-.35],
+  Engine:[0,.25,.95],
+  InteriorSeatsColor1:[0,.8,0], InteriorSeatsColor2:[0,.8,0], InteriorSeatsFrame1:[0,.8,0], InteriorSeatsFrame2:[0,.8,0],
+  InteriorSteeringCylinder:[0,.65,.4], InteriorSteeringBase:[0,.65,.4], InteriorSteeringDash:[0,.65,.4], InteriorSteeringDashColumn:[0,.65,.4], InteriorSteeringHandleL:[0,.65,.4], InteriorSteeringHandleR:[0,.65,.4],
+  InteriorDashMid:[0,.48,.3], InteriorDashSides:[0,.48,.3],
+  InteriorPedalAccel:[0,.25,.55], InteriorPedalAccelArm:[0,.25,.55], InteriorPedalBrake:[0,.25,.55], InteriorPedalBrakeArm:[0,.25,.55],
+  InteriorMid:[0,.2,0], InteriorPillar:[0,.9,0],
+};
+const TAGS=[['WheelFrontL','Front wheel · 21"'],['BodyDoorLColor1','Door · carbon frame'],['BodyRoofPanel','Roof · glass-backed'],['Engine','E-motor · 720 kW'],['InteriorSeatsColor1','Seats · carmine'],['BodyRearPanelsColor1','Tail · active wing']];
+
+function setup(gltf){
+  car=gltf.scene; scene.add(car);
+  const plate=car.getObjectByName('License_Plate'); if(plate) plate.visible=false;
+  const emb=car.getObjectByName('InteriorSteeringEmblem'); if(emb) emb.visible=false;
+  // variant materials
+  const vnames=gltf.parser.json.extensions.KHR_materials_variants.variants.map(v=>v.name);
+  const meshes=[];
+  car.traverse(o=>{ if(o.isMesh) meshes.push(o); });
+  const patch=m=>{ m.clippingPlanes=[solidPlane]; m.envMapIntensity=(m.name||'').startsWith('Paint')?1.25:1; m.needsUpdate=true; return m; };
+  const pending=[];
+  for(const o of meshes){
+    patch(o.material);
+    const ext=o.userData.gltfExtensions&&o.userData.gltfExtensions.KHR_materials_variants;
+    if(ext){ o.userData.variantMats={}; for(const mp of ext.mappings){ pending.push(gltf.parser.getDependency('material',mp.material).then(mat=>{ patch(mat); mp.variants.forEach(v=>o.userData.variantMats[v]=mat); })); } }
+  }
+  // line art copy of every mesh
+  for(const o of meshes){
+    if(!o.visible) continue;
+    const e=new THREE.EdgesGeometry(o.geometry,o.name&&/tire|Tire/.test(o.material.name||'')?55:32);
+    const l=new THREE.LineSegments(e,lineMat); l.raycast=()=>{}; o.add(l);
+  }
+  // explode / door rigs
+  for(const name in EXPLODE){ const n=car.getObjectByName(name); if(!n) continue; parts[name]={n,p0:n.position.clone(),r0:n.rotation.clone(),d:W2L(...EXPLODE[name])}; }
+  // tag anchors at each part's visual centre
+  const tagsEl=$('tags');
+  TAGS.forEach(([name,label])=>{ const n=car.getObjectByName(name); if(!n) return;
+    const b=new THREE.Box3().setFromObject(n); const c=b.getCenter(new THREE.Vector3()); n.worldToLocal(c);
+    const el=document.createElement('div'); el.className='tag'; el.innerHTML=`<span>${label}</span>`; tagsEl.appendChild(el);
+    tagList.push({n,c,el}); });
+  Promise.all(pending).then(()=>{ buildFinishes(vnames,meshes); });
+  ready=true; drawT0=performance.now();
+  loadline.textContent='Drawing the car · 100%'; setTimeout(()=>loadline.classList.add('done'),900);
+}
+const tagList=[];
+
+/* finishes */
+const FIN=[['Carmine','#9e1020'],['Pearl','#e9e4ea'],['Graphite','#3a3c41']];
+function buildFinishes(vnames,meshes){
+  const box=$('finishes');
+  vnames.forEach((vn,i)=>{ const f=FIN[i]||[vn,'#888']; const b=document.createElement('button'); b.type='button'; b.className='fin'; b.setAttribute('aria-pressed',i===0);
+    b.innerHTML=`<i style="background:${f[1]}"></i>${f[0]}`;
+    b.onclick=()=>{ meshes.forEach(o=>{ const m=o.userData.variantMats&&o.userData.variantMats[i]; if(m) o.material=m; }); [...box.children].forEach((x,k)=>x.setAttribute('aria-pressed',k===i)); flash=1; };
+    box.appendChild(b); });
+}
+let flash=0;
+
+/* ---------- scroll mapping ---------- */
+let anchors=[], maxScroll=1;
+function anchorScroll(i){ const c=chs[i]; if(i===0) return 0; if(i===chs.length-1) return maxScroll; return c.offsetTop+(c.offsetHeight-innerHeight)/2; }
+function measure(){ maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight); anchors=chs.map((c,i)=>anchorScroll(i)); }
+function uFromScroll(y){ for(let i=0;i<anchors.length-1;i++){ if(y<=anchors[i+1]) return i+clamp((y-anchors[i])/Math.max(1,anchors[i+1]-anchors[i]),0,1); } return anchors.length-1; }
+
+/* camera keys: position, target, screen shift x (fraction, + = car moves right), shift y (+ = car moves up) */
+const K=[
+  {p:[5.0,1.3,5.2], t:[0,.52,.25], sx:0,    sy:.12},
+  {p:[9.8,1.2,.3], t:[0,.55,.25], sx:.15,  sy:.03},
+  {p:[-6.0,2.9,7.4],t:[0,.62,.35], sx:-.15, sy:.03},
+  {p:[8.6,5.4,9.0], t:[0,1.05,.3], sx:0,    sy:.1},
+  {p:[3.0,.62,6.6], t:[0,.62,.2],  sx:0,    sy:.14},
+  {p:[-6.4,1.7,-5.8],t:[0,.55,0], sx:.15,  sy:.03},
+  {p:[9.6,1.3,.3],  t:[0,.55,.25], sx:0,    sy:.27},
+];
+const vA=new THREE.Vector3(), vB=new THREE.Vector3(), tA=new THREE.Vector3(), tB=new THREE.Vector3();
+let W=1,H=1,mob=false;
+function resize(){
+  W=innerWidth; H=innerHeight; mob=W<=760;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,LITE?1.5:2)); renderer.setSize(W,H,false);
+  cam.aspect=W/H; cam.fov=mob?40:32; cam.updateProjectionMatrix(); measure();
+}
+addEventListener('resize',resize); resize();
+addEventListener('load',measure);
+
+let uS=0, uT=0;
+addEventListener('scroll',()=>{ uT=uFromScroll(scrollY); },{passive:true});
+
+/* ---------- frame ---------- */
+const clock=new THREE.Clock();
+const tmp=new THREE.Vector3();
+function frame(){
+  requestAnimationFrame(frame);
+  const dt=Math.min(.05,clock.getDelta()), now=performance.now();
+  uS += (uT-uS)*(TEST?1:Math.min(1,dt*(reduce?30:4.5)));
+  const u=uS;
+
+  // chapter activity
+  const near=Math.round(u);
+  chs.forEach((c,i)=>{ const on=Math.abs(u-i)<.42; c.classList.toggle('on',on); });
+  [...$('chapters').children].forEach((b,i)=>b.setAttribute('aria-current',i===near));
+
+  // camera
+  const i0=Math.min(K.length-2,Math.floor(u)), f=sstep(0,1,u-i0), a=K[i0], b=K[i0+1];
+  const aspect=W/H, mul=aspect<1?clamp(.8/aspect,1,1.8):1;
+  tA.fromArray(a.t); tB.fromArray(b.t); const tgt=tA.lerp(tB,f);
+  vA.fromArray(a.p); vB.fromArray(b.p);
+  // swing around the car rather than through it
+  const ra=Math.hypot(vA.x-tgt.x,vA.z-tgt.z), rb=Math.hypot(vB.x-tgt.x,vB.z-tgt.z);
+  let aa=Math.atan2(vA.x,vA.z), ab=Math.atan2(vB.x,vB.z); if(ab-aa>Math.PI) ab-=Math.PI*2; if(aa-ab>Math.PI) ab+=Math.PI*2;
+  const ang=lerp(aa,ab,f)+(reduce?0:Math.sin(now/5200)*.03), rad=lerp(ra,rb,f)*mul;
+  cam.position.set(tgt.x+Math.sin(ang)*rad, lerp(vA.y,vB.y,f)*(mob?1+(mul-1)*.6:1), tgt.z+Math.cos(ang)*rad);
+  cam.lookAt(tgt);
+  const sx=mob?0:lerp(a.sx,b.sx,f), sy=mob?.07+lerp(a.sy,b.sy,f)*.3:lerp(a.sy,b.sy,f);
+  cam.setViewOffset(W,H,-sx*W,sy*H,W,H);
+
+  if(ready){
+    // 1. light drawing on load, 2. metal sweep, 3. back to light at the end
+    const draw=reduce?1:clamp((now-drawT0)/2600,0,1);
+    const d=lerp(2.7,-2.2,sstep(0,1,draw));
+    const rIn=sstep(.25,.95,u), rOut=sstep(5.35,5.95,u);
+    const s = rOut>0 ? lerp(-2.2,2.7,rOut) : lerp(2.7,-2.2,rIn);
+    linePlaneDraw.constant=-d; solidPlane.constant=-s; linePlaneHide.constant=s;
+    const sweeping = (rIn>0&&rIn<1&&rOut===0)||(rOut>0&&rOut<1);
+    scan.visible=scanLine.visible=sweeping; scan.position.z=scanLine.position.z=s;
+    lineMat.opacity=.78-.3*sstep(.95,1.4,u)*(1-rOut);
+
+    // doors, hood, tail
+    const open=sstep(1.35,1.95,u)*(1-sstep(3.3,3.8,u));
+    const ex=sstep(2.3,2.95,u)*(1-sstep(3.15,3.75,u));
+    for(const k in parts){ const pr=parts[k]; pr.n.position.copy(pr.p0).addScaledVector(pr.d,ex); pr.n.rotation.copy(pr.r0); }
+    const dl=parts.BodyDoorLColor1, dr=parts.BodyDoorRColor1, hd=parts.BodyHood, tl=parts.BodyRearPanelsColor1;
+    if(dl) dl.n.rotation.z=dl.r0.z-1.15*Math.max(open,ex*.6);
+    if(dr) dr.n.rotation.z=dr.r0.z+1.15*Math.max(open,ex*.6);
+    if(hd) hd.n.rotation.x=hd.r0.x+.42*open+.25*ex;
+    if(tl) tl.n.rotation.x=tl.r0.x-.38*open-.2*ex;
+
+    // grid + reborn
+    gridMat.uniforms.uO.value=sstep(.4,.9,u)*(1-sstep(1.4,1.85,u))+ .6*ex + .5*sstep(5.4,5.9,u);
+    const rb=sstep(3.55,4.0,u)*(1-sstep(4.45,4.9,u));
+    rimRed.intensity=3.2*rb; rimRed2.intensity=40*rb; halo.material.opacity=rb*.9; streakMat.opacity=rb;
+    streaks.children.forEach(m=>{ m.position.z+=m.userData.v*dt*(.4+rb); if(m.position.z>12) m.position.z-=24; });
+    streaks.visible=rb>.01;
+    top.intensity=1.2-.6*rb; cool.intensity=.5*(1-rb);
+    flash=Math.max(0,flash-dt*1.5); renderer.toneMappingExposure=1+.25*flash;
+
+    // part labels
+    const tagsOn=ex>.85 && Math.abs(u-3)<.4;
+    $('tags').classList.toggle('on',tagsOn);
+    if(tagsOn){ tagList.forEach(t=>{ tmp.copy(t.c); t.n.localToWorld(tmp); tmp.project(cam);
+      const x=(tmp.x+1)/2*W, y=(1-tmp.y)/2*H; t.el.style.transform=`translate(${x-5}px,${y-8}px)`; t.el.style.visibility=(tmp.z<1&&x>8&&x<W-120&&y>70&&y<H-30)?'visible':'hidden'; }); }
+  }
+  renderer.render(scene,cam);
+}
+measure(); uT=uFromScroll(scrollY); uS=uT;
+requestAnimationFrame(frame);
+</script>
+
+</body>
+</html>

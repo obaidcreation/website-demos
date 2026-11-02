@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%230c0d0f%22/%3E%3Cpath%20d%3D%22M5%2018%20L12%206%20L19%2018%22%20stroke%3D%22%23efece6%22%20stroke-width%3D%222.2%22%20fill%3D%22none%22/%3E%3Cpath%20d%3D%22M8.5%2018h7%22%20stroke%3D%22%23ff7a1a%22%20stroke-width%3D%222.2%22/%3E%3C/svg%3E">
+<meta name="author" content="OK Creation">
+<title>KAIRO Sneaker Wall</title>
+<meta name="description" content="KAIRO Collection 04 — a live 3D sneaker wall. Tap a pair to bring it forward onto the light bar. Concept project by OK Creation.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed live 3D wall; product view = stage canvas over the blurred wall, title top-left, buy rail right (bottom sheet on phones) */
+:root{
+  --bg:#0c0d0f;
+  --ink:#efece6;
+  --mute:#8e9095;
+  --line:rgba(239,236,230,.13);
+  --panel:rgba(20,21,24,.72);
+  --glow:#ff7a1a;
+  --glow-soft:#ffb36b;
+  --f-disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-disp);font-size:15px;line-height:1.5;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible,a:focus-visible{outline:2px solid var(--glow-soft);outline-offset:3px;border-radius:4px}
+a{color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.app{position:fixed;inset:0;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#wall{transition:filter .7s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transform-origin:50% 55%}
+#stage{pointer-events:none;opacity:0;transition:opacity .35s}
+.is-detail #wall{filter:blur(14px) brightness(.42) saturate(.8);transform:scale(1.05)}
+.is-detail #stage{pointer-events:auto;opacity:1;cursor:grab}
+.is-detail #stage:active{cursor:grabbing}
+.vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 55%,transparent 55%,rgba(0,0,0,.55) 100%)}
+
+/* nav */
+.nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:calc(14px + env(safe-area-inset-top,0px)) var(--gut-r) 14px var(--gut-l)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-stretch:125%;letter-spacing:.14em;font-size:15px}
+.logo svg{width:22px;height:22px}
+.nav-mid{display:flex;gap:28px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.nav-mid span:first-child{color:var(--ink)}
+.bag{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px 14px;border:1px solid var(--line);border-radius:999px;transition:border-color .2s,background .2s}
+.bag:hover{border-color:rgba(239,236,230,.35)}
+.bag b{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-size:11px;font-weight:500}
+.bag.bump b{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.35);background:var(--glow)}}
+
+/* wall intro */
+.intro{position:absolute;z-index:5;left:var(--gut-l);top:calc(78px + env(safe-area-inset-top,0px));max-width:420px;transition:opacity .45s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.intro h1{margin:10px 0 10px;font-weight:800;font-stretch:118%;font-size:clamp(30px,4.4vw,58px);line-height:.95;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.intro h1 em{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--ink)}
+.intro p{margin:0;color:var(--mute);max-width:34ch}
+.is-detail .intro{opacity:0;transform:translateY(-14px);pointer-events:none}
+.legend{position:absolute;z-index:5;right:var(--gut-r);top:calc(84px + env(safe-area-inset-top,0px));text-align:right;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;transition:opacity .4s}
+.legend strong{display:block;font-family:var(--f-disp);font-stretch:125%;font-weight:700;font-size:28px;color:var(--ink);letter-spacing:.02em}
+.is-detail .legend{opacity:0}
+
+.tip{position:absolute;z-index:6;left:0;top:0;pointer-events:none;padding:8px 12px;border-radius:8px;background:rgba(12,13,15,.82);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-size:12px;white-space:nowrap;opacity:0;transform:translate(-50%,-110%);transition:opacity .2s}
+.tip.on{opacity:1}
+.tip b{font-stretch:120%;letter-spacing:.06em;margin-right:10px}
+.tip span{font-family:var(--f-mono);color:var(--glow-soft)}
+
+/* detail */
+.detail{position:absolute;inset:0;z-index:8;pointer-events:none}
+.detail > *{pointer-events:auto}
+.d-head{position:absolute;left:var(--gut-l);top:calc(78px + env(safe-area-inset-top,0px));max-width:min(520px,52vw)}
+.back{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:6px 0;margin-bottom:14px;transition:color .2s}
+.back:hover{color:var(--ink)}
+.d-name{margin:6px 0 10px;font-weight:800;font-stretch:125%;font-size:clamp(38px,6.4vw,92px);line-height:.9;letter-spacing:-.01em;overflow:hidden}
+.d-name span,.d-tag span{display:inline-block}
+.d-tag{margin:0;color:var(--mute);max-width:36ch;overflow:hidden}
+.swap-out span{animation:out .28s forwards}
+.swap-in span{animation:in .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes out{to{transform:translateY(-105%);opacity:0}}
+@keyframes in{from{transform:translateY(105%);opacity:0}}
+
+.d-panel{position:absolute;right:var(--gut-r);top:calc(78px + env(safe-area-inset-top,0px));width:330px;max-height:calc(100% - 110px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;
+  padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--panel);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
+  display:flex;flex-direction:column;gap:18px}
+.d-panel > *{flex-shrink:0}
+.price-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.price{font-family:var(--f-mono);font-size:26px;font-weight:500;letter-spacing:-.02em}
+.cw{font-size:12px;color:var(--mute);text-align:right}
+.cw b{display:block;color:var(--ink);font-weight:600}
+.label{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.swatches{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.18);position:relative;transition:transform .2s}
+.sw:hover{transform:scale(1.12)}
+.sw[aria-pressed="true"]::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--ink)}
+.sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.sizes.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.size{height:40px;border:1px solid var(--line);border-radius:10px;font-family:var(--f-mono);font-size:13px;transition:background .15s,border-color .15s,color .15s}
+.size:hover:not(:disabled){border-color:rgba(239,236,230,.45)}
+.size[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.size:disabled{color:rgba(239,236,230,.25);text-decoration:line-through;cursor:not-allowed}
+.hint{min-height:16px;font-size:12px;color:var(--glow-soft)}
+.add{position:relative;overflow:hidden;height:52px;border-radius:12px;background:var(--glow);color:#1a0d02;font-weight:700;font-stretch:112%;letter-spacing:.06em;text-transform:uppercase;font-size:13px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 18px;box-shadow:0 10px 40px -10px rgba(255,122,26,.65);transition:transform .15s,box-shadow .2s}
+.add:hover{box-shadow:0 14px 50px -8px rgba(255,122,26,.85)}
+.add:active{transform:scale(.98)}
+.add span:last-child{font-family:var(--f-mono);font-weight:500}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);padding-top:14px;gap:8px}
+.specs div{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.specs b{display:block;margin-top:4px;font-size:15px;color:var(--ink);font-weight:500;letter-spacing:0;font-variant-numeric:tabular-nums}
+.note{font-size:12px;color:var(--mute);margin:0}
+
+.d-nav{position:absolute;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));transform:translateX(calc(-50% - 175px));display:flex;align-items:center;gap:16px}
+.arrow{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;background:rgba(12,13,15,.4);transition:background .2s,border-color .2s}
+.arrow:hover{background:rgba(239,236,230,.08);border-color:rgba(239,236,230,.35)}
+.arrow svg{width:18px;height:18px}
+.count{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;min-width:74px;text-align:center;font-variant-numeric:tabular-nums}
+.count i{font-style:normal;color:var(--mute)}
+.drag{position:absolute;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(calc(-50% - 175px));font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);display:flex;gap:8px;align-items:center}
+.drag::before,.drag::after{content:"";width:22px;height:1px;background:var(--line)}
+
+.detail{opacity:0;visibility:hidden;transition:opacity .45s .15s,visibility 0s .6s}
+.is-detail .detail{opacity:1;visibility:visible;transition:opacity .5s .25s,visibility 0s}
+.d-panel{transform:translateX(24px);transition:transform .7s cubic-bezier(.2,.7,.2,1) .2s}
+.is-detail .d-panel{transform:none}
+
+/* misc */
+.credit{position:absolute;z-index:9;left:var(--gut-l);bottom:calc(16px + env(safe-area-inset-bottom,0px));font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:var(--mute);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;transition:opacity .4s}
+.credit a{text-decoration:none;border-bottom:1px solid var(--line)}
+.credit a:hover{color:var(--ink)}
+.credit .chip{padding:3px 8px;border:1px solid var(--line);border-radius:99px;text-transform:uppercase;letter-spacing:.12em}
+.is-detail .credit{opacity:0;pointer-events:none}
+.credits-pop{position:absolute;z-index:30;left:var(--gut-l);bottom:calc(48px + env(safe-area-inset-bottom,0px));max-width:340px;padding:14px 16px;border-radius:12px;background:#15161a;border:1px solid var(--line);font-size:12px;color:var(--mute)}
+.credits-pop b{color:var(--ink)}
+.toast{position:absolute;z-index:40;left:50%;top:calc(76px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;padding:12px 18px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600;transition:opacity .3s,transform .4s cubic-bezier(.2,.7,.2,1);pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.loader{position:absolute;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg);transition:opacity .8s .2s,visibility 0s 1s}
+.loader.done{opacity:0;visibility:hidden}
+.loader div{width:min(260px,70vw);text-align:center}
+.loader .logo{justify-content:center;font-size:20px;margin-bottom:22px}
+.bar{height:1px;background:var(--line);position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:var(--glow);transition:transform .3s}
+.loader p{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase;margin:12px 0 0}
+.loader p.err{color:var(--glow-soft);text-transform:none;letter-spacing:.02em}
+
+@media (max-width:760px){
+  .nav-mid{display:none}
+  .intro{top:calc(66px + env(safe-area-inset-top,0px));max-width:none;right:var(--gut-r)}
+  .intro h1{font-size:34px;margin:8px 0 6px}
+  .intro p{font-size:13px}
+  .legend{display:none}
+  .d-head{top:calc(64px + env(safe-area-inset-top,0px));max-width:none;right:var(--gut-r)}
+  .back{margin-bottom:6px}
+  .d-name{font-size:40px;margin:2px 0 6px}
+  .d-tag{font-size:13px}
+  .d-panel{left:0;right:0;top:auto;bottom:0;width:auto;max-height:44%;border-radius:20px 20px 0 0;border-bottom:0;
+    padding:18px var(--gut-r) calc(18px + env(safe-area-inset-bottom,0px)) var(--gut-l);gap:14px;transform:translateY(30px)}
+  .d-nav{transform:translateX(-50%);bottom:calc(44% + 14px)}
+  .add{position:sticky;bottom:0;z-index:2}
+  .drag{display:none}
+  .arrow{width:40px;height:40px}
+  .credit{right:var(--gut-r)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <canvas id="wall" aria-label="KAIRO sneaker wall, ten pairs on lit glass shelves"></canvas>
+  <div class="vignette"></div>
+  <canvas id="stage" aria-label="Selected pair on the light bar. Drag to rotate."></canvas>
+
+  <header class="nav">
+    <div class="logo" aria-label="KAIRO">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19 L12 4 L21 19" stroke="currentColor" stroke-width="2.2"/><path d="M7.5 19h9" stroke="#ff7a1a" stroke-width="2.2"/></svg>
+      KAIRO
+    </div>
+    <nav class="nav-mid" aria-label="Sections"><span>Collection 04</span><span>Run</span><span>Studio</span><span>Journal</span></nav>
+    <button class="bag" id="bagBtn" type="button" aria-label="Bag, 0 items">Bag <b id="bagCount">0</b></button>
+  </header>
+
+  <section class="intro" id="intro">
+    <div class="eyebrow">Collection 04 · Spring / Summer 26</div>
+    <h1>Ten pairs.<br><em>One wall.</em></h1>
+    <p>Every shoe here is a live 3D object. Tap a pair to bring it forward.</p>
+    <ul class="sr" id="srList"></ul>
+  </section>
+  <div class="legend" aria-hidden="true"><strong>10</strong>pairs on the wall</div>
+  <div class="tip" id="tip" aria-hidden="true"><b id="tipName"></b><span id="tipPrice"></span></div>
+
+  <section class="detail" id="detail" aria-label="Product details" inert>
+    <div class="d-head">
+      <button class="back" id="backBtn" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2"/></svg>
+        All pairs
+      </button>
+      <div class="eyebrow" id="dType"></div>
+      <h2 class="d-name" id="dName"><span></span></h2>
+      <p class="d-tag" id="dTag"><span></span></p>
+    </div>
+
+    <aside class="d-panel" aria-label="Buy">
+      <div class="price-row">
+        <div class="price" id="dPrice"></div>
+        <div class="cw">Colorway<b id="dColor"></b></div>
+      </div>
+      <div>
+        <div class="label"><span>Colorways</span><span id="dSwName"></span></div>
+        <div class="swatches" id="swatches"></div>
+      </div>
+      <div>
+        <div class="label"><span>Size · EU</span><span>Fits true to size</span></div>
+        <div class="sizes" id="sizes"></div>
+        <div class="hint" id="hint" role="status"></div>
+      </div>
+      <button class="add" id="addBtn" type="button"><span>Add to bag</span><span id="addPrice"></span></button>
+      <div class="specs" id="specs"></div>
+      <p class="note">Free delivery over $150 · 30-day returns</p>
+    </aside>
+
+    <div class="drag" aria-hidden="true">Drag to rotate</div>
+    <div class="d-nav">
+      <button class="arrow" id="prevBtn" type="button" aria-label="Previous pair"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <div class="count" id="dCount" aria-live="polite"></div>
+      <button class="arrow" id="nextBtn" type="button" aria-label="Next pair"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.8"/></svg></button>
+    </div>
+  </section>
+
+  <footer class="credit">
+    <span class="chip">Concept project</span>
+    <span>© OK Creation</span>
+    <a href="https://wa.me/923101530011" target="_blank" rel="noopener">WhatsApp OK Creation</a>
+    <button type="button" id="creditsBtn" style="border-bottom:1px solid var(--line);font-size:inherit;letter-spacing:inherit">3D credits</button>
+  </footer>
+  <div class="credits-pop" id="creditsPop" hidden>
+    <b>3D shoe model</b> — “Materials Variants Shoe” © 2021 Shopify, licensed CC BY 4.0. Colorways recoloured for this concept. Brand, products and prices are fictional.
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <div class="loader" id="loader">
+    <div>
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19 L12 4 L21 19" stroke="currentColor" stroke-width="2.2"/><path d="M7.5 19h9" stroke="#ff7a1a" stroke-width="2.2"/></svg>KAIRO</div>
+      <div class="bar"><i id="loadBar"></i></div>
+      <p id="loadTxt">Stocking the wall · 0%</p>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ---------- catalogue ---------- */
+const P = [
+  {name:'NOVA 05',   type:'Lifestyle runner', color:'Sand / Bone',       hex:'#d8c6a5', price:150, tag:'A warm neutral knit that goes from the track to dinner.', rc:[38,.34,1.95], spec:['238 g','8 mm','32 mm'], out:[46]},
+  {name:'ORBIT 03',  type:'Daily trainer',    color:'Glacier / White',   hex:'#a9cfe0', price:165, tag:'Cloud-soft foam for the miles nobody posts.',            rc:[198,.5,1.9],  spec:['252 g','8 mm','34 mm'], out:[39]},
+  {name:'HALO 01',   type:'Easy run',         color:'Blush / Cloud',     hex:'#c9a3a6', price:145, tag:'Featherweight upper, cushioned from first step to last.', v:1,            spec:['226 g','6 mm','30 mm'], out:[44,45]},
+  {name:'TIDE 06',   type:'Tempo',            color:'Sage / Chalk',      hex:'#9fb59a', price:170, tag:'Open mesh tuned for hot-weather tempo days.',            rc:[112,.32,1.55],spec:['231 g','8 mm','33 mm'], out:[]},
+  {name:'ECHO 04',   type:'Night run',        color:'Obsidian / Signal', hex:'#2a2a2d', price:175, tag:'Night-run black with high-vis signal hits.',              v:2,            spec:['249 g','10 mm','35 mm'], out:[40]},
+  {name:'PULSE 07',  type:'Speed',            color:'Volt / White',      hex:'#b8e04a', price:185, tag:'Loud colour, quick turnover, a firmer bounce.',          rc:[78,1.25,1.55],spec:['214 g','6 mm','31 mm'], out:[41]},
+  {name:'FLUX 09',   type:'Daily trainer',    color:'Ocean / White',     hex:'#1f7fb8', price:160, tag:'The original. Responsive foam and a deep-sea knit.',     v:0,            spec:['246 g','8 mm','34 mm'], out:[]},
+  {name:'SUMMIT 12', type:'Road to trail',    color:'Saffron / Bone',    hex:'#e0a336', price:190, tag:'Grippy outsole and a saffron knit for mixed ground.',     rc:[36,1.1,1.45], spec:['268 g','9 mm','36 mm'], out:[39,46]},
+  {name:'DRIFT 11',  type:'Race',             color:'Crimson / White',   hex:'#c22a3b', price:210, tag:'Race-day red with a stiffer plate and a faster ride.',   rc:[352,1.05,1.15],spec:['205 g','8 mm','38 mm'], out:[43]},
+  {name:'ZENITH 10', type:'Long run',         color:'Violet / Mist',     hex:'#7e68c7', price:195, tag:'Max cushion for the long Sunday run.',                   rc:[262,.7,1.3],  spec:['272 g','10 mm','40 mm'], out:[]},
+];
+const SIZES = [39,40,41,42,43,44,45,46];
+const N = P.length;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const app = $('app');
+
+/* ---------- helpers ---------- */
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const easeOut=t=>1-Math.pow(1-t,4);
+function glowTex(draw,w=256,h=256){
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');draw(x,w,h);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
+}
+const radial=(stops)=>glowTex((x,w,h)=>{const g=x.createRadialGradient(w/2,h/2,0,w/2,h/2,w/2);stops.forEach(s=>g.addColorStop(s[0],s[1]));x.fillStyle=g;x.fillRect(0,0,w,h);});
+
+/* ---------- renderers ---------- */
+const wallR = new THREE.WebGLRenderer({canvas:$('wall'),antialias:true,powerPreference:'high-performance'});
+const stageR = new THREE.WebGLRenderer({canvas:$('stage'),antialias:true,alpha:true});
+for (const r of [wallR,stageR]){ r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.05; r.outputColorSpace=THREE.SRGBColorSpace; }
+stageR.setClearColor(0x000000,0);
+
+const pmremW = new THREE.PMREMGenerator(wallR), pmremS = new THREE.PMREMGenerator(stageR);
+const envW = pmremW.fromScene(new RoomEnvironment(),0.04).texture;
+const envS = pmremS.fromScene(new RoomEnvironment(),0.04).texture;
+
+/* ---------- wall scene ---------- */
+const wall = new THREE.Scene();
+wall.background = new THREE.Color(0x0c0d0f);
+wall.environment = envW;
+const wallCam = new THREE.PerspectiveCamera(30,1,.05,30);
+wall.add(new THREE.HemisphereLight(0xdfe6ff,0x1a1410,.35));
+const key = new THREE.DirectionalLight(0xfff3e6,1.6); key.position.set(-1.2,2.4,2.2); wall.add(key);
+const rim = new THREE.DirectionalLight(0x9fb4ff,.8); rim.position.set(1.5,1.2,-1.5); wall.add(rim);
+
+// textured back wall
+const grain = glowTex((x,w,h)=>{x.fillStyle='#1a1b1f';x.fillRect(0,0,w,h);const id=x.getImageData(0,0,w,h),d=id.data;
+  for(let i=0;i<d.length;i+=4){const n=(Math.random()-.5)*14;d[i]+=n;d[i+1]+=n;d[i+2]+=n+1;}x.putImageData(id,0,0);},512,512);
+grain.wrapS=grain.wrapT=THREE.RepeatWrapping; grain.repeat.set(6,6);
+const backWall = new THREE.Mesh(new THREE.PlaneGeometry(12,8),new THREE.MeshStandardMaterial({map:grain,roughness:.95,metalness:0,envMapIntensity:.25}));
+backWall.position.z=-.2; wall.add(backWall);
+
+const poolTex = radial([[0,'rgba(255,240,222,.55)'],[.35,'rgba(255,232,210,.18)'],[1,'rgba(255,230,200,0)']]);
+const shadowTex = radial([[0,'rgba(0,0,0,.75)'],[.45,'rgba(0,0,0,.35)'],[1,'rgba(0,0,0,0)']]);
+const orangeTex = radial([[0,'rgba(255,150,60,1)'],[.3,'rgba(255,110,20,.55)'],[1,'rgba(255,90,0,0)']]);
+const glassMat = new THREE.MeshPhysicalMaterial({color:0xd8e4ff,roughness:.08,metalness:0,transparent:true,opacity:.16,envMapIntensity:1.2,clearcoat:1});
+const edgeMat = new THREE.MeshBasicMaterial({color:new THREE.Color(1.6,1.7,2.0)});
+const shelfGroup = new THREE.Group(); wall.add(shelfGroup);
+const slots = []; // per product: {g,pivot,shoe,hit,glow,pool,hover,base:{x,y}}
+
+/* ---------- stage scene ---------- */
+const stage = new THREE.Scene();
+stage.environment = envS;
+const stageCam = new THREE.PerspectiveCamera(30,1,.05,30);
+stageCam.position.set(0,.105,1.3); stageCam.lookAt(0,.07,0);
+stage.add(new THREE.HemisphereLight(0xe8eeff,0x2a1606,.5));
+const sKey = new THREE.DirectionalLight(0xffffff,2.1); sKey.position.set(-1,2,1.6); stage.add(sKey);
+const sRim = new THREE.DirectionalLight(0xa9bcff,1.3); sRim.position.set(1.2,.9,-1.6); stage.add(sRim);
+const warm = new THREE.PointLight(0xff7a1a,1.4,1.2,1.6); warm.position.set(0,.01,.18); stage.add(warm);
+
+const ped = new THREE.Group(); stage.add(ped);
+const barCore = new THREE.Mesh(new THREE.BoxGeometry(.7,.004,.022),new THREE.MeshBasicMaterial({color:new THREE.Color(5,2.6,1.2)}));
+const barShell = new THREE.Mesh(new THREE.BoxGeometry(.72,.009,.034),new THREE.MeshBasicMaterial({color:new THREE.Color(2.4,.75,.12),transparent:true,opacity:.75}));
+barCore.position.y=barShell.position.y=-.012;
+const floorGlow = new THREE.Mesh(new THREE.PlaneGeometry(1.5,.55),new THREE.MeshBasicMaterial({map:orangeTex,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,opacity:.95}));
+floorGlow.rotation.x=-Math.PI/2; floorGlow.position.y=-.021;
+const halo = new THREE.Mesh(new THREE.PlaneGeometry(1.5,.16),new THREE.MeshBasicMaterial({map:orangeTex,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,opacity:.85}));
+halo.position.set(0,-.014,-.03);
+ped.add(floorGlow,halo,barShell,barCore);
+
+const stageShoes=[null,null]; // [current, outgoing]
+let shoeProto=null, shoeBox=null;
+
+/* ---------- loading ---------- */
+const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+const SHOE_B64_LEN = 793840;
+loadB64('kairo-shoe.txt', SHOE_B64_LEN, p=>{ $('loadBar').style.transform=`scaleX(${p*.9})`; $('loadTxt').textContent=`Stocking the wall · ${Math.round(p*100)}%`; })
+  .then(buf=>loader.parse(buf,'',async gltf=>{ try{ await build(gltf); }catch(e){ fail(e); } },fail))
+  .catch(fail);
+async function loadB64(url,len,onp){
+  const res=await fetch(url); if(!res.ok) throw new Error('HTTP '+res.status);
+  let txt='';
+  if(res.body && res.body.getReader){ const rd=res.body.getReader(), dec=new TextDecoder(); for(;;){ const {done,value}=await rd.read(); if(done)break; txt+=dec.decode(value,{stream:true}); onp(Math.min(1,txt.length/len)); } }
+  else txt=await res.text();
+  const bin=atob(txt.trim()), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+  return u.buffer;
+}
+function fail(e){ console.error(e); const t=$('loadTxt'); t.classList.add('err'); t.textContent='The 3D wall needs WebGL. Try opening this page in Chrome, Safari or Firefox.'; }
+
+async function build(gltf){
+  // centre the model: toe points +X, sole on y=0
+  const root = gltf.scene; root.updateMatrixWorld(true);
+  let mesh; root.traverse(o=>{ if(o.isMesh) mesh=o; });
+  const box = new THREE.Box3().setFromObject(root);
+  const c = box.getCenter(new THREE.Vector3());
+  shoeProto = new THREE.Group();
+  const m = mesh.clone(); m.applyMatrix4(mesh.matrixWorld); m.position.x-=c.x; m.position.z-=c.z; m.position.y-=box.min.y;
+  shoeProto.add(m); shoeBox = box.getSize(new THREE.Vector3());
+
+  // base materials per variant (0 midnight, 1 beach, 2 street)
+  const maps = mesh.userData.gltfExtensions.KHR_materials_variants.mappings;
+  const base = [];
+  for (let v=0;v<3;v++){ const mp=maps.find(x=>x.variants.includes(v)); base[v]=await gltf.parser.getDependency('material',mp.material); }
+  const recolor = makeRecolor(base[0].map);
+  P.forEach((p,i)=>{
+    let mat;
+    if (p.v!==undefined) mat = base[p.v];
+    else { mat = base[0].clone(); mat.map = recolor(...p.rc); }
+    mat.envMapIntensity = 1.1;
+    p.mat = mat;
+    if (i%2) $('loadBar').style.transform=`scaleX(${.9+.1*i/N})`;
+  });
+
+  P.forEach((p,i)=>{
+    const g = new THREE.Group(); const pivot = new THREE.Group(); g.add(pivot);
+    const s = shoeProto.clone(); s.traverse(o=>{ if(o.isMesh){ o.material=p.mat; } }); pivot.add(s);
+    const pool = new THREE.Mesh(new THREE.PlaneGeometry(.62,.46),new THREE.MeshBasicMaterial({map:poolTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.55}));
+    pool.position.set(0,.09,-.19);
+    const shadow = new THREE.Mesh(new THREE.PlaneGeometry(.42,.16),new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false,opacity:.85}));
+    shadow.rotation.x=-Math.PI/2; shadow.position.y=.0015; shadow.rotation.z=.4;
+    const glow = new THREE.Mesh(new THREE.PlaneGeometry(.5,.2),new THREE.MeshBasicMaterial({map:orangeTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+    glow.rotation.x=-Math.PI/2; glow.position.y=.004;
+    const hit = new THREE.Mesh(new THREE.BoxGeometry(.38,.2,.2),new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false,colorWrite:false}));
+    hit.position.y=.08; hit.userData.i=i;
+    g.add(pool,shadow,glow,hit); wall.add(g);
+    slots.push({g,pivot,shoe:s,hit,glow,shadow,hv:0,away:false});
+    // screen-reader / keyboard access
+    const li=document.createElement('li'); const b=document.createElement('button'); b.type='button'; b.textContent=`View ${p.name}, ${p.color}, $${p.price}`; b.onclick=()=>open(i); li.appendChild(b); $('srList').appendChild(li);
+  });
+  buildDetailUI();
+  layout();
+  $('loadBar').style.transform='scaleX(1)';
+  setTimeout(()=>$('loader').classList.add('done'),250);
+  intro0 = performance.now();
+  requestAnimationFrame(loop);
+}
+
+/* Recolour the knit: shift hue of saturated pixels only, keep sole/laces untouched */
+function makeRecolor(tex){
+  const img=tex.image, W=img.width, H=img.height;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const cx=cv.getContext('2d',{willReadFrequently:true}); cx.drawImage(img,0,0);
+  const src=cx.getImageData(0,0,W,H).data, n=W*H;
+  const S=new Float32Array(n), L=new Float32Array(n);
+  for(let i=0,j=0;i<n;i++,j+=4){
+    const r=src[j]/255,g=src[j+1]/255,b=src[j+2]/255, mx=Math.max(r,g,b), mn=Math.min(r,g,b), l=(mx+mn)/2, d=mx-mn;
+    L[i]=l; S[i]= d===0?0: d/(1-Math.abs(2*l-1));
+  }
+  const h2r=(p,q,t)=>{ if(t<0)t+=1; if(t>1)t-=1; if(t<1/6)return p+(q-p)*6*t; if(t<1/2)return q; if(t<2/3)return p+(q-p)*(2/3-t)*6; return p; };
+  return (hue,sMul,lMul)=>{
+    const out=cx.createImageData(W,H), o=out.data, h=hue/360;
+    for(let i=0,j=0;i<n;i++,j+=4){
+      const w = clamp((S[i]-.12)/.2,0,1);
+      if (w<=0){ o[j]=src[j];o[j+1]=src[j+1];o[j+2]=src[j+2];o[j+3]=255; continue; }
+      const s=Math.min(1,S[i]*sMul), l=Math.min(.93,L[i]*lMul);
+      const q=l<.5?l*(1+s):l+s-l*s, p=2*l-q;
+      const r=h2r(p,q,h+1/3)*255, g=h2r(p,q,h)*255, b=h2r(p,q,h-1/3)*255;
+      o[j]=src[j]+(r-src[j])*w; o[j+1]=src[j+1]+(g-src[j+1])*w; o[j+2]=src[j+2]+(b-src[j+2])*w; o[j+3]=255;
+    }
+    const c2=document.createElement('canvas'); c2.width=W; c2.height=H; c2.getContext('2d').putImageData(out,0,0);
+    const t=new THREE.CanvasTexture(c2); t.flipY=tex.flipY; t.colorSpace=THREE.SRGBColorSpace; t.wrapS=tex.wrapS; t.wrapT=tex.wrapT; t.channel=tex.channel; t.anisotropy=4;
+    return t;
+  };
+}
+
+/* ---------- layout ---------- */
+let W=1,H=1, isMobile=false, wallVisH=1, wallDist=3, intro0=0;
+const SHOE_ROT = -.42;
+function layout(){
+  W=innerWidth; H=innerHeight; isMobile = W<=760;
+  const aspect=W/H;
+  const dpr=Math.min(devicePixelRatio,isMobile?1.6:1.75);
+  wallR.setPixelRatio(dpr); stageR.setPixelRatio(Math.min(devicePixelRatio,2));
+  wallR.setSize(W,H,false); stageR.setSize(W,H,false);
+  wallCam.aspect=aspect; wallCam.updateProjectionMatrix();
+
+  const cols = aspect<.8 ? 2 : (aspect<1.15 ? 3 : 5);
+  const rows = Math.ceil(N/cols);
+  const sx = cols===2?.41:.44, sy = cols===2?.29:.33;
+  const gw = cols*sx, gh = rows*sy;
+  // fit grid into the free area below the headline
+  const fracW = cols===2?.92:.88, fracH = cols===2?.6:.62;
+  const tanH = Math.tan(THREE.MathUtils.degToRad(wallCam.fov/2));
+  wallVisH = Math.max(gh/fracH, gw/fracW/aspect);
+  wallDist = wallVisH/2/tanH;
+  const yc = cols===2?.595:.6; // grid centre at 60% of screen height
+  wallCam.position.set(0, (yc-.5)*wallVisH, wallDist-.2);
+  wallCam.lookAt(0,(yc-.5)*wallVisH,-.2);
+
+  // shelves
+  shelfGroup.clear();
+  for (let r=0;r<rows;r++){
+    const y = (rows-1)/2*sy - r*sy - .06;
+    const n = Math.min(cols, N-r*cols), w = n*sx+.06;
+    const glass = new THREE.Mesh(new THREE.BoxGeometry(w,.012,.26),glassMat); glass.position.set(0,y-.006,-.04);
+    const edge = new THREE.Mesh(new THREE.BoxGeometry(w,.003,.003),edgeMat); edge.position.set(0,y-.0005,.09);
+    shelfGroup.add(glass,edge);
+  }
+  slots.forEach((s,i)=>{
+    const r=Math.floor(i/cols), c=i%cols, n=Math.min(cols,N-r*cols);
+    s.bx = (c-(n-1)/2)*sx; s.by = (rows-1)/2*sy - r*sy - .06;
+    s.g.position.set(s.bx,s.by,0);
+    s.pivot.rotation.y = SHOE_ROT;
+  });
+  layoutStage();
+}
+
+/* stage framing: centre of the free area (left of the rail / above the sheet) */
+let stageScale=1.8, stageCX=0, stageCY=0;
+function layoutStage(){
+  stageCam.aspect=W/H;
+  let cx, cy, avail;
+  if (isMobile){ const sheetTop=H*.56; cx=W/2; cy=Math.max(H*.38, 175+(sheetTop-175)*.5); avail=Math.min(W*.86,(sheetTop-160)*1.9); }
+  else { const railL=W-330-16-24; cx=railL/2+20; cy=H*.6; avail=Math.min(railL*.6,H*.78,660); }
+  stageCX=cx; stageCY=cy;
+  stageCam.setViewOffset(W,H,W/2-cx,H/2-cy,W,H);
+  if(!isMobile){ for(const el of document.querySelectorAll('.d-nav,.drag')){ el.style.left=cx+'px'; el.style.transform='translateX(-50%)'; } }
+  else { for(const el of document.querySelectorAll('.d-nav,.drag')){ el.style.left=''; el.style.transform=''; } }
+  stageCam.updateProjectionMatrix();
+  const D=stageCam.position.distanceTo(new THREE.Vector3(0,.07,0));
+  const visH=2*Math.tan(THREE.MathUtils.degToRad(stageCam.fov/2))*D;
+  stageScale = avail*visH/(H*shoeBox.x);
+  ped.scale.setScalar(stageScale/2.3);
+}
+addEventListener('resize',()=>{ if(!shoeBox)return; layout(); wallDirty=true; if(cur>=0 && stageShoes[0] && !busy) placeStage(stageShoes[0],1); });
+
+/* ---------- hover / pick on wall ---------- */
+const ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
+let hovered=-1, detail=false, cur=-1, busy=false;
+const tip=$('tip');
+function pick(e){
+  const r=$('wall').getBoundingClientRect();
+  ndc.set((e.clientX-r.left)/r.width*2-1, -(e.clientY-r.top)/r.height*2+1);
+  ray.setFromCamera(ndc,wallCam);
+  const hit=ray.intersectObjects(slots.map(s=>s.hit),false)[0];
+  return hit?hit.object.userData.i:-1;
+}
+$('wall').addEventListener('pointermove',e=>{
+  if(detail||!slots.length) return;
+  const i=pick(e); hovered=i; $('wall').style.cursor=i>=0?'pointer':'default';
+  if(i>=0 && e.pointerType==='mouse'){ $('tipName').textContent=P[i].name; $('tipPrice').textContent='$'+P[i].price; tip.classList.add('on'); tip.style.left=e.clientX+'px'; tip.style.top=(e.clientY-14)+'px'; }
+  else tip.classList.remove('on');
+});
+$('wall').addEventListener('pointerleave',()=>{ hovered=-1; tip.classList.remove('on'); });
+$('wall').addEventListener('click',e=>{ if(detail||busy) return; const i=pick(e); if(i>=0) open(i); });
+
+/* ---------- stage animation ---------- */
+function makeStageShoe(i){
+  const g=new THREE.Group(); const s=shoeProto.clone(); s.traverse(o=>{ if(o.isMesh) o.material=P[i].mat; });
+  s.position.x=0; g.add(s); g.userData.i=i; stage.add(g); return g;
+}
+function wallScreen(i){ // screen px of a wall shoe
+  const v=new THREE.Vector3(); slots[i].shoe.getWorldPosition(v); v.y+=shoeBox.y*.45; v.project(wallCam);
+  return {x:(v.x+1)/2*W, y:(1-v.y)/2*H};
+}
+function stageFromScreen(px,py){
+  const v=new THREE.Vector3(px/W*2-1, -(py/H*2-1), .5).unproject(stageCam);
+  const dir=v.sub(stageCam.position).normalize();
+  const D=stageCam.position.distanceTo(new THREE.Vector3(0,.07,0));
+  return stageCam.position.clone().add(dir.multiplyScalar(D));
+}
+function wallApparentScale(){ // stage scale that matches the on-wall size
+  return (shoeBox.x/wallVisH*H) * (2*Math.tan(THREE.MathUtils.degToRad(15))*stageCam.position.distanceTo(new THREE.Vector3(0,.07,0))) / (H*shoeBox.x);
+}
+let anims=[];
+function tween(dur,fn,done,ez=ease){ const a={t0:performance.now(),dur:reduce?1:dur,fn,done,ez}; anims.push(a); return a; }
+function placeStage(g,t){ g.position.set(0,.03,0); g.scale.setScalar(stageScale); }
+
+let rotY=0, rotVel=0, dragging=false, lastX=0, idle=0;
+function open(i){
+  if(busy) return; busy=true; detail=true; cur=i; hovered=-1; tip.classList.remove('on');
+  app.classList.add('is-detail'); $('detail').inert=false; fillDetail(i,false);
+  const g=makeStageShoe(i); stageShoes[0]=g; slots[i].away=true;
+  const from=wallScreen(i), p0=stageFromScreen(from.x,from.y), s0=wallApparentScale();
+  rotY=SHOE_ROT; rotVel=0;
+  g.position.copy(p0); g.scale.setScalar(s0);
+  ped.visible=true; pedGlow=0;
+  tween(1100,t=>{
+    g.position.lerpVectors(p0,new THREE.Vector3(0,.03,0),t);
+    g.scale.setScalar(lerp(s0,stageScale,t));
+    rotY=lerp(SHOE_ROT,-.18,t);
+    pedGlow=clamp((t-.35)/.65,0,1);
+  },()=>{ busy=false; });
+}
+function close(){
+  if(busy||!detail) return; busy=true;
+  const g=stageShoes[0], i=cur;
+  const to=wallScreen(i), p1=stageFromScreen(to.x,to.y), s1=wallApparentScale(), p0=g.position.clone(), s0=g.scale.x, r0=rotY;
+  app.classList.remove('is-detail'); $('detail').inert=true;
+  tween(900,t=>{ g.position.lerpVectors(p0,p1,t); g.scale.setScalar(lerp(s0,s1,t)); rotY=lerp(r0,SHOE_ROT,t); pedGlow=1-t; },()=>{
+    stage.remove(g); stageShoes[0]=null; slots[i].away=false; cur=-1; detail=false; busy=false; ped.visible=false; stageR.clear();
+  });
+}
+function go(dir,target){
+  if(busy||!detail) return; busy=true;
+  const out=stageShoes[0], i=target!==undefined?target:(cur+dir+N)%N, prev=cur;
+  cur=i; fillDetail(i,true);
+  const g=makeStageShoe(i); stageShoes[0]=g; stageShoes[1]=out;
+  const span=stageScale*shoeBox.x*2.2;
+  g.position.set(dir*span,.03,0); g.scale.setScalar(stageScale);
+  const o0=out.position.x, r0=rotY;
+  slots[prev].away=false; slots[i].away=true;
+  pedPulse=1;
+  tween(850,t=>{ out.position.x=lerp(o0,-dir*span,t); g.position.x=lerp(dir*span,0,t); rotY=lerp(r0,-.18,t); },()=>{ stage.remove(out); stageShoes[1]=null; busy=false; });
+}
+$('backBtn').onclick=close; $('prevBtn').onclick=()=>go(-1); $('nextBtn').onclick=()=>go(1);
+addEventListener('keydown',e=>{
+  if(!detail) return;
+  if(e.key==='Escape') close(); else if(e.key==='ArrowRight') go(1); else if(e.key==='ArrowLeft') go(-1);
+});
+const stageEl=$('stage');
+stageEl.addEventListener('pointerdown',e=>{ dragging=true; lastX=e.clientX; rotVel=0; stageEl.setPointerCapture(e.pointerId); });
+stageEl.addEventListener('pointermove',e=>{ if(!dragging) return; const dx=e.clientX-lastX; lastX=e.clientX; rotY+=dx*.012; rotVel=dx*.012; idle=0; });
+const endDrag=()=>{ dragging=false; };
+stageEl.addEventListener('pointerup',endDrag); stageEl.addEventListener('pointercancel',endDrag);
+
+/* ---------- detail UI ---------- */
+let size=null, bag=0;
+function buildDetailUI(){
+  P.forEach((p,i)=>{ const b=document.createElement('button'); b.type='button'; b.className='sw'; b.style.background=p.hex; b.setAttribute('aria-label',`${p.name}, ${p.color}`); b.title=p.name;
+    b.onclick=()=>{ if(i===cur||busy) return; jump(i); }; $('swatches').appendChild(b); });
+  SIZES.forEach(s=>{ const b=document.createElement('button'); b.type='button'; b.className='size'; b.textContent=s; b.dataset.s=s;
+    b.onclick=()=>{ size=s; [...$('sizes').children].forEach(x=>x.setAttribute('aria-pressed',x===b)); $('hint').textContent=''; }; $('sizes').appendChild(b); });
+}
+function jump(i){ go(i>cur?1:-1,i); }
+function swapText(el,txt,anim){
+  const sp=el.querySelector('span');
+  if(!anim||reduce){ sp.textContent=txt; return; }
+  el.classList.remove('swap-in'); el.classList.add('swap-out');
+  setTimeout(()=>{ sp.textContent=txt; el.classList.remove('swap-out'); void el.offsetWidth; el.classList.add('swap-in'); },260);
+}
+function fillDetail(i,anim){
+  const p=P[i];
+  swapText($('dName'),p.name,anim); swapText($('dTag'),p.tag,anim);
+  $('dType').textContent=p.type; $('dPrice').textContent='$'+p.price; $('addPrice').textContent='$'+p.price;
+  $('dColor').textContent=p.color; $('dSwName').textContent=p.name;
+  $('dCount').innerHTML=`${String(i+1).padStart(2,'0')} <i>/ ${N}</i>`;
+  [...$('swatches').children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
+  size=null; $('hint').textContent='';
+  [...$('sizes').children].forEach(b=>{ const s=+b.dataset.s; b.disabled=p.out.includes(s); b.setAttribute('aria-pressed','false'); b.title=b.disabled?'Sold out':''; });
+  $('specs').innerHTML=`<div>Weight<b>${p.spec[0]}</b></div><div>Drop<b>${p.spec[1]}</b></div><div>Stack<b>${p.spec[2]}</b></div>`;
+}
+$('addBtn').onclick=()=>{
+  if(!size){ $('hint').textContent='Pick your size first'; const g=$('sizes'); g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake'); return; }
+  bag++; $('bagCount').textContent=bag; $('bagBtn').setAttribute('aria-label',`Bag, ${bag} item${bag>1?'s':''}`);
+  const b=$('bagBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+  toast(`${P[cur].name} · EU ${size} added to your bag`); pedPulse=1;
+};
+let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2200); }
+$('bagBtn').onclick=()=>toast(bag?`${bag} item${bag>1?'s':''} in your bag · checkout is disabled in this concept`:'Your bag is empty. Pick a pair from the wall.');
+$('creditsBtn').onclick=()=>{ const p=$('creditsPop'); p.hidden=!p.hidden; };
+
+/* ---------- loop ---------- */
+let last=performance.now(), pedGlow=0, pedPulse=0, wallDirty=true;
+function loop(now){
+  requestAnimationFrame(loop);
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+  anims=anims.filter(a=>{ const t=clamp((now-a.t0)/a.dur,0,1); a.fn(a.ez(t)); if(t>=1){ a.done&&a.done(); return false;} return true; });
+
+  // wall: entrance + hover
+  const ti = reduce?1:clamp((now-intro0)/1600,0,1);
+  slots.forEach((s,i)=>{
+    const target = (i===hovered && !detail)?1:0;
+    s.hv += (target-s.hv)*Math.min(1,dt*9);
+    const delay = clamp(ti*1.6-(i%5)*.08-Math.floor(i/5)*.12,0,1), e=easeOut(delay);
+    s.pivot.position.y = s.hv*.035 + (1-e)*.08;
+    s.pivot.rotation.y = SHOE_ROT + s.hv*.38 + Math.sin(now/1400+i)*.015;
+    s.pivot.scale.setScalar((1+s.hv*.07)*(.9+.1*e));
+    s.shoe.visible = !s.away && e>0; s.shadow.visible = !s.away;
+    s.glow.material.opacity = s.hv*.9;
+  });
+  const wallStill = detail && !busy;
+  if(!wallStill || wallDirty){ wallR.render(wall,wallCam); wallDirty=false; }
+
+  // stage
+  if(detail || busy){
+    if(!dragging){ rotVel*=.94; rotY+=rotVel; if(Math.abs(rotVel)<.0005 && !reduce){ idle+=dt; rotY+= Math.sin(now/2400)*.0016; } }
+    const bob = reduce?0:Math.sin(now/900)*.006;
+    stageShoes.forEach(g=>{ if(!g) return; g.rotation.y=rotY; g.children[0].position.y=bob+.01; });
+    pedPulse=Math.max(0,pedPulse-dt*1.6);
+    const k=pedGlow*(1+pedPulse*.6);
+    floorGlow.material.opacity=.7*k; halo.material.opacity=.9*k;
+    barCore.material.color.setRGB(5*k+.05,2.6*k+.02,1.2*k+.01); barShell.material.opacity=.75*Math.min(1,k);
+    warm.intensity=1.4*k;
+    stageR.render(stage,stageCam);
+  }
+}
+</script>
+
+</body>
+</html>

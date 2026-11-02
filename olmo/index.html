@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%23141414%22/%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%226%22%20stroke%3D%22%23f3f3f1%22%20stroke-width%3D%222.4%22%20fill%3D%22none%22/%3E%3C/svg%3E">
+<meta name="author" content="OK Creation">
+<title>OLMO Try the Look</title>
+<meta name="description" content="OLMO Studio — swipe through eight styled outfits and add a complete look to your bag in one tap. Concept project by OK Creation.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: editorial lineup of eight looks across a pale studio floor (left), "In this look" shopping rail (right / below on phones) */
+:root{
+  --paper:#f3f3f1;
+  --floor:#e7e7e3;
+  --ink:#141414;
+  --mute:#76767a;
+  --line:rgba(20,20,20,.1);
+  --card:#ffffff;
+  --haze:#dcd7f2;
+  --f-disp:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"DM Mono",ui-monospace,Menlo,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-disp);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+a{color:inherit}
+
+.nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:calc(16px + env(safe-area-inset-top,0px)) var(--gut-r) 14px var(--gut-l)}
+.logo{font-weight:700;letter-spacing:.34em;font-size:16px}
+.links{display:flex;gap:26px;font-size:13px;color:var(--mute)}
+.links span:nth-child(4){color:var(--ink)}
+.bag{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.bag b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:99px;background:var(--ink);color:#fff;font-family:var(--f-mono);font-size:11px;font-weight:500;padding:0 6px}
+.bag.bump b{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.35)}}
+
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;padding:0 var(--gut-r) calc(24px + env(safe-area-inset-bottom,0px)) var(--gut-l);min-height:calc(100vh - 64px)}
+.stage-col{position:relative;min-width:0;display:flex;flex-direction:column}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-top:8px}
+.head h1{margin:0;font-size:clamp(30px,3.6vw,52px);font-weight:600;letter-spacing:-.035em;line-height:1}
+.head p{margin:8px 0 0;color:var(--mute);max-width:44ch}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters span{font-size:12px;padding:6px 12px;border:1px solid var(--line);border-radius:99px;color:var(--mute)}
+.filters span:first-child{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.stage{position:relative;flex:1;min-height:560px;margin-top:8px;overflow:hidden;border-radius:22px;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:none;
+  background:radial-gradient(120% 70% at 50% 108%,var(--haze) 0,rgba(220,215,242,0) 60%),linear-gradient(180deg,#f7f7f5 0,var(--floor) 100%)}
+.stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.35));pointer-events:none}
+.fig{position:absolute;left:50%;bottom:12%;height:82%;aspect-ratio:240/640;transform-origin:50% 100%;transition:transform .8s cubic-bezier(.2,.75,.2,1),filter .7s,opacity .7s;will-change:transform,filter}
+.fig svg{display:block;width:100%;height:100%;overflow:visible}
+.fig button{position:absolute;inset:0;width:100%;height:100%;cursor:none}
+.cursor{position:absolute;left:0;top:0;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:rgba(20,20,20,.88);color:#fff;display:grid;place-items:center;
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;pointer-events:none;opacity:0;transform:scale(.6);transition:opacity .2s,transform .25s;z-index:20}
+.cursor.on{opacity:1;transform:scale(1)}
+.cursor.press{transform:scale(.85)}
+.pager{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:15;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:99px;padding:5px;cursor:auto}
+.pager button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:background .2s}
+.pager button:hover{background:rgba(20,20,20,.07)}
+.pager svg{width:16px;height:16px}
+.pager span{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;min-width:56px;text-align:center;font-variant-numeric:tabular-nums}
+.pager span i{font-style:normal;color:var(--mute)}
+.lookname{position:absolute;left:20px;top:18px;z-index:15;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.lookname b{display:block;font-family:var(--f-disp);font-size:20px;letter-spacing:-.02em;text-transform:none;color:var(--ink);font-weight:600;margin-top:4px}
+
+.rail{align-self:start;position:sticky;top:16px;background:var(--card);border-radius:22px;padding:22px;box-shadow:0 1px 0 var(--line),0 30px 60px -40px rgba(20,20,20,.35);display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.rail-top{display:flex;justify-content:space-between;align-items:baseline}
+.rail-top h2{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em}
+.rail-top span{font-family:var(--f-mono);font-size:11px;color:var(--mute);letter-spacing:.08em}
+.items{display:flex;flex-direction:column;gap:2px;transition:opacity .25s}
+.items.fade{opacity:0}
+.item{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.thumb{width:76px;height:88px;border-radius:12px;background:#f1f1ee;display:grid;place-items:center;overflow:hidden}
+.thumb svg{width:100%;height:100%}
+.meta{min-width:0}
+.meta b{display:block;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.meta small{display:block;color:var(--mute);font-size:12.5px;margin:1px 0 8px}
+.meta select{appearance:none;-webkit-appearance:none;border:1px solid var(--line);border-radius:8px;padding:5px 26px 5px 9px;font-size:12.5px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23141414' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 9px center;cursor:pointer}
+.price{font-family:var(--f-mono);font-size:13.5px;font-variant-numeric:tabular-nums;align-self:start;padding-top:2px}
+.total{display:flex;justify-content:space-between;align-items:baseline}
+.total span{color:var(--mute);font-size:13px}
+.total b{font-family:var(--f-mono);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums}
+.total s{font-family:var(--f-mono);font-size:12.5px;color:var(--mute);margin-right:8px}
+.add{height:54px;border-radius:14px;background:var(--ink);color:#fff;font-weight:600;font-size:14.5px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;transition:transform .15s,background .2s}
+.add:hover{background:#2a2a2a}
+.add:active{transform:scale(.985)}
+.add svg{width:18px;height:18px}
+.note{margin:0;font-size:12px;color:var(--mute);display:flex;gap:14px;flex-wrap:wrap}
+
+.foot{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-family:var(--f-mono);font-size:11px;color:var(--mute);padding-top:6px}
+.foot .chip{padding:3px 9px;border:1px solid var(--line);border-radius:99px;text-transform:uppercase;letter-spacing:.12em}
+.foot a{text-decoration:none;border-bottom:1px solid var(--line)}
+.foot a:hover{color:var(--ink)}
+.toast{position:fixed;z-index:50;left:50%;top:calc(18px + env(safe-area-inset-top,0px));transform:translate(-50%,-16px);opacity:0;background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:500;transition:opacity .3s,transform .4s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:980px){
+  .links{display:none}
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  .rail{position:relative;top:0}
+  .stage{min-height:0;height:68vh;max-height:640px;flex:none;cursor:auto}
+  .fig button{cursor:pointer}
+  .cursor{display:none}
+  .fig{height:74%;bottom:13%}
+  .filters{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="shadeLR" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="shadeTB" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".08"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".14"/>
+    </linearGradient>
+    <radialGradient id="floorShadow"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <radialGradient id="knee" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <pattern id="twill" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(32)"><line x1="0" y1="0" x2="0" y2="4" stroke="#fff" stroke-opacity=".1" stroke-width="1.3"/></pattern>
+    <pattern id="knit" width="5" height="6" patternUnits="userSpaceOnUse"><path d="M0 0l2.5 3L5 0M0 3l2.5 3L5 3" fill="none" stroke="#000" stroke-opacity=".07" stroke-width=".8"/></pattern>
+    <pattern id="rib" width="3" height="10" patternUnits="userSpaceOnUse"><line x1="1.5" y1="0" x2="1.5" y2="10" stroke="#000" stroke-opacity=".16" stroke-width="1"/></pattern>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="logo">OLMO</div>
+  <nav class="links" aria-label="Sections"><span>New in</span><span>Men</span><span>Women</span><span>Looks</span><span>Journal</span></nav>
+  <button class="bag" id="bagBtn" type="button" aria-label="Bag, 0 items">Bag <b id="bagCount">0</b></button>
+</header>
+
+<div class="wrap">
+  <section class="stage-col">
+    <div class="head">
+      <div>
+        <h1>Try the Look</h1>
+        <p>Eight outfits styled by the OLMO studio. Swipe the lineup, pick a look, and shop every piece in one tap.</p>
+      </div>
+      <div class="filters" aria-hidden="true"><span>All looks</span><span>Weekend</span><span>Studio</span><span>Street</span></div>
+    </div>
+    <div class="stage" id="stage" aria-roledescription="carousel" aria-label="Outfit lineup">
+      <div class="lookname" id="lookName" aria-live="polite"></div>
+      <div id="figs"></div>
+      <div class="cursor" id="cursor">Drag</div>
+      <div class="pager">
+        <button type="button" id="prev" aria-label="Previous look"><svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        <span id="count"></span>
+        <button type="button" id="next" aria-label="Next look"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="rail" aria-label="In this look">
+    <div class="rail-top"><h2>In this look</h2><span id="pieces"></span></div>
+    <div class="items" id="items"></div>
+    <div class="total"><span>Complete look</span><div><s id="was"></s><b id="total"></b></div></div>
+    <button class="add" type="button" id="addLook"><span>Add full look to bag</span><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
+    <p class="note"><span>10% off when you buy the full look</span><span>Free returns</span><span>Ships in 2–4 days</span></p>
+  </aside>
+
+  <footer class="foot">
+    <span class="chip">Concept project</span>
+    <span>© OK Creation</span>
+    <a href="https://wa.me/923101530011" target="_blank" rel="noopener">WhatsApp OK Creation</a>
+    <span>Brand, products and prices are fictional. Illustrations drawn in code.</span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ---------- looks ---------- */
+const DENIM={light:'#9db4cc',mid:'#5f7fa6',dark:'#2f3f5a',black:'#2b2b2e'};
+const LOOKS=[
+ {name:'Grey Weekend', skin:'#e3b68f', hair:['short','#3a2a20'], top:['crew','#b9b9b5'], bottom:['jeans',DENIM.light,'light'], shoes:['#f4f4f2','#e4e4e0'], s:4, ax:2,
+  items:[['Loopback Crewneck','Heather Grey','top',85],['Wide Leg Jean','Light Wash','bottom',110],['Court Low','Off White','shoes',140]]},
+ {name:'Olive Field', skin:'#6e4429', hair:['curly','#141210'], top:['tee','#f2f1ec'], bottom:['cargo','#6b6a45'], shoes:['#1d1d1f','#f0f0ec'], s:7, ax:4,
+  items:[['Boxy Heavy Tee','Chalk','top',45],['Utility Cargo','Olive','bottom',120],['Runner 90','Black / White','shoes',150]]},
+ {name:'After Hours', skin:'#c68a5e', hair:['cap','#1b1b1d'], top:['tee','#1f1f21'], bottom:['jeans',DENIM.mid,'mid'], shoes:['#efefec','#bdbdb9'], s:2, ax:1,
+  items:[['Boxy Heavy Tee','Black','top',45],['Wide Leg Jean','Mid Wash','bottom',110],['Court Low','Bone / Grey','shoes',140],['Six Panel Cap','Black','acc',35]]},
+ {name:'Red Line', skin:'#f1c9a5', hair:['wavy','#b98a55'], top:['crew','#ae2f2a'], bottom:['trouser','#8e8e8b'], shoes:['#efe7d6','#d9cdb4'], s:5, ax:3,
+  items:[['Merino Crew','Brick Red','top',120],['Pleated Wide Trouser','Stone Grey','bottom',130],['Court Low','Cream','shoes',140]]},
+ {name:'Studio Layers', skin:'#a8714a', hair:['beanie','#8e8f8c'], top:['over','#77744f','#f1f0ec'], bottom:['jeans',DENIM.black,'black'], shoes:['#f4f4f2','#e2e2de'], s:6, ax:5,
+  items:[['Twill Overshirt','Moss','top',135],['Wide Leg Jean','Washed Black','bottom',110],['Court Low','Off White','shoes',140],['Rib Beanie','Ash','acc',30]]},
+ {name:'Navy Hours', skin:'#d9a77f', hair:['buzz','#2a1d15'], top:['hoodie','#2d3652'], bottom:['cargo','#b9ac90'], shoes:['#f4f4f2','#d8d8d4'], s:3, ax:2,
+  items:[['Heavyweight Hoodie','Navy','top',95],['Utility Cargo','Stone','bottom',120],['Court Low','White','shoes',140]]},
+ {name:'Oat Knit', skin:'#f0c8a4', hair:['bun','#5a3a24'], top:['crew','#d7c8ae','knit'], bottom:['jeans',DENIM.dark,'dark'], shoes:['#8b5c3c','#efe6d6'], s:1, ax:2,
+  items:[['Chunky Knit Sweater','Oat','top',150],['Straight Jean','Rinse','bottom',115],['Suede Trainer','Tobacco','shoes',165]]},
+ {name:'Sage Stroll', skin:'#5e3a24', hair:['twists','#120f0d'], top:['hoodie','#9aa892'], bottom:['trouser','#cfcfcb'], shoes:['#1d1d1f','#3a3a3d'], s:6, ax:3, bag:'#e9e3d3',
+  items:[['Heavyweight Hoodie','Sage','top',95],['Pleated Wide Trouser','Fog','bottom',130],['Runner 90','Black','shoes',150],['Canvas Tote','Natural','acc',40]]},
+];
+
+/* ---------- drawing ---------- */
+const C=120;
+const shade=(hex,amt)=>{ const n=parseInt(hex.slice(1),16); let r=n>>16,g=n>>8&255,b=n&255; const f=amt<0?0:255, t=Math.abs(amt);
+  r=Math.round(r+(f-r)*t); g=Math.round(g+(f-g)*t); b=Math.round(b+(f-b)*t); return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1); };
+const ov=(d,extra='')=>`<path d="${d}" fill="url(#shadeLR)"${extra}/><path d="${d}" fill="url(#shadeTB)"/>`;
+const fold=(d,o=.18,w=1.4)=>`<path d="${d}" fill="none" stroke="#000" stroke-opacity="${o}" stroke-width="${w}" stroke-linecap="round"/>`;
+const hi=(d,o=.25,w=1.2)=>`<path d="${d}" fill="none" stroke="#fff" stroke-opacity="${o}" stroke-width="${w}" stroke-linecap="round"/>`;
+
+function shoes(L){
+  const [up,sole]=L.shoes, s=L.s; let o='';
+  for(const g of [-1,1]){
+    const cx=C+g*(35+s);
+    const upper=`M${cx-27} 610 Q${cx-31} 588 ${cx-14} 584 L${cx+14} 584 Q${cx+31} 588 ${cx+32} 606 Q${cx+34} 621 ${cx+20} 624 L${cx-20} 624 Q${cx-30} 622 ${cx-27} 610Z`;
+    o+=`<path d="${upper}" fill="${up}"/>`+ov(upper);
+    o+=`<path d="M${cx-30} 611 Q${cx} 617 ${cx+33} 609 L${cx+33} 617 Q${cx+31} 628 ${cx+18} 629 L${cx-20} 629 Q${cx-32} 627 ${cx-30} 611Z" fill="${sole}"/>`;
+    o+=fold(`M${cx-29} 612 Q${cx} 618 ${cx+33} 610`,.22,1);
+    o+=`<ellipse cx="${cx+g*9}" cy="601" rx="10" ry="4.5" fill="#fff" opacity=".22"/>`;
+    o+=fold(`M${cx-16} 599 Q${cx-6} 594 ${cx+2} 597`,.14,1)+fold(`M${cx+g*20} 592 Q${cx+g*26} 600 ${cx+g*25} 610`,.12,1);
+  }
+  return o;
+}
+
+function pants(L){
+  const [type,col,wash]=L.bottom, s=L.s;
+  const d=`M${C-57} 296 Q${C-64} 330 ${C-64-s*.5} 400 L${C-62-s} 588 Q${C-35-s} 598 ${C-7-s} 590 Q${C-6-s*.5} 470 ${C-4} 372 Q${C} 366 ${C+4} 372 Q${C+6+s*.5} 470 ${C+7+s} 590 Q${C+35+s} 598 ${C+62+s} 588 L${C+64+s*.5} 400 Q${C+64} 330 ${C+57} 296 Q${C} 303 ${C-57} 296Z`;
+  let o=`<path d="${d}" fill="${col}"/>`;
+  if(type==='jeans'){ o+=`<path d="${d}" fill="url(#twill)"/>`;
+    if(wash==='light'||wash==='mid'){ o+=`<ellipse cx="${C-33-s*.7}" cy="468" rx="17" ry="34" fill="url(#knee)"/><ellipse cx="${C+33+s*.7}" cy="468" rx="17" ry="34" fill="url(#knee)"/>`;
+      o+=hi(`M${C-14} 362 Q${C-24} 366 ${C-30} 362`,.3)+hi(`M${C-12} 372 Q${C-22} 378 ${C-28} 376`,.25)+hi(`M${C+14} 362 Q${C+24} 366 ${C+30} 362`,.3)+hi(`M${C+12} 372 Q${C+22} 378 ${C+28} 376`,.25); }
+    o+=fold(`M${C+1} 302 Q${C+2} 330 ${C+1} 352 Q${C-2} 358 ${C-12} 352`,.25,1.2);
+    o+=hi(`M${C-58} 300 Q${C-62} 420 ${C-60-s} 586`,.12,1)+hi(`M${C+58} 300 Q${C+62} 420 ${C+60+s} 586`,.12,1);
+  }
+  if(type==='cargo'){ for(const g of [-1,1]){ const x0=C+g*(40+s*.3), x1=C+g*(63+s*.4);
+      o+=`<path d="M${x0} 404 L${x1} 404 L${x1+g*1} 462 L${x0} 462Z" fill="${shade(col,-.08)}"/>`+fold(`M${x0} 404 L${x1} 404 L${x1+g} 462 L${x0} 462Z`,.2,1)+fold(`M${x0} 418 L${x1} 418`,.22,1.1); }
+    o+=fold(`M${C+1} 302 L${C+1} 350`,.22,1.1);
+  }
+  if(type==='trouser'){ o+=hi(`M${C-33-s*.6} 318 L${C-35-s} 586`,.35,1.1)+hi(`M${C+33+s*.6} 318 L${C+35+s} 586`,.35,1.1)+fold(`M${C-18} 300 Q${C-20} 318 ${C-22} 334`,.2,1)+fold(`M${C+18} 300 Q${C+20} 318 ${C+22} 334`,.2,1); }
+  o+=ov(d);
+  // inner leg shadow, knee and hem breaks
+  o+=fold(`M${C-4} 374 Q${C-6-s*.5} 470 ${C-7-s} 588`,.28,2)+fold(`M${C+4} 374 Q${C+6+s*.5} 470 ${C+7+s} 588`,.28,2);
+  for(const g of [-1,1]){ const k=C+g*(34+s*.6);
+    o+=fold(`M${k-14} 466 Q${k} 474 ${k+14} 464`,.12,1.2);
+    o+=fold(`M${k-20} 556 Q${k-4} 566 ${k+18} 552`,.16,1.3)+fold(`M${k-22} 572 Q${k} 580 ${k+22} 570`,.18,1.3)+fold(`M${k-12} 538 Q${k+2} 546 ${k+14} 536`,.1,1.1);
+  }
+  return o;
+}
+
+function arms(L,long){ // skin forearms + hands
+  if(L.noBody) return '';
+  const sk=L.skin, ax=L.ax; let o='';
+  for(const g of [-1,1]){ const cx=C+g*(70+ax);
+    if(!long){ const a=`M${C+g*63} 196 L${C+g*81} 198 Q${C+g*(80+ax*.6)} 260 ${cx+g*6} 316 L${cx-g*7} 316 Q${C+g*(63+ax*.5)} 260 ${C+g*63} 196Z`;
+      o+=`<path d="${a}" fill="${sk}"/>`+ov(a); }
+    o+=`<path d="M${cx-8} 316 Q${cx-10} 334 ${cx-4} 344 Q${cx} 350 ${cx+5} 344 Q${cx+10} 334 ${cx+8} 316Z" fill="${sk}"/>`;
+    o+=`<path d="M${cx-8} 316 Q${cx-10} 334 ${cx-4} 344 Q${cx} 350 ${cx+5} 344 Q${cx+10} 334 ${cx+8} 316Z" fill="url(#shadeLR)"/>`;
+  }
+  return o;
+}
+
+function torso(hemY){ return `M${C-16} 110 Q${C} 121 ${C+16} 110 L${C+58} 122 Q${C+72} 128 ${C+74} 150 L${C+66} 200 L${C+63} ${hemY} Q${C} ${hemY+8} ${C-63} ${hemY} L${C-66} 200 L${C-74} 150 Q${C-72} 128 ${C-58} 122Z`; }
+function sleeve(g,ax){ const x=v=>C+g*v; const cy=314;
+  return `M${x(58)} 122 Q${x(74)} 126 ${x(77)} 152 L${x(80+ax)} ${cy-4} Q${x(81+ax)} ${cy+4} ${x(76+ax)} ${cy+6} L${x(62+ax)} ${cy+5} Q${x(57+ax*.8)} ${cy} ${x(57+ax*.6)} ${cy-8} L${x(60)} 202 Q${x(64)} 162 ${x(58)} 122Z`; }
+function shortSleeve(g){ const x=v=>C+g*v; return `M${x(58)} 122 Q${x(74)} 126 ${x(78)} 152 L${x(85)} 196 Q${x(76)} 204 ${x(61)} 202 L${x(60)} 170 Q${x(62)} 140 ${x(58)} 122Z`; }
+
+function topW(L){
+  const [type,col,inner]=L.top, ax=L.ax; let o='';
+  const knit = L.top[2]==='knit';
+  if(type==='tee'){
+    o+=arms(L,false);
+    const t=torso(320); o+=`<path d="${t}" fill="${col}"/>`+ov(t);
+    for(const g of [-1,1]){ const sl=shortSleeve(g); o+=`<path d="${sl}" fill="${shade(col,-.03)}"/>`+ov(sl)+fold(`M${C+g*62} 190 Q${C+g*72} 196 ${C+g*84} 194`,.15,1.2); }
+    o+=`<path d="M${C-16} 110 Q${C} 121 ${C+16} 110" fill="none" stroke="${shade(col,-.15)}" stroke-width="4"/>`;
+    o+=fold(`M${C-40} 200 Q${C-30} 240 ${C-42} 300`,.08,1.4)+fold(`M${C+44} 210 Q${C+34} 250 ${C+40} 306`,.1,1.4)+fold(`M${C-10} 140 Q${C} 150 ${C+12} 140`,.08,1.2);
+    return o;
+  }
+  if(type==='over'){
+    const t=torso(318); o+=`<path d="${t}" fill="${inner}"/>`+ov(t);
+    for(const g of [-1,1]){ const x=v=>C+g*v;
+      const p=`M${x(5)} 126 L${x(6)} 326 Q${x(36)} 332 ${x(65)} 324 L${x(67)} 200 L${x(75)} 150 Q${x(73)} 128 ${x(58)} 122 L${x(18)} 111Z`;
+      o+=`<path d="${p}" fill="${col}"/>`+ov(p);
+      o+=`<path d="M${x(18)} 110 L${x(4)} 128 L${x(13)} 146 L${x(32)} 118Z" fill="${shade(col,-.12)}"/>`;
+      o+=`<path d="M${x(22)} 168 L${x(50)} 168 L${x(50)} 204 L${x(22)} 204Z" fill="${shade(col,-.06)}"/>`+fold(`M${x(22)} 176 L${x(50)} 176`,.25,1.1);
+      const sl=sleeve(g,ax); o+=`<path d="${sl}" fill="${shade(col,-.02)}"/>`+ov(sl);
+    }
+    for(let y=150;y<320;y+=34) o+=`<circle cx="${C+9}" cy="${y}" r="2" fill="${shade(col,-.35)}"/>`;
+    o+=fold(`M${C+6} 128 L${C+6} 324`,.25,1.2);
+    o+=arms(L,true);
+    return o;
+  }
+  // crew / hoodie
+  const hem = type==='hoodie'?324:318;
+  const t=torso(hem); o+=`<path d="${t}" fill="${col}"/>`; if(knit) o+=`<path d="${t}" fill="url(#knit)"/>`; o+=ov(t);
+  o+=`<path d="M${C-62} ${hem-14} L${C+62} ${hem-14} L${C+63} ${hem} Q${C} ${hem+8} ${C-63} ${hem}Z" fill="url(#rib)"/>`;
+  o+=fold(`M${C-62} ${hem-14} Q${C} ${hem-8} ${C+62} ${hem-14}`,.14,1.1);
+  o+=fold(`M${C-44} 206 Q${C-32} 252 ${C-46} 296`,.09,1.6)+fold(`M${C+46} 214 Q${C+34} 256 ${C+44} 300`,.11,1.6)+fold(`M${C-24} 150 Q${C-6} 168 ${C+22} 152`,.07,1.4);
+  if(type==='hoodie'){
+    const pk=`M${C-38} 248 L${C+38} 248 L${C+48} 302 L${C-48} 302Z`;
+    o+=`<path d="${pk}" fill="${shade(col,-.04)}"/>`+fold(pk,.18,1.1)+fold(`M${C-38} 248 L${C-48} 290`,.25,1.4)+fold(`M${C+38} 248 L${C+48} 290`,.25,1.4);
+  }
+  for(const g of [-1,1]){ const sl=sleeve(g,ax); o+=`<path d="${sl}" fill="${shade(col,-.03)}"/>`; if(knit) o+=`<path d="${sl}" fill="url(#knit)"/>`; o+=ov(sl);
+    const cx=C+g*(69+ax), cuff=`M${cx-12} 300 L${cx+12} 300 L${cx+12} 320 L${cx-12} 320Z`;
+    o+=`<path d="M${C+g*(57+ax*.6)} 302 L${C+g*(80+ax)} 302 Q${C+g*(81+ax)} 318 ${C+g*(76+ax)} 320 L${C+g*(62+ax)} 319 Q${C+g*(57+ax*.8)} 314 ${C+g*(57+ax*.6)} 302Z" fill="url(#rib)"/>`;
+    o+=fold(`M${C+g*66} 180 Q${C+g*72} 186 ${C+g*78} 182`,.13,1.2)+fold(`M${C+g*64} 240 Q${C+g*72} 248 ${C+g*80} 242`,.13,1.2)+fold(`M${C+g*62} 202 Q${C+g*60} 160 ${C+g*58} 126`,.16,1.4);
+  }
+  o+=arms(L,true);
+  if(type==='crew') o+=`<path d="M${C-17} 110 Q${C} 123 ${C+17} 110" fill="none" stroke="${shade(col,-.14)}" stroke-width="6"/><path d="M${C-17} 110 Q${C} 123 ${C+17} 110" fill="none" stroke="url(#rib)" stroke-width="6"/>`;
+  return o;
+}
+
+function hood(L){ if(L.top[0]!=='hoodie') return '';
+  const col=L.top[1], d=`M${C-32} 126 Q${C-40} 100 ${C-22} 92 Q${C} 104 ${C+22} 92 Q${C+40} 100 ${C+32} 126 Q${C} 114 ${C-32} 126Z`;
+  return `<path d="${d}" fill="${shade(col,-.08)}"/>`+ov(d)+fold(`M${C-22} 96 Q${C} 108 ${C+22} 96`,.25,1.4)+
+    `<path d="M${C-7} 116 L${C-9} 176" stroke="${shade(col,.55)}" stroke-width="2" stroke-linecap="round"/><path d="M${C+7} 116 L${C+9} 170" stroke="${shade(col,.55)}" stroke-width="2" stroke-linecap="round"/>`+
+    `<rect x="${C-11}" y="174" width="4" height="8" rx="1.5" fill="${shade(col,.7)}"/><rect x="${C+7}" y="168" width="4" height="8" rx="1.5" fill="${shade(col,.7)}"/>`;
+}
+
+function head(L){
+  const sk=L.skin, [hs,hc]=L.hair; let o='';
+  if(L.noBody){ if(hs==='cap') return `<path d="M${C-24} 48 Q${C-25} 18 ${C} 17 Q${C+25} 18 ${C+24} 48Z" fill="${hc}"/><path d="M${C-24} 48 Q${C-25} 18 ${C} 17 Q${C+25} 18 ${C+24} 48Z" fill="url(#shadeLR)"/><path d="M${C-26} 46 Q${C} 41 ${C+26} 46 Q${C+30} 52 ${C+24} 54 Q${C} 49 ${C-24} 54 Q${C-30} 52 ${C-26} 46Z" fill="${shade(hc,.08)}"/>`;
+    return `<path d="M${C-24} 46 Q${C-26} 10 ${C} 10 Q${C+26} 10 ${C+24} 46Z" fill="${hc}"/><path d="M${C-25} 38 L${C+25} 38 L${C+25} 50 Q${C} 47 ${C-25} 50Z" fill="${shade(hc,-.08)}"/><path d="M${C-25} 38 L${C+25} 38 L${C+25} 50 Q${C} 47 ${C-25} 50Z" fill="url(#rib)"/><path d="M${C-24} 46 Q${C-26} 10 ${C} 10 Q${C+26} 10 ${C+24} 46Z" fill="url(#shadeLR)"/>`; }
+  const neck=`M${C-11} 80 L${C+11} 80 L${C+12} 114 Q${C} 121 ${C-12} 114Z`;
+  o+=`<path d="${neck}" fill="${sk}"/><path d="${neck}" fill="url(#shadeLR)"/><ellipse cx="${C}" cy="88" rx="12" ry="5" fill="#000" opacity=".16"/>`;
+  if(hs==='bun') o+=`<circle cx="${C+2}" cy="24" r="12" fill="${hc}"/>`;
+  if(hs==='wavy') o+=`<path d="M${C-25} 48 Q${C-29} 70 ${C-23} 80 L${C+23} 80 Q${C+29} 70 ${C+25} 48Z" fill="${shade(hc,-.15)}"/>`;
+  o+=`<ellipse cx="${C-22}" cy="62" rx="4" ry="7" fill="${shade(sk,-.08)}"/><ellipse cx="${C+22}" cy="62" rx="4" ry="7" fill="${shade(sk,-.12)}"/>`;
+  const face=`M${C-22} 52 Q${C-22} 26 ${C} 26 Q${C+22} 26 ${C+22} 52 Q${C+22} 78 ${C+8} 86 Q${C} 89 ${C-8} 86 Q${C-22} 78 ${C-22} 52Z`;
+  o+=`<path d="${face}" fill="${sk}"/><path d="${face}" fill="url(#shadeLR)"/>`;
+  o+=`<path d="M${C+1} 56 Q${C+4} 66 ${C} 69" fill="none" stroke="#000" stroke-opacity=".1" stroke-width="1.6" stroke-linecap="round"/>`;
+  const hair={
+    short:`M${C-23} 52 Q${C-26} 22 ${C} 20 Q${C+26} 21 ${C+23} 50 Q${C+20} 36 ${C+6} 34 Q${C-12} 32 ${C-20} 42 Q${C-22} 46 ${C-23} 52Z`,
+    buzz:`M${C-22} 48 Q${C-22} 24 ${C} 24 Q${C+22} 24 ${C+22} 48 Q${C+16} 34 ${C} 33 Q${C-16} 34 ${C-22} 48Z`,
+    bun:`M${C-23} 54 Q${C-24} 24 ${C} 23 Q${C+24} 24 ${C+23} 54 Q${C+18} 36 ${C} 35 Q${C-18} 36 ${C-23} 54Z`,
+    wavy:`M${C-25} 60 Q${C-28} 20 ${C} 19 Q${C+28} 20 ${C+25} 60 Q${C+22} 40 ${C+10} 34 Q${C-6} 40 ${C-20} 38 Q${C-24} 46 ${C-25} 60Z`,
+  };
+  if(hair[hs]) o+=`<path d="${hair[hs]}" fill="${hc}"/><path d="${hair[hs]}" fill="url(#shadeLR)"/>`;
+  if(hs==='curly'||hs==='twists'){ const r=hs==='curly'?7:5; let pts=''; for(let a=-170;a<=-10;a+=hs==='curly'?20:14){ const t=a*Math.PI/180; pts+=`<circle cx="${C+Math.cos(t)*23}" cy="${44+Math.sin(t)*22}" r="${r}" fill="${hc}"/>`; }
+    o+=`<path d="M${C-22} 46 Q${C-22} 24 ${C} 23 Q${C+22} 24 ${C+22} 46Z" fill="${hc}"/>`+pts; }
+  if(hs==='cap'){ o+=`<path d="M${C-24} 48 Q${C-25} 18 ${C} 17 Q${C+25} 18 ${C+24} 48Z" fill="${hc}"/><path d="M${C-24} 48 Q${C-25} 18 ${C} 17 Q${C+25} 18 ${C+24} 48Z" fill="url(#shadeLR)"/>
+    <path d="M${C-26} 46 Q${C} 41 ${C+26} 46 Q${C+30} 52 ${C+24} 54 Q${C} 49 ${C-24} 54 Q${C-30} 52 ${C-26} 46Z" fill="${shade(hc,.08)}"/>`+fold(`M${C} 18 L${C} 44`,.3,1); }
+  if(hs==='beanie'){ o+=`<path d="M${C-24} 46 Q${C-26} 10 ${C} 10 Q${C+26} 10 ${C+24} 46Z" fill="${hc}"/><path d="M${C-25} 38 L${C+25} 38 L${C+25} 50 Q${C} 47 ${C-25} 50Z" fill="${shade(hc,-.08)}"/><path d="M${C-25} 38 L${C+25} 38 L${C+25} 50 Q${C} 47 ${C-25} 50Z" fill="url(#rib)"/><path d="M${C-24} 46 Q${C-26} 10 ${C} 10 Q${C+26} 10 ${C+24} 46Z" fill="url(#shadeLR)"/>`; }
+  return o;
+}
+
+function tote(L){ if(!L.bag) return ''; const c=L.bag;
+  return `<path d="M${C+56} 128 Q${C+70} 220 ${C+86} 300" fill="none" stroke="${shade(c,-.18)}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M${C+70} 296 L${C+112} 290 L${C+116} 372 L${C+72} 378Z" fill="${c}"/><path d="M${C+70} 296 L${C+112} 290 L${C+116} 372 L${C+72} 378Z" fill="url(#shadeLR)"/>`+fold(`M${C+78} 300 Q${C+92} 330 ${C+84} 370`,.1,1.2); }
+
+function figure(L,i){
+  return `<svg viewBox="0 0 240 640" role="img" aria-label="Look ${i+1}: ${L.name}">
+    <ellipse cx="${C}" cy="628" rx="96" ry="10" fill="url(#floorShadow)"/>
+    ${shoes(L)}${pants(L)}${topW(L)}${hood(L)}${head(L)}${tote(L)}
+  </svg>`;
+}
+/* product thumbnails reuse the same garments without the body */
+function thumb(L,kind){
+  if(kind==='top'){ const body=topW({...L,noBody:true})+hood(L); return `<svg viewBox="28 92 184 250">${body}</svg>`; }
+  if(kind==='bottom') return `<svg viewBox="22 286 196 320">${pants(L)}</svg>`;
+  if(kind==='shoes') return `<svg viewBox="62 574 116 64">${shoes({...L,s:-6})}</svg>`;
+  // accessory
+  if(L.hair[0]==='cap'||L.hair[0]==='beanie'){ const h=head({...L,noBody:true}); return `<svg viewBox="88 2 64 60">${h}</svg>`; }
+  return `<svg viewBox="${C+60} 280 66 104">${tote(L)}</svg>`;
+}
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+const figsEl=$('figs'), N=LOOKS.length;
+let cur=2, bag=0;
+const els=LOOKS.map((L,i)=>{ const d=document.createElement('div'); d.className='fig'; d.innerHTML=figure(L,i)+`<button type="button" aria-label="Show look ${i+1}, ${L.name}"></button>`;
+  d.querySelector('button').addEventListener('click',()=>{ if(!dragMoved && i!==cur) set(i); }); figsEl.appendChild(d); return d; });
+
+function layout(){
+  const w=$('stage').clientWidth, mob=w<620;
+  const gap = mob ? w*.36 : Math.min(w*.155,190);
+  els.forEach((el,i)=>{
+    let k=i-cur; if(k>N/2) k-=N; if(k<-N/2) k+=N;
+    const a=Math.abs(k), sc = k===0?1:Math.max(.6,.86-(a-1)*.08), x=k*gap + (k===0?0:Math.sign(k)*gap*.06);
+    el.style.transform=`translateX(calc(-50% + ${x+dragX}px)) scale(${sc})`;
+    el.style.filter = a===0?'none':`blur(${Math.min(5,a*1.5)}px) saturate(${1-a*.12})`;
+    el.style.opacity = a>3?0:(a===0?1:1-a*.17);
+    el.style.zIndex = 10-a;
+    el.querySelector('button').tabIndex = a===0?-1:0;
+    el.setAttribute('aria-hidden', a>3);
+  });
+}
+function money(n){ return '$'+n.toLocaleString('en-US'); }
+function fill(anim){
+  const L=LOOKS[cur];
+  $('lookName').innerHTML=`Look ${String(cur+1).padStart(2,'0')}<b>${L.name}</b>`;
+  $('count').innerHTML=`${String(cur+1).padStart(2,'0')} <i>/ ${String(N).padStart(2,'0')}</i>`;
+  const render=()=>{
+    $('items').innerHTML=L.items.map(([n,c,k,p],j)=>{
+      const sizes = k==='shoes'?[40,41,42,43,44,45]:k==='acc'?['One size']:['XS','S','M','L','XL'];
+      const def = k==='shoes'?42:k==='acc'?'One size':'M';
+      return `<div class="item"><div class="thumb">${thumb(L,k)}</div><div class="meta"><b>${n}</b><small>${c}</small>
+        <label class="sr" for="sz-${cur}-${j}">Size for ${n}</label><select id="sz-${cur}-${j}">${sizes.map(s=>`<option${s==def?' selected':''}>${s}</option>`).join('')}</select></div><div class="price">${money(p)}</div></div>`; }).join('');
+    const sum=L.items.reduce((a,x)=>a+x[3],0), deal=Math.round(sum*.9);
+    $('was').textContent=money(sum); $('total').textContent=money(deal); $('pieces').textContent=`${L.items.length} pieces`;
+    $('items').classList.remove('fade');
+  };
+  if(anim){ $('items').classList.add('fade'); setTimeout(render,220); } else render();
+}
+function set(i){ cur=(i+N)%N; dragX=0; layout(); fill(true); }
+$('prev').onclick=()=>set(cur-1); $('next').onclick=()=>set(cur+1);
+addEventListener('keydown',e=>{ if(e.target.tagName==='SELECT') return; if(e.key==='ArrowRight') set(cur+1); if(e.key==='ArrowLeft') set(cur-1); });
+
+/* drag / swipe */
+const stage=$('stage'), cursor=$('cursor');
+let dragX=0, down=false, sx=0, dragMoved=false;
+stage.addEventListener('pointerdown',e=>{ if(e.target.closest('.pager')) return; down=true; dragMoved=false; sx=e.clientX; cursor.classList.add('press'); });
+addEventListener('pointermove',e=>{
+  const r=stage.getBoundingClientRect();
+  if(e.pointerType==='mouse'){ const inside=e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom&&!e.target.closest('.pager');
+    cursor.classList.toggle('on',inside); cursor.style.transform=''; cursor.style.left=(e.clientX-r.left)+'px'; cursor.style.top=(e.clientY-r.top)+'px'; }
+  if(!down) return; const dx=e.clientX-sx; if(Math.abs(dx)>6) dragMoved=true; dragX=dx*.9;
+  els.forEach(el=>el.style.transition='none'); layout();
+});
+const up=e=>{ if(!down) return; down=false; cursor.classList.remove('press'); els.forEach(el=>el.style.transition='');
+  const w=stage.clientWidth, gap=w<620?w*.36:Math.min(w*.155,190); const steps=Math.round(-dragX/gap*1.1);
+  if(steps) set(cur+steps); else { dragX=0; layout(); }
+  setTimeout(()=>dragMoved=false,0); };
+addEventListener('pointerup',up); addEventListener('pointercancel',up);
+stage.addEventListener('pointerleave',()=>cursor.classList.remove('on'));
+
+/* bag */
+let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2400); }
+$('addLook').onclick=()=>{ const L=LOOKS[cur]; bag+=L.items.length; $('bagCount').textContent=bag; $('bagBtn').setAttribute('aria-label',`Bag, ${bag} items`);
+  const b=$('bagBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+  toast(`${L.name} added · ${L.items.length} pieces for ${$('total').textContent}`); };
+$('bagBtn').onclick=()=>toast(bag?`${bag} pieces in your bag · checkout is off in this concept`:'Your bag is empty. Add a full look to start.');
+
+addEventListener('resize',layout);
+layout(); fill(false);
+</script>
+
+</body>
+</html>
