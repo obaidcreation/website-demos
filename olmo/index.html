@@ -183,6 +183,17 @@ a{color:inherit}
   .filters{overflow-x:auto;flex-wrap:nowrap;max-width:100%}
   .filters button{flex:none}
 }
+
+/* compact rail so a 4-piece look fits above the fold */
+@media (min-width:981px){
+  .rail{padding:18px 20px;gap:12px}
+  .item{grid-template-columns:62px minmax(0,1fr) auto;gap:12px;padding:8px 0}
+  .item .thumb{width:62px;height:70px}
+  .meta small{margin:0 0 2px}
+  .opts{margin-top:4px}
+  .row2{margin-top:6px}
+  .add{height:50px}
+}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
