@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%230a0b0d%22/%3E%3Cpath%20d%3D%22M5%2015l2-4h10l2%204v3H5z%22%20fill%3D%22none%22%20stroke%3D%22%23d2ae6d%22%20stroke-width%3D%221.6%22/%3E%3Ccircle%20cx%3D%228.5%22%20cy%3D%2218%22%20r%3D%221.5%22%20fill%3D%22%23d2ae6d%22/%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%2218%22%20r%3D%221.5%22%20fill%3D%22%23d2ae6d%22/%3E%3C/svg%3E">
+<meta name="author" content="OK Creation">
+<meta property="og:title" content="SAFAR Luxury Rent a Car"><meta property="og:description" content="Civic, Corolla, Fortuner, V8, Revo dala, Hiace and bridal cars with driver or self-drive. Book on WhatsApp in a minute."><meta property="og:type" content="website">
+<title>SAFAR Luxury Rent a Car</title>
+<meta name="description" content="SAFAR Luxury Rent a Car — Civic, Corolla, Alto, Wagon R, Fortuner, Prado, V8, Revo and Ravi dala, Hiace and bridal Mercedes, with driver or self-drive in Islamabad, Rawalpindi, Lahore and Attock. Book in a minute on WhatsApp.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"AutoRental","name":"SAFAR Luxury Rent a Car (concept)","areaServed":["Islamabad","Rawalpindi","Lahore","Attock"],"openingHours":"Mo-Su 00:00-23:59","priceRange":"Rs 3,500 – Rs 35,000 per day"}</script>
+<style>
+/* Layout: night-showroom hero with a live 3D car and the booking box, then fleet grid, services, tours, terms, FAQ; booking drawer slides in from the right (full screen on phones) */
+:root{
+  --bg:#0a0b0d;
+  --panel:#121318;
+  --panel2:#17181e;
+  --ink:#f2efe9;
+  --mute:#8f8c86;
+  --line:rgba(242,239,233,.1);
+  --gold:#d2ae6d;
+  --gold2:#f0d9a6;
+  --ok:#7fc79a;
+  --f-disp:"Bodoni Moda","Didot","Times New Roman",serif;
+  --f-body:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  --max:1240px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+button,input,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;padding:0}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--f-disp);font-weight:500;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h2{font-size:clamp(32px,4vw,52px);line-height:1.05}
+h2 em,h1 em{font-style:italic;color:var(--gold2)}
+.lead{color:var(--mute);max-width:56ch;margin:14px 0 0}
+.sec{padding-block:clamp(64px,9vw,120px);scroll-margin-top:70px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:34px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 22px;border-radius:12px;font-weight:600;font-size:14.5px;transition:transform .15s,background .2s,box-shadow .2s,border-color .2s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a140a;box-shadow:0 12px 34px -14px rgba(210,174,109,.8)}
+.btn-gold:hover{box-shadow:0 16px 44px -12px rgba(210,174,109,.95)}
+.btn-line{border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.btn-line:hover{border-color:rgba(242,239,233,.35)}
+.btn svg{width:18px;height:18px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(10,11,13,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:41;background:var(--bg)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;height:68px}
+.logo{display:flex;align-items:baseline;gap:10px}
+.logo b{font-family:var(--f-disp);font-weight:600;font-size:24px;letter-spacing:.24em}
+.logo span{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.menu{display:flex;gap:26px;font-size:14px;color:var(--mute)}
+.menu a:hover{color:var(--ink)}
+.hdr-r{display:flex;align-items:center;gap:10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;gap:2px}
+.seg button{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;padding:6px 11px;border-radius:99px;color:var(--mute);transition:background .2s,color .2s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.hdr .btn{height:42px;padding:0 16px;font-size:13.5px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);
+  background:radial-gradient(60% 70% at 72% 58%,rgba(210,174,109,.12),transparent 70%),radial-gradient(90% 60% at 50% 120%,rgba(120,140,170,.10),transparent 70%),var(--bg)}
+.hero-3d{position:absolute;inset:0}
+.hero-3d canvas{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.hero-3d canvas:active{cursor:grabbing}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,520px) 1fr;min-height:720px;padding-block:56px 40px;pointer-events:none}
+.hero-copy{pointer-events:auto;align-self:center}
+.hero h1{font-size:clamp(42px,5.6vw,78px);line-height:1;margin:16px 0 18px}
+.hero p.sub{color:#c9c5bd;max-width:44ch;margin:0 0 26px;font-size:16.5px}
+.book{background:rgba(18,19,24,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.mode{display:grid;grid-template-columns:1fr 1fr;background:#0d0e12;border-radius:12px;padding:4px;margin-bottom:14px}
+.mode button{height:40px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--mute);transition:background .2s,color .2s}
+.mode button[aria-pressed="true"]{background:var(--panel2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f.full{grid-column:1/-1}
+.f label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.f input,.f select{height:46px;background:#0d0e12;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:14.5px;min-width:0;width:100%}
+.f input:focus,.f select:focus{outline:none;border-color:var(--gold)}
+.dt{display:grid;grid-template-columns:1.25fr 1fr;gap:6px}
+.book .btn{width:100%;margin-top:14px}
+.book-note{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:12px;color:var(--mute)}
+.paint{position:absolute;z-index:3;right:var(--gut-r);bottom:28px;display:flex;align-items:center;gap:10px;pointer-events:auto}
+.paint .chip{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px 0 6px;border-radius:99px;border:1px solid var(--line);background:rgba(10,11,13,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:12.5px;color:var(--mute);transition:border-color .2s,color .2s}
+.paint .chip i{width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.paint .chip[aria-pressed="true"]{border-color:var(--gold);color:var(--ink)}
+.paint .doors{padding:0 14px}
+.hint3d{position:absolute;z-index:3;right:var(--gut-r);top:24px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:10px}
+.hint3d::before{content:"";width:24px;height:1px;background:var(--line)}
+.trust{border-bottom:1px solid var(--line)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.trust div{display:flex;gap:14px;align-items:center;padding:22px 18px;border-left:1px solid var(--line);font-size:13.5px;color:var(--mute)}
+.trust div:first-child{border-left:0;padding-left:0}
+.trust b{display:block;color:var(--ink);font-weight:600;font-size:14.5px}
+.trust svg{width:28px;height:28px;flex:none;stroke:var(--gold);fill:none;stroke-width:1.5}
+
+/* fleet */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{height:38px;padding:0 15px;border-radius:99px;border:1px solid var(--line);font-size:13.5px;color:var(--mute);transition:all .2s}
+.filters button:hover{color:var(--ink);border-color:rgba(242,239,233,.3)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters button small{font-family:var(--f-mono);font-size:10.5px;opacity:.6;margin-left:4px}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px;justify-content:space-between}
+.tools select{height:38px;border-radius:99px;border:1px solid var(--line);background:transparent;padding:0 14px;font-size:13.5px;color:var(--ink)}
+.tools select option{background:var(--panel)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.car{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .35s;animation:cardIn .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}}
+.car:hover{transform:translateY(-4px);border-color:rgba(210,174,109,.35);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.vis{position:relative;aspect-ratio:16/9.4;background:radial-gradient(70% 80% at 50% 92%,rgba(210,174,109,.18),transparent 65%),radial-gradient(100% 70% at 50% 0%,rgba(255,255,255,.04),transparent 60%),#0e0f13;display:grid;place-items:end center;padding:0 8px 8px}
+.vis svg{width:100%;max-width:360px;margin-bottom:-4px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.car:hover .vis svg{transform:translateX(6px) scale(1.02)}
+.badge{position:absolute;left:14px;top:14px;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;border-radius:99px;background:rgba(210,174,109,.14);color:var(--gold2);border:1px solid rgba(210,174,109,.35)}
+.only{position:absolute;right:14px;top:14px;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.car-b{padding:18px 18px 18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.car-b h3{font-family:var(--f-body);font-weight:700;font-size:18px;letter-spacing:-.01em}
+.car-b .trim{color:var(--mute);font-size:13px;margin-top:2px}
+.specs{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#bdb9b1}
+.specs span{display:inline-flex;align-items:center;gap:6px}
+.specs svg{width:15px;height:15px;stroke:var(--mute);fill:none;stroke-width:1.6}
+.price-row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.price-row b{font-family:var(--f-mono);font-weight:500;font-size:20px}
+.price-row small{display:block;color:var(--mute);font-size:11.5px}
+.price-row .btn{height:42px;padding:0 16px;font-size:13.5px}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:var(--mute)}
+
+/* services */
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.svc article{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.svc svg{width:34px;height:34px;stroke:var(--gold);fill:none;stroke-width:1.4}
+.svc h3{font-family:var(--f-body);font-weight:700;font-size:17px;margin-top:6px}
+.svc p{margin:0;color:var(--mute);font-size:14px}
+.svc .from{margin-top:auto;padding-top:10px;font-family:var(--f-mono);font-size:13px;color:var(--gold2)}
+
+/* tours */
+.tours{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tour{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column}
+.tour .art{aspect-ratio:4/3;position:relative}
+.tour .art svg{position:absolute;inset:0;width:100%;height:100%}
+.tour .body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tour h3{font-family:var(--f-disp);font-size:24px;font-weight:500}
+.tour .meta{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;color:var(--mute)}
+.tour p{margin:0;color:var(--mute);font-size:13.5px}
+.tour .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
+.tour .row b{font-family:var(--f-mono);font-weight:500}
+.tour .row small{display:block;font-size:11px;color:var(--mute);font-family:var(--f-body)}
+.link{font-size:13.5px;font-weight:600;color:var(--gold2);border-bottom:1px solid rgba(240,217,166,.4);padding-bottom:1px}
+
+/* steps + terms */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.steps div{border-top:1px solid var(--gold);padding-top:18px}
+.steps div::before{counter-increment:s;content:"0" counter(s);font-family:var(--f-mono);font-size:12px;color:var(--gold);letter-spacing:.1em}
+.steps h3{font-family:var(--f-body);font-weight:700;font-size:18px;margin:10px 0 6px}
+.steps p{margin:0;color:var(--mute);font-size:14px}
+.terms{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-top:56px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+.card h3{font-family:var(--f-body);font-weight:700;font-size:17px;margin-bottom:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl td{padding:11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td:last-child{text-align:right;color:var(--ink);font-family:var(--f-mono);font-size:13px;padding-left:14px}
+.tbl td:first-child{color:#c9c5bd}
+.docs{display:grid;gap:18px}
+.docs ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+.docs li{display:flex;gap:10px;font-size:14px;color:#c9c5bd}
+.docs li::before{content:"";flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;background:radial-gradient(circle,var(--gold) 35%,transparent 40%),rgba(210,174,109,.15)}
+.docs h4{margin:0 0 10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:500}
+
+/* faq */
+.faq{display:grid;grid-template-columns:1fr 1.4fr;gap:40px}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:600;font-size:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--gold);font-size:20px;line-height:1;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:10px 0 0;color:var(--mute);font-size:14.5px;max-width:62ch}
+
+/* cta + footer */
+.cta{border-radius:24px;padding:clamp(28px,5vw,56px);background:radial-gradient(80% 120% at 100% 0%,rgba(210,174,109,.22),transparent 60%),var(--panel);border:1px solid rgba(210,174,109,.25);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.cta h2{font-size:clamp(28px,3.4vw,44px)}
+.cta .num{font-family:var(--f-mono);color:var(--gold2);margin-top:8px;user-select:all}
+footer{border-top:1px solid var(--line);padding-block:44px calc(44px + env(safe-area-inset-bottom,0px));margin-top:clamp(64px,9vw,110px)}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;font-size:14px;color:var(--mute)}
+.foot h4{margin:0 0 12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);font-weight:500}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot a:hover{color:var(--ink)}
+.legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--f-mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+.legal .chip{padding:3px 9px;border:1px solid var(--line);border-radius:99px;text-transform:uppercase;letter-spacing:.12em}
+
+/* drawer */
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .35s}
+.drawer{position:fixed;z-index:61;top:0;right:0;bottom:0;width:min(520px,100%);background:#0f1014;border-left:1px solid var(--line);transform:translateX(102%);transition:transform .55s cubic-bezier(.2,.75,.2,1);display:flex;flex-direction:column}
+.open .scrim{opacity:1;pointer-events:auto}
+.open .drawer{transform:none;box-shadow:-40px 0 100px rgba(0,0,0,.6)}
+.dr-top{display:flex;justify-content:space-between;align-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(22px, env(safe-area-inset-right,0px)) 14px 22px;border-bottom:1px solid var(--line)}
+.dr-top .eyebrow{font-size:10.5px}
+.x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.x svg{width:14px;height:14px}
+.dr-body{flex:1;overflow:auto;padding:18px max(22px, env(safe-area-inset-right,0px)) 22px 22px;display:flex;flex-direction:column;gap:18px}
+.dr-car{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:10px 14px 10px 10px}
+.dr-car .vis{aspect-ratio:auto;height:84px;border-radius:12px;padding:0 6px 2px}
+.dr-car h3{font-family:var(--f-body);font-weight:700;font-size:17px}
+.dr-car small{display:block;color:var(--mute);font-size:12.5px}
+.dr-car .rate{font-family:var(--f-mono);font-size:13px;color:var(--gold2);margin-top:4px}
+.blk h4{margin:0 0 10px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.extras{display:grid;gap:8px}
+.ex{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:border-color .2s,background .2s}
+.ex:hover{border-color:rgba(242,239,233,.25)}
+.ex input{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:6px;border:1.5px solid rgba(242,239,233,.35);display:grid;place-items:center;flex:none;margin:0}
+.ex input:checked{background:var(--gold);border-color:var(--gold)}
+.ex input:checked::after{content:"";width:9px;height:5px;border:2px solid #1a140a;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.ex span{flex:1;font-size:14px}
+.ex span small{display:block;color:var(--mute);font-size:12px}
+.ex b{font-family:var(--f-mono);font-weight:500;font-size:12.5px;color:#c9c5bd;white-space:nowrap}
+.ex.off{opacity:.4;pointer-events:none}
+.hrs{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+.hrs span{font-size:14px}
+.hrs span small{display:block;color:var(--mute);font-size:12px}
+.step{display:flex;align-items:center;gap:12px;font-family:var(--f-mono)}
+.step button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);font-size:16px}
+.sum{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.sum .ln{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;color:#c9c5bd;padding:5px 0}
+.sum .ln b{font-family:var(--f-mono);font-weight:500;color:var(--ink);font-size:13px;white-space:nowrap}
+.sum .tot{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:15px;color:var(--ink)}
+.sum .tot b{font-size:20px;color:var(--gold2)}
+.sum .dep{font-size:12.5px;color:var(--mute)}
+.dr-foot{padding:14px max(22px, env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) 22px;border-top:1px solid var(--line);display:grid;gap:8px;background:#0f1014}
+.wa{background:#25d366;color:#06140b;box-shadow:0 12px 30px -14px rgba(37,211,102,.7)}
+.wa:hover{background:#2fe072}
+.dr-foot .fine{font-size:11.5px;color:var(--mute);text-align:center}
+.err{color:#ff9a8a;font-size:12.5px;min-height:0}
+
+.fab{position:fixed;z-index:50;right:max(16px, env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:#25d366;display:none;place-items:center;box-shadow:0 14px 34px -10px rgba(37,211,102,.7)}
+.fab svg{width:28px;height:28px;fill:#06140b}
+.toast{position:fixed;z-index:80;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:600;transition:opacity .3s,transform .4s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:1060px){
+  .menu{display:none}
+  .svc,.tours{grid-template-columns:repeat(2,1fr)}
+  .foot{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .hero-3d{position:relative;height:300px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);min-height:0;padding-block:0 36px}
+  .hero h1{font-size:40px;margin-top:10px}
+  .hint3d{top:14px}
+  .paint{top:248px;bottom:auto;left:var(--gut-l);right:var(--gut-r);justify-content:center;flex-wrap:wrap}
+  .paint .chip span{display:none}
+  .paint .chip{padding:0 6px}
+  .paint .doors{padding:0 12px}
+  .paint .doors span{display:inline}
+  .trust .wrap{grid-template-columns:1fr 1fr}
+  .trust div{border-left:0;padding:16px 0;border-top:1px solid var(--line)}
+  .terms,.faq{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .fab{display:grid}
+  .hdr .btn span{display:none}
+  .hdr .btn{width:42px;padding:0}
+}
+@media (max-width:560px){
+  .svc,.tours{grid-template-columns:1fr}
+  .fields{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr}
+  .dr-car{grid-template-columns:110px minmax(0,1fr)}
+  .seg button{padding:6px 8px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="bodyShade" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".32" stop-color="#fff" stop-opacity=".06"/>
+      <stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/>
+    </linearGradient>
+    <linearGradient id="sideSheen" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity=".25"/><stop offset=".45" stop-color="#fff" stop-opacity=".1"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#3a4250"/><stop offset=".45" stop-color="#11151c"/><stop offset="1" stop-color="#07090c"/>
+    </linearGradient>
+    <radialGradient id="rim" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#e9ebee"/><stop offset=".55" stop-color="#8d939b"/><stop offset="1" stop-color="#3c4046"/></radialGradient>
+    <radialGradient id="cs"><stop offset="0" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1b2433"/><stop offset="1" stop-color="#0d1016"/></linearGradient>
+  </defs>
+</svg>
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="SAFAR home"><b>SAFAR</b><span>Rent a Car</span></a>
+    <nav class="menu" aria-label="Main"><a href="#fleet">Fleet</a><a href="#services">Services</a><a href="#tours">Tours</a><a href="#terms">Pricing &amp; terms</a><a href="#faq">FAQ</a></nav>
+    <div class="hdr-r">
+      <div class="seg" role="group" aria-label="Currency"><button type="button" data-cur="PKR" aria-pressed="true">PKR</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div>
+      <a class="btn btn-gold" id="hdrWa" href="https://wa.me/923101530011" target="_blank" rel="noopener" aria-label="Book on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg><span>Book on WhatsApp</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-label="SAFAR showroom">
+  <div class="hero-3d" id="hero3d"><canvas id="gl" aria-label="3D showroom car. Drag to rotate."></canvas>
+    <div class="hint3d" id="hint3d">Loading showroom · 0%</div>
+  </div>
+  <div class="paint" id="paint" role="group" aria-label="Showroom paint">
+    <button type="button" class="chip" data-v="2" aria-pressed="true"><i style="background:#3a3c41"></i><span>Graphite</span></button>
+    <button type="button" class="chip" data-v="1" aria-pressed="false"><i style="background:#e9e4ea"></i><span>Pearl</span></button>
+    <button type="button" class="chip" data-v="0" aria-pressed="false"><i style="background:#9e1020"></i><span>Carmine</span></button>
+    <button type="button" class="chip doors" id="doorsBtn" aria-pressed="false"><span>Open doors</span></button>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow">Islamabad · Rawalpindi · Lahore · Attock</div>
+      <h1>Arrive like it was <em>planned.</em></h1>
+      <p class="sub">From a city Alto to a protocol Land Cruiser. With a uniformed driver or keys in your hand, booked in a minute on WhatsApp.</p>
+      <form class="book" id="bookForm" novalidate>
+        <div class="mode" role="group" aria-label="Service type"><button type="button" data-mode="drv" aria-pressed="true">With driver</button><button type="button" data-mode="self" aria-pressed="false">Self-drive</button></div>
+        <div class="fields">
+          <div class="f full"><label for="city">Pickup city</label><select id="city"><option>Islamabad</option><option>Rawalpindi</option><option>Lahore</option><option>Attock</option><option>Peshawar</option><option>Islamabad Airport (ISB)</option></select></div>
+          <div class="f"><label for="pd">Pickup</label><div class="dt"><input type="date" id="pd" aria-label="Pickup date"><input type="time" id="pt" value="10:00" aria-label="Pickup time"></div></div>
+          <div class="f"><label for="rd">Return</label><div class="dt"><input type="date" id="rd" aria-label="Return date"><input type="time" id="rt" value="10:00" aria-label="Return time"></div></div>
+        </div>
+        <button class="btn btn-gold" type="submit">Show available cars <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></button>
+        <div class="book-note"><span id="daysNote">1 day</span><span>Free cancellation up to 24 hours before</span></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="trust" aria-label="Why SAFAR">
+  <div class="wrap">
+    <div><svg viewBox="0 0 32 32"><path d="M4 22l6-2 10-12 3 2-8 13 9-3 2 3-20 6z"/></svg><span><b>Free airport pickup</b>Islamabad International, on 3+ day bookings</span></div>
+    <div><svg viewBox="0 0 32 32"><circle cx="16" cy="10" r="5"/><path d="M6 28c1-6 5-9 10-9s9 3 10 9M12 19l4 5 4-5"/></svg><span><b>Verified drivers</b>Uniformed, police-checked, city and route experts</span></div>
+    <div><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="M16 9v7l5 3"/></svg><span><b>24/7 support</b>Roadside help and a replacement car if needed</span></div>
+    <div><svg viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="18" rx="3"/><path d="M5 13h22M10 19h5"/></svg><span><b>No hidden charges</b>Every rate, extra and deposit shown before you book</span></div>
+  </div>
+</section>
+
+<section class="sec" id="fleet" aria-labelledby="fleetH">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">The fleet</div><h2 id="fleetH">Fifteen cars. <em>One standard.</em></h2>
+        <p class="lead">Every car is under three years old, washed and checked before each booking. Prices are per day, <span id="modeLead">with a driver for 10 hours, fuel by you</span>.</p></div>
+    </div>
+    <div class="tools">
+      <div class="filters" id="filters" role="group" aria-label="Filter by type"></div>
+      <label class="sr" for="sort">Sort cars</label>
+      <select id="sort"><option value="rec">Recommended</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option><option value="seats">Most seats</option></select>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="sec" id="services" style="padding-top:0" aria-labelledby="svcH">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Services</div><h2 id="svcH">For the airport, the <em>baraat</em> and the boardroom.</h2></div></div>
+    <div class="svc">
+      <article><svg viewBox="0 0 34 34"><path d="M4 23l7-2 11-13 3 2-8 14 10-4 2 3-23 7z"/><path d="M4 30h26"/></svg><h3>Airport transfers</h3><p>Meet and greet at Islamabad International with a name board. Flight tracked, so late landings cost nothing extra.</p><div class="from" data-from="4500">From Rs 4,500 per trip</div></article>
+      <article><svg viewBox="0 0 34 34"><path d="M17 29s-10-6-12.5-11.6C2.8 13.4 5.6 8.6 10 8.6c2.9 0 4.9 1.6 7 4.3 2.1-2.7 4.1-4.3 7-4.3 4.4 0 7.2 4.8 5.5 8.8C27 23 17 29 17 29z"/></svg><h3>Wedding cars</h3><p>Fresh-flower decor on a white Civic or Mercedes, a suited driver and a convoy plan for mehndi, baraat and walima.</p><div class="from" data-from="15000">From Rs 15,000 per event</div></article>
+      <article><svg viewBox="0 0 34 34"><rect x="5" y="10" width="24" height="18" rx="3"/><path d="M12 10V7h10v3M5 17h24"/></svg><h3>Corporate monthly</h3><p>A dedicated car and driver for your team or guests, one monthly invoice, and a replacement within two hours.</p><div class="from" data-from="120000">From Rs 120,000 per month</div></article>
+      <article><svg viewBox="0 0 34 34"><circle cx="10" cy="24" r="4"/><circle cx="25" cy="24" r="4"/><path d="M4 24v-6l4-7h14l6 7h2v6M14 24h7"/></svg><h3>Self-drive</h3><p>Keys in your hand for 24 hours with 250 km included. Refundable deposit, returned within a day.</p><div class="from" data-from="3500">From Rs 3,500 per day</div></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="tours" style="padding-top:0" aria-labelledby="tourH">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Northern tours</div><h2 id="tourH">Car, driver, route. <em>You just look out.</em></h2>
+      <p class="lead">Drivers who know every turn to Naran and Hunza. Prices include the car and driver for the whole trip; fuel, tolls and the driver's stay are by you.</p></div></div>
+    <div class="tours" id="tourGrid"></div>
+  </div>
+</section>
+
+<section class="sec" id="terms" style="padding-top:0" aria-labelledby="howH">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">How it works</div><h2 id="howH">Booked in a minute. <em>Clear to the rupee.</em></h2></div></div>
+    <div class="steps">
+      <div><h3>Pick your car and dates</h3><p>Choose with driver or self-drive, add extras, and see the full price before you send anything.</p></div>
+      <div><h3>Confirm on WhatsApp</h3><p>Your booking arrives as a ready message. We confirm the car, driver name and number within 10 minutes.</p></div>
+      <div><h3>We arrive, you go</h3><p>The car reaches your door, office or arrival hall on time. Pay cash, bank transfer or card on pickup.</p></div>
+    </div>
+    <div class="terms">
+      <div class="card"><h3>Pricing and terms</h3>
+        <table class="tbl"><tbody>
+          <tr><td>Rental day with driver</td><td>10 hours, within city</td></tr>
+          <tr><td>Overtime, per extra hour</td><td data-m="1500">Rs 1,500</td></tr>
+          <tr><td>Night service after 11 pm</td><td data-m="2000">+ Rs 2,000</td></tr>
+          <tr><td>Out of city, per day</td><td data-m="2000">+ Rs 2,000</td></tr>
+          <tr><td>Driver food and stay, outstation</td><td data-m="2500">Rs 2,500 / night</td></tr>
+          <tr><td>Fuel</td><td>By customer, same level back</td></tr>
+          <tr><td>Self-drive mileage</td><td>250 km / day included</td></tr>
+          <tr><td>Extra km, self-drive</td><td data-m="25">Rs 25 / km</td></tr>
+          <tr><td>Cancellation</td><td>Free up to 24 hours before</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card docs"><div><h3>Documents you need</h3><h4>With driver</h4><ul><li>CNIC or passport copy of the person booking</li><li>Pickup address and contact number</li></ul></div>
+        <div><h4>Self-drive</h4><ul><li>Original CNIC and a valid driving licence, 2+ years old</li><li>Utility bill or office card for address check</li><li>Refundable deposit: Rs 30,000 for cars, Rs 50,000 for SUVs and dala</li></ul></div>
+        <div><h4>Overseas guests</h4><ul><li>Passport with valid visa and an International Driving Permit</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq" style="padding-top:0" aria-labelledby="faqH">
+  <div class="wrap faq">
+    <div><div class="eyebrow">FAQ</div><h2 id="faqH">Good <em>questions.</em></h2><p class="lead">Still unsure? Send us a WhatsApp and a real person replies, day or night.</p></div>
+    <div>
+      <details open><summary>Is the price with or without fuel?</summary><p>Without fuel. The car comes with fuel noted on handover and goes back at the same level. On tours, we can add a fuel package at pump price if you prefer one bill.</p></details>
+      <details><summary>Can I take a self-drive car out of the city?</summary><p>Yes, within Punjab, KP and Islamabad with prior notice. Northern areas trips are with driver only, for safety and insurance.</p></details>
+      <details><summary>What if the car breaks down?</summary><p>Call or WhatsApp our 24/7 line. Within twin cities a replacement car reaches you within two hours; outstation we arrange the nearest one.</p></details>
+      <details><summary>Do you decorate wedding cars?</summary><p>Yes. Fresh-flower decor for the bridal car and matching ribbons for the convoy. Add it in the booking and share your colour theme.</p></details>
+      <details><summary>How do I pay?</summary><p>Cash, bank transfer, JazzCash, Easypaisa or card on pickup. Corporate clients get a monthly invoice.</p></details>
+      <details><summary>When do I get my self-drive deposit back?</summary><p>Within 24 hours of return, after a quick check for damage, fines and extra kilometres.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" aria-label="Book now">
+  <div class="cta">
+    <div><h2>Your car is <em>ready</em> when you are.</h2><div class="num">WhatsApp · 0310 1530011</div></div>
+    <a class="btn btn-gold" href="#fleet">Choose your car <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg></a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="#top"><b>SAFAR</b><span>Rent a Car</span></a><p style="margin:14px 0 0;max-width:34ch">Luxury and everyday cars with driver or self-drive, open 24 hours, seven days a week.</p></div>
+      <div><h4>Fleet</h4><ul><li><a href="#fleet" data-jump="economy">Economy</a></li><li><a href="#fleet" data-jump="sedan">Sedans</a></li><li><a href="#fleet" data-jump="suv">SUVs &amp; 4x4</a></li><li><a href="#fleet" data-jump="dala">Dala &amp; pickups</a></li><li><a href="#fleet" data-jump="van">Vans</a></li></ul></div>
+      <div><h4>Cities</h4><ul><li>Islamabad</li><li>Rawalpindi</li><li>Lahore</li><li>Attock</li><li>Peshawar</li></ul></div>
+      <div><h4>Contact</h4><ul><li>WhatsApp: 0310 1530011</li><li>Open 24/7</li><li><a href="#terms">Pricing &amp; terms</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    </div>
+    <div class="legal"><span><span class="chip">Concept project</span> &nbsp;© OK Creation · Brand, prices and fleet are a demo. WhatsApp goes to OK Creation.</span><span>3D car: “Car Concept” © 2024 Darmstadt Graphics Group, CC BY 4.0</span></div>
+  </div>
+</footer>
+
+<a class="fab" id="fab" href="https://wa.me/923101530011" target="_blank" rel="noopener" aria-label="WhatsApp SAFAR"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg></a>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Book this car" inert>
+  <div class="dr-top"><div><div class="eyebrow">Your booking</div></div><button class="x" id="drClose" type="button" aria-label="Close booking"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2"/></svg></button></div>
+  <div class="dr-body">
+    <div class="dr-car" id="drCar"></div>
+    <div class="mode" id="drMode" role="group" aria-label="Service type" style="margin:0"><button type="button" data-mode="drv">With driver</button><button type="button" data-mode="self">Self-drive</button></div>
+    <div class="fields">
+      <div class="f full"><label for="dCity">Pickup city</label><select id="dCity"></select></div>
+      <div class="f"><label for="dpd">Pickup</label><div class="dt"><input type="date" id="dpd" aria-label="Pickup date"><input type="time" id="dpt" aria-label="Pickup time"></div></div>
+      <div class="f"><label for="drd">Return</label><div class="dt"><input type="date" id="drd" aria-label="Return date"><input type="time" id="drt" aria-label="Return time"></div></div>
+    </div>
+    <div class="err" id="dateErr" role="alert"></div>
+    <div class="blk"><h4>Extras</h4><div class="extras" id="extras"></div></div>
+    <div class="hrs" id="hrsRow"><span>Extra hours<small>Beyond 10 hours a day, per hour</small></span><div class="step"><button type="button" id="hMinus" aria-label="Fewer hours">−</button><span id="hVal">0</span><button type="button" id="hPlus" aria-label="More hours">+</button></div></div>
+    <div class="fields">
+      <div class="f"><label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="Full name"></div>
+      <div class="f"><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="03xx xxxxxxx"></div>
+    </div>
+    <div class="sum" id="sum" aria-live="polite"></div>
+  </div>
+  <div class="dr-foot">
+    <a class="btn wa" id="waBtn" href="https://wa.me/923101530011" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg>Confirm on WhatsApp</a>
+    <button class="btn btn-line" id="copyBtn" type="button">Copy booking details</button>
+    <div class="fine">Nothing is charged online. You pay on pickup.</div>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ---------- data ---------- */
+const WA='923101530011';
+const FLEET=[
+ {id:'alto',  name:'Suzuki Alto',        trim:'VXR · 2024',            cat:'economy', type:'hatch',  color:'#c9ccd1', seats:4, gear:'Manual', fuel:'Petrol', bags:1, drv:4000,  self:3500,  badge:'City favourite'},
+ {id:'wagonr',name:'Suzuki Wagon R',     trim:'VXL · 2024',            cat:'economy', type:'tall',   color:'#8e1d26', seats:4, gear:'Manual', fuel:'Petrol', bags:2, drv:4500,  self:4000},
+ {id:'cultus',name:'Suzuki Cultus',      trim:'VXL AGS · 2024',        cat:'economy', type:'hatch',  color:'#2c4b78', seats:4, gear:'Auto',   fuel:'Petrol', bags:2, drv:5000,  self:4500},
+ {id:'yaris', name:'Toyota Yaris',       trim:'ATIV X CVT · 2024',     cat:'sedan',   type:'sedan',  color:'#e8e6e1', seats:4, gear:'Auto',   fuel:'Petrol', bags:3, drv:5500,  self:5000},
+ {id:'city',  name:'Honda City',         trim:'Aspire 1.5 · 2024',     cat:'sedan',   type:'sedan',  color:'#5a5f66', seats:4, gear:'Auto',   fuel:'Petrol', bags:3, drv:6000,  self:5500},
+ {id:'corolla',name:'Toyota Corolla',    trim:'Altis 1.6 · 2024',      cat:'sedan',   type:'sedan',  color:'#1b1c20', seats:4, gear:'Auto',   fuel:'Petrol', bags:3, drv:6500,  self:6000,  badge:'Most booked'},
+ {id:'civic', name:'Honda Civic',        trim:'RS Turbo · 2024',       cat:'sedan',   type:'sedan',  color:'#f1f1ee', seats:4, gear:'Auto',   fuel:'Petrol', bags:3, drv:8000,  self:7500,  badge:'Wedding favourite', decor:true},
+ {id:'sportage',name:'Kia Sportage',     trim:'AWD · 2024',            cat:'suv',     type:'suv',    color:'#6b786a', seats:5, gear:'Auto',   fuel:'Petrol', bags:4, drv:12000, self:11000},
+ {id:'fortuner',name:'Toyota Fortuner',  trim:'Legender 4x4 · 2024',   cat:'suv',     type:'suv',    color:'#efeeea', seats:7, gear:'Auto',   fuel:'Diesel', bags:4, drv:16000, self:15000, badge:'Tours'},
+ {id:'prado', name:'Toyota Prado',       trim:'TX-L · 2023',           cat:'suv',     type:'suv',    color:'#2a2b30', seats:7, gear:'Auto',   fuel:'Diesel', bags:4, drv:18000, self:null},
+ {id:'v8',    name:'Land Cruiser V8',    trim:'ZX · 2022',             cat:'luxury',  type:'suv',    color:'#0e0e10', seats:7, gear:'Auto',   fuel:'Petrol', bags:4, drv:25000, self:null,  badge:'Protocol'},
+ {id:'merc',  name:'Mercedes-Benz E-Class',trim:'E 200 · Bridal car', cat:'luxury',  type:'lux',    color:'#dedad2', seats:4, gear:'Auto',   fuel:'Petrol', bags:3, drv:35000, self:null,  badge:'Bridal car', decor:true},
+ {id:'revo',  name:'Toyota Hilux Revo',  trim:'Dala · 4x4 · 2024',     cat:'dala',    type:'pickup', color:'#9b9ea3', seats:5, gear:'Auto',   fuel:'Diesel', bags:'Open bed', drv:13000, self:12000},
+ {id:'ravi',  name:'Suzuki Ravi',        trim:'Dala · Loader · 2024',  cat:'dala',    type:'ravi',   color:'#ebebe7', seats:2, gear:'Manual', fuel:'Petrol', bags:'650 kg', drv:4000, self:null, badge:'Shifting & cargo'},
+ {id:'hiace', name:'Toyota Hiace',       trim:'Grand Cabin · 2023',    cat:'van',     type:'van',    color:'#f0f0ed', seats:14,gear:'Manual', fuel:'Diesel', bags:8, drv:10000, self:null,  badge:'Groups'},
+];
+const CATS=[['all','All'],['economy','Economy'],['sedan','Sedan'],['suv','SUV & 4x4'],['luxury','Luxury'],['dala','Dala'],['van','Van']];
+const TOURS=[
+ {name:'Murree & Nathia Gali', days:'1 day', km:'≈ 160 km', car:'civic', from:12000, note:'Pine roads, Mall Road and a sunset at Mushkpuri.', hue:'#2f4a3a', peaks:[.62,.48,.7,.55]},
+ {name:'Naran & Kaghan',       days:'3 days', km:'≈ 560 km', car:'fortuner', from:55000, note:'Lake Saiful Muluk and the Babusar Top drive.', hue:'#24405a', peaks:[.5,.3,.45,.6]},
+ {name:'Swat & Malam Jabba',   days:'3 days', km:'≈ 520 km', car:'corolla', from:32000, note:'Mingora bazaars, Kalam valley and the ski slopes.', hue:'#3a3f5c', peaks:[.58,.42,.5,.66]},
+ {name:'Hunza & Khunjerab',    days:'6 days', km:'≈ 1,600 km', car:'prado', from:140000, note:'Karakoram Highway, Attabad Lake and the China border.', hue:'#4a3a30', peaks:[.4,.22,.35,.5]},
+];
+const EXTRAS=[
+ {id:'air',  name:'Airport pickup or drop', note:'Islamabad International, flight tracked', amt:2500, per:'trip'},
+ {id:'out',  name:'Out of city',            note:'Driver food and stay by you',           amt:2000, per:'day', drvOnly:false},
+ {id:'decor',name:'Wedding flower decor',   note:'Fresh flowers, your colour theme',       amt:8000, per:'event', decorOnly:true},
+ {id:'seat', name:'Child seat',             note:'ISOFIX, up to 4 years',                  amt:500,  per:'day'},
+];
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+let cur='PKR'; try{ const c=localStorage.getItem('safar-cur'); if(c==='USD'||c==='PKR') cur=c; }catch(e){}
+const money=(pkr)=>cur==='PKR'?'Rs '+Math.round(pkr).toLocaleString('en-PK'):'$'+Math.round(pkr/280).toLocaleString('en-US');
+let tt; function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),2600); }
+const icon={
+ seat:'<svg viewBox="0 0 16 16"><path d="M5 2h4l1 6H5zM4 8h8v3H4zM5 11v3M11 11v3"/></svg>',
+ gear:'<svg viewBox="0 0 16 16"><circle cx="4" cy="4" r="1.6"/><circle cx="8" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/><path d="M4 5.6v6.8M8 5.6v6.8M12 5.6V8.5H4"/></svg>',
+ fuel:'<svg viewBox="0 0 16 16"><rect x="3" y="2" width="7" height="12" rx="1"/><path d="M3 7h7M10 5l3 2v5a1 1 0 0 1-2 0V9"/></svg>',
+ bag:'<svg viewBox="0 0 16 16"><rect x="2.5" y="5" width="11" height="8.5" rx="1.5"/><path d="M6 5V3h4v2"/></svg>',
+};
+
+/* ---------- car illustrations (generic body styles, drawn in code) ---------- */
+const BODY={
+ sedan:{w:[78,240],r:18,p:'M14 88C14 80 18 75 30 72L70 68C84 66 92 64 100 60C116 46 132 38 156 37L196 37C214 38 228 46 246 60C262 64 286 68 298 74C306 78 308 84 307 92L306 98C306 102 302 104 296 104L28 104C18 104 14 100 14 94Z',
+   win:['M108 60C120 49 134 43 156 42L170 42L170 60Z','M176 42L196 42C212 43 224 49 236 60L176 60Z'],seams:['M172 62L171 100','M110 62L106 100','M226 63L230 100'],light:'M289 72C297 74 302 77 304 81L292 81C290 79 289 75 289 72Z',tail:'M16 78C22 75 30 74 36 74L36 80L17 82Z',handles:[[148,70],[204,70]],mirror:'M236 58l9-4 4 5-10 3z'},
+ lux:{w:[80,244],r:19,p:'M10 86C10 79 15 75 28 72L72 67C88 65 98 62 108 58C126 44 142 38 164 37L198 37C218 38 234 47 252 60C270 64 292 68 304 74C311 78 312 85 311 92L310 98C310 102 306 104 300 104L24 104C14 104 10 100 10 94Z',
+   win:['M116 58C128 47 142 42 164 41L176 41L176 58Z','M182 41L198 41C216 42 230 48 242 58L182 58Z'],seams:['M178 60L177 100','M118 60L114 100','M232 61L236 100'],light:'M292 71C302 73 307 77 309 81L296 81C294 78 293 74 292 71Z',tail:'M12 78C18 75 26 74 34 73L34 79L13 82Z',handles:[[152,68],[208,68]],mirror:'M240 56l9-4 4 5-10 3z',chrome:'M112 61L250 61'},
+ hatch:{w:[88,228],r:16,p:'M40 90C40 78 42 66 52 60C58 50 66 44 80 42L178 40C200 41 216 52 236 64C258 68 278 72 286 78C290 82 291 88 290 94L290 100C290 104 286 106 282 106L48 106C42 106 40 102 40 98Z',
+   win:['M62 62C66 52 72 47 84 46L126 45L126 62Z','M132 45L178 44C196 45 210 53 224 62L132 62Z'],seams:['M129 64L128 102','M222 66L224 100'],light:'M276 74C283 76 287 79 288 83L278 83C277 80 276 77 276 74Z',tail:'M42 68L50 66L50 76L42 78Z',handles:[[108,70],[176,70]],mirror:'M222 60l8-4 3 4-9 3z'},
+ tall:{w:[88,228],r:16,p:'M40 92C40 70 42 46 48 36C52 30 58 28 68 28L190 27C204 28 214 40 230 60C254 66 276 72 286 78C290 82 291 88 290 94L290 100C290 104 286 106 282 106L48 106C42 106 40 102 40 98Z',
+   win:['M52 60L54 38C55 34 58 33 64 33L124 33L124 60Z','M130 33L188 32C200 33 208 44 220 58L130 60Z'],seams:['M127 62L126 102','M220 64L222 100'],light:'M276 74C283 76 287 79 288 83L278 83C277 80 276 77 276 74Z',tail:'M42 66L49 64L49 78L42 80Z',handles:[[108,70],[176,70]],mirror:'M218 56l8-4 3 4-9 3z'},
+ suv:{w:[80,240],r:21,p:'M12 82C12 66 16 56 28 54L44 52C48 40 54 30 70 28L206 28C220 29 232 38 248 52C270 56 292 60 302 66C308 70 309 80 308 90L308 96C308 101 304 104 298 104L22 104C15 104 12 100 12 94Z',
+   win:['M54 52C58 40 62 34 72 33L120 33L120 52Z','M126 33L176 33L176 52Z','M182 33L204 33C216 34 226 42 238 52L182 52Z'],seams:['M179 54L178 98','M123 54L122 98','M240 56L242 92'],light:'M294 64C301 66 305 70 306 74L295 74C294 71 294 67 294 64Z',tail:'M14 62L22 60L22 74L14 76Z',handles:[[150,62],[206,62]],mirror:'M236 50l9-4 4 5-10 3z',rails:'M74 26L200 26',clad:'M18 92L304 92L304 102C304 103 302 104 298 104L22 104C19 104 18 102 18 100Z'},
+ pickup:{w:[74,246],r:20,p:'M12 70L140 70L142 64C150 44 158 32 176 30L214 30C226 31 236 40 250 54C272 58 294 62 304 68C309 72 310 82 309 92L309 97C309 102 305 104 299 104L20 104C14 104 12 100 12 94Z',
+   win:['M152 62C158 46 164 36 178 35L196 35L196 62Z','M202 35L212 35C224 36 232 44 244 56L202 58Z'],seams:['M199 64L198 100','M140 70L140 102'],light:'M296 66C302 68 306 71 307 75L297 75C296 72 296 69 296 66Z',tail:'M13 74L19 74L19 86L13 86Z',handles:[[176,70],[222,70]],mirror:'M240 52l9-4 4 5-10 3z',bed:'M12 70L140 70'},
+ ravi:{w:[80,236],r:15,p:'M20 76L190 76L192 40C193 34 198 32 206 32L270 32C282 33 290 40 294 56L298 86C299 96 298 104 292 106L26 106C21 106 20 102 20 98Z',
+   win:['M200 38L262 38C274 38 282 44 286 56L288 66L200 66Z'],seams:['M244 70L244 102'],light:'M288 76L297 76L297 86L289 86Z',tail:'M21 80L26 80L26 92L21 92Z',handles:[[226,74]],mirror:'M292 46l6-2 2 6-6 2z',bed:'M20 76L190 76',boards:true},
+ van:{w:[78,232],r:17,p:'M10 96L10 34C10 26 16 22 26 22L246 22C262 23 272 30 282 42L300 64C306 70 308 78 308 88L308 98C308 102 304 106 298 106L16 106C12 106 10 102 10 98Z',
+   win:['M22 32L228 32L228 56L22 56Z','M236 30C250 31 262 38 274 52L236 54Z'],seams:['M232 58L232 100','M150 58L150 100'],light:'M298 70C303 73 306 77 306 82L297 82Z',tail:'M11 60L16 60L16 80L11 80Z',handles:[[200,66]],mirror:'M276 48l8-3 3 4-9 3z',pillars:[72,120,168]},
+};
+let uid=0;
+function carSVG(type,color,big){
+  const B=BODY[type], id='c'+(uid++), cy=108-B.r;
+  const wheel=x=>{ let sp=''; for(let k=0;k<5;k++){ const a=k*72; sp+=`<rect x="${x-1.6}" y="${cy-B.r*.58}" width="3.2" height="${B.r*.58}" rx="1.2" fill="#b9bec5" transform="rotate(${a} ${x} ${cy})"/>`; }
+    return `<circle cx="${x}" cy="${cy}" r="${B.r}" fill="#0b0b0c"/><circle cx="${x}" cy="${cy}" r="${B.r-1.5}" fill="none" stroke="#2a2b2e" stroke-width="1.2"/><circle cx="${x}" cy="${cy}" r="${B.r*.64}" fill="url(#rim)"/>${sp}<circle cx="${x}" cy="${cy}" r="${B.r*.18}" fill="#2b2e33"/>`; };
+  let s=`<svg viewBox="0 0 320 124" role="img" aria-hidden="true"><defs><clipPath id="${id}"><path d="${B.p}"/></clipPath></defs>
+    <ellipse cx="160" cy="110" rx="150" ry="7" fill="url(#cs)"/>`;
+  s+=`<path d="${B.p}" fill="${color}"/>`;
+  if(B.clad) s+=`<path d="${B.clad}" fill="#000" opacity=".35"/>`;
+  s+=`<g clip-path="url(#${id})">${B.w.map(x=>`<circle cx="${x}" cy="${cy}" r="${B.r+5}" fill="#08090b"/>`).join('')}</g>`;
+  s+=`<path d="${B.p}" fill="url(#bodyShade)"/><path d="${B.p}" fill="url(#sideSheen)"/>`;
+  B.win.forEach(w=>s+=`<path d="${w}" fill="url(#glass)"/><path d="${w}" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="1"/>`);
+  if(B.pillars) B.pillars.forEach(x=>s+=`<rect x="${x-2}" y="32" width="4" height="24" fill="${color}"/><rect x="${x-2}" y="32" width="4" height="24" fill="url(#bodyShade)"/>`);
+  if(B.bed) s+=`<path d="${B.bed}" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>`;
+  if(B.boards) for(let x=36;x<186;x+=30) s+=`<path d="M${x} 78L${x} 100" stroke="#000" stroke-opacity=".18" stroke-width="1.2"/>`;
+  if(B.rails) s+=`<path d="${B.rails}" stroke="#1a1b1e" stroke-width="3" stroke-linecap="round"/>`;
+  if(B.chrome) s+=`<path d="${B.chrome}" stroke="#e8eaee" stroke-opacity=".7" stroke-width="1.4"/>`;
+  s+=`<path d="M22 80C120 77 220 77 302 81" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1.2"/>`;
+  B.seams.forEach(d=>s+=`<path d="${d}" stroke="#000" stroke-opacity=".3" stroke-width="1"/>`);
+  B.handles.forEach(([x,y])=>s+=`<rect x="${x}" y="${y}" width="12" height="3" rx="1.5" fill="#000" opacity=".35"/>`);
+  s+=`<path d="${B.mirror}" fill="${color}"/><path d="${B.mirror}" fill="#000" opacity=".3"/>`;
+  s+=`<path d="${B.light}" fill="#eef3ff"/><path d="${B.tail}" fill="#c3141f"/>`;
+  s+=B.w.map(wheel).join('');
+  return s+'</svg>';
+}
+
+/* ---------- state ---------- */
+const S={mode:'drv', cat:'all', sort:'rec', city:'Islamabad', pd:'', pt:'10:00', rd:'', rt:'10:00', car:null, extras:new Set(), hrs:0};
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+(function initDates(){ const a=new Date(); a.setDate(a.getDate()+1); const b=new Date(a); b.setDate(b.getDate()+2); S.pd=iso(a); S.rd=iso(b);
+  $('pd').value=S.pd; $('rd').value=S.rd; $('pd').min=iso(new Date()); $('rd').min=S.pd; })();
+function days(){ const a=new Date(`${S.pd}T${S.pt||'10:00'}`), b=new Date(`${S.rd}T${S.rt||'10:00'}`); const h=(b-a)/36e5; if(!isFinite(h)) return {d:1,bad:true}; if(h<=0) return {d:1,bad:true}; return {d:Math.max(1,Math.ceil(h/24-0.04)),bad:false}; }
+function fmtDT(d,t){ const x=new Date(`${d}T${t}`); return isNaN(x)?'—':x.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+', '+t; }
+
+/* ---------- fleet ---------- */
+function rate(c,mode){ return mode==='self'&&c.self?c.self:c.drv; }
+function renderFilters(){ $('filters').innerHTML=CATS.map(([k,l])=>{ const n=k==='all'?FLEET.length:FLEET.filter(c=>c.cat===k).length; return `<button type="button" data-cat="${k}" aria-pressed="${S.cat===k}">${l}<small>${n}</small></button>`; }).join(''); }
+function renderFleet(){
+  let list=FLEET.filter(c=>S.cat==='all'||c.cat===S.cat);
+  if(S.sort==='lo') list=list.slice().sort((a,b)=>rate(a,S.mode)-rate(b,S.mode));
+  if(S.sort==='hi') list=list.slice().sort((a,b)=>rate(b,S.mode)-rate(a,S.mode));
+  if(S.sort==='seats') list=list.slice().sort((a,b)=>b.seats-a.seats);
+  $('grid').innerHTML=list.map((c,i)=>{ const self=S.mode==='self', only=self&&!c.self;
+    return `<article class="car" style="animation-delay:${i*40}ms"><div class="vis">${c.badge?`<span class="badge">${c.badge}</span>`:''}${only?'<span class="only">With driver only</span>':''}${carSVG(c.type,c.color)}</div>
+      <div class="car-b"><div><h3>${c.name}</h3><div class="trim">${c.trim}</div></div>
+      <div class="specs"><span>${icon.seat}${c.seats} seats</span><span>${icon.gear}${c.gear}</span><span>${icon.fuel}${c.fuel}</span><span>${icon.bag}${typeof c.bags==='number'?c.bags+' bags':c.bags}</span></div>
+      <div class="price-row"><div><b class="tnum">${money(rate(c,S.mode))}</b><small>per day · ${self&&c.self?'24 hrs, 250 km':'with driver, 10 hrs'}</small></div><button class="btn btn-gold" type="button" data-book="${c.id}">Book</button></div></div></article>`; }).join('') || '<div class="empty">No cars in this group right now.</div>';
+}
+$('filters').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; S.cat=b.dataset.cat; renderFilters(); renderFleet(); });
+$('sort').addEventListener('change',e=>{ S.sort=e.target.value; renderFleet(); });
+$('grid').addEventListener('click',e=>{ const b=e.target.closest('[data-book]'); if(b) openBooking(b.dataset.book); });
+document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',()=>{ S.cat=a.dataset.jump; renderFilters(); renderFleet(); }));
+
+/* ---------- tours ---------- */
+function tourArt(t){ const [a,b,c,d]=t.peaks;
+  return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="300" fill="url(#sky)"/>
+   <circle cx="300" cy="80" r="26" fill="#f0d9a6" opacity=".85"/>
+   <path d="M0 ${300*a} L70 ${300*b} L130 ${300*(b+.12)} L200 ${300*c} L280 ${300*(c+.1)} L330 ${300*d} L400 ${300*(d-.05)} L400 300 L0 300Z" fill="${t.hue}"/>
+   <path d="M200 ${300*c} L188 ${300*c+22} L200 ${300*c+14} L212 ${300*c+24}Z" fill="#f2efe9" opacity=".8"/><path d="M70 ${300*b} L60 ${300*b+18} L70 ${300*b+12} L80 ${300*b+20}Z" fill="#f2efe9" opacity=".7"/>
+   <path d="M0 ${300*(a+.18)} C100 ${300*(a+.1)} 200 ${300*(c+.22)} 400 ${300*(d+.14)} L400 300 L0 300Z" fill="#0d1016" opacity=".85"/>
+   <path d="M-10 290 C90 250 180 268 250 236 S360 206 410 214" fill="none" stroke="#d2ae6d" stroke-width="2" stroke-dasharray="6 8" opacity=".9"/></svg>`; }
+function renderTours(){ $('tourGrid').innerHTML=TOURS.map((t,i)=>{ const c=FLEET.find(f=>f.id===t.car);
+  return `<article class="tour"><div class="art">${tourArt(t)}</div><div class="body"><div class="meta">${t.days} · ${t.km} · ${c.name}</div><h3>${t.name}</h3><p>${t.note}</p>
+   <div class="row"><div><b class="tnum">${money(t.from)}</b><small>car and driver, full trip</small></div><a class="link" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent(`Assalam o Alaikum SAFAR, I want to plan the ${t.name} tour (${t.days}) in a ${c.name}. Please share availability.`)}">Plan this trip</a></div></div></article>`; }).join(''); }
+
+/* ---------- currency ---------- */
+function paintCur(){ document.querySelectorAll('[data-cur]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cur===cur));
+  document.querySelectorAll('[data-from]').forEach(el=>{ el.textContent=el.textContent.replace(/(Rs [\d,]+|\$[\d,]+)/,money(+el.dataset.from)); });
+  document.querySelectorAll('[data-m]').forEach(el=>{ el.textContent=el.textContent.replace(/(Rs [\d,]+|\$[\d,]+)/,money(+el.dataset.m)); });
+  renderFleet(); renderTours(); if(S.car) renderSum(); }
+document.querySelectorAll('[data-cur]').forEach(b=>b.onclick=()=>{ cur=b.dataset.cur; try{ localStorage.setItem('safar-cur',cur); }catch(e){} paintCur(); toast(cur==='USD'?'Showing USD at Rs 280 per dollar, indicative':'Showing Pakistani rupees'); });
+
+/* ---------- hero booking ---------- */
+function setMode(m){ S.mode=m; document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));
+  $('modeLead').textContent=m==='drv'?'with a driver for 10 hours, fuel by you':'self-drive for 24 hours with 250 km, fuel by you'; renderFleet(); }
+document.querySelectorAll('.book [data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+function syncHero(){ S.city=$('city').value; S.pd=$('pd').value; S.pt=$('pt').value; S.rd=$('rd').value; S.rt=$('rt').value; $('rd').min=S.pd; const D=days(); $('daysNote').textContent=D.bad?'Return must be after pickup':`${D.d} day${D.d>1?'s':''}`; }
+['city','pd','pt','rd','rt'].forEach(id=>$(id).addEventListener('change',syncHero));
+$('bookForm').addEventListener('submit',e=>{ e.preventDefault(); syncHero(); if(days().bad){ toast('Pick a return time after the pickup time'); return; } document.getElementById('fleet').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}); });
+
+/* ---------- booking drawer ---------- */
+$('dCity').innerHTML=$('city').innerHTML;
+function openBooking(id){ const c=FLEET.find(f=>f.id===id); S.car=c; S.extras=new Set(); S.hrs=0; if(S.mode==='self'&&!c.self) S.mode='drv';
+  $('drCar').innerHTML=`<div class="vis">${carSVG(c.type,c.color)}</div><div><h3>${c.name}</h3><small>${c.trim} · ${c.seats} seats · ${c.gear}</small><div class="rate" id="drRate"></div></div>`;
+  $('dCity').value=S.city; $('dpd').value=S.pd; $('dpt').value=S.pt; $('drd').value=S.rd; $('drt').value=S.rt; $('dpd').min=iso(new Date());
+  renderDrawer(); document.body.classList.add('open','lock'); $('drawer').inert=false; setTimeout(()=>$('drClose').focus({preventScroll:true}),350); }
+function closeBooking(){ document.body.classList.remove('open','lock'); $('drawer').inert=true; }
+$('drClose').onclick=closeBooking; $('scrim').onclick=closeBooking;
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeBooking(); });
+function renderDrawer(){ const c=S.car;
+  [...$('drMode').children].forEach(b=>{ const dis=b.dataset.mode==='self'&&!c.self; b.disabled=dis; b.style.opacity=dis?.35:1; b.title=dis?'This car comes with a driver only':''; b.setAttribute('aria-pressed',b.dataset.mode===S.mode); });
+  $('extras').innerHTML=EXTRAS.map(x=>{ const off=(x.decorOnly&&!c.decor); return `<label class="ex${off?' off':''}"><input type="checkbox" data-x="${x.id}" ${S.extras.has(x.id)?'checked':''} ${off?'disabled':''}><span>${x.name}<small>${off?'Available on Civic and Mercedes':x.note}</small></span><b>+${money(x.amt)}${x.per==='day'?' / day':''}</b></label>`; }).join('');
+  $('hrsRow').style.display=S.mode==='drv'?'':'none';
+  renderSum(); }
+$('drMode').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b||b.disabled) return; S.mode=b.dataset.mode; setMode(S.mode); renderDrawer(); });
+$('extras').addEventListener('change',e=>{ const i=e.target.closest('input'); if(!i) return; i.checked?S.extras.add(i.dataset.x):S.extras.delete(i.dataset.x); renderSum(); });
+$('hMinus').onclick=()=>{ S.hrs=Math.max(0,S.hrs-1); renderSum(); }; $('hPlus').onclick=()=>{ S.hrs=Math.min(12,S.hrs+1); renderSum(); };
+[['dCity','city'],['dpd','pd'],['dpt','pt'],['drd','rd'],['drt','rt']].forEach(([a,k])=>$(a).addEventListener('change',()=>{ S[k]=$(a).value; $(({city:'city',pd:'pd',pt:'pt',rd:'rd',rt:'rt'})[k]).value=S[k]; $('drd').min=S.pd; syncHero(); renderSum(); }));
+['nm','ph'].forEach(id=>$(id).addEventListener('input',renderSum));
+function quote(){ const c=S.car, D=days(), r=rate(c,S.mode), lines=[[`${money(r)} × ${D.d} day${D.d>1?'s':''}`, r*D.d]];
+  EXTRAS.forEach(x=>{ if(S.extras.has(x.id)){ const n=x.per==='day'?D.d:1; lines.push([x.name+(n>1?` × ${n}`:''), x.amt*n]); } });
+  if(S.mode==='drv'&&S.hrs) lines.push([`Extra hours × ${S.hrs*D.d}`, 1500*S.hrs*D.d]);
+  const total=lines.reduce((a,l)=>a+l[1],0), dep=S.mode==='self'?(['suv','luxury','dala'].includes(c.cat)?50000:30000):0;
+  return {D,r,lines,total,dep}; }
+function renderSum(){ if(!S.car) return; const q=quote(), c=S.car;
+  $('drRate').textContent=`${money(q.r)} per day · ${S.mode==='drv'?'with driver':'self-drive'}`;
+  $('dateErr').textContent=q.D.bad?'Return must be after the pickup time. We used 1 day for now.':'';
+  $('sum').innerHTML=q.lines.map(l=>`<div class="ln"><span>${l[0]}</span><b>${money(l[1])}</b></div>`).join('')+
+    `<div class="ln tot"><span>Estimated total</span><b>${money(q.total)}</b></div>`+
+    (q.dep?`<div class="ln dep"><span>Refundable deposit at pickup</span><b>${money(q.dep)}</b></div>`:`<div class="ln dep"><span>Fuel, tolls and parking by you</span><b></b></div>`);
+  $('waBtn').href=`https://wa.me/${WA}?text=${encodeURIComponent(message(q))}`; }
+function message(q){ const c=S.car, ex=EXTRAS.filter(x=>S.extras.has(x.id)).map(x=>x.name);
+  return [`Assalam o Alaikum SAFAR, I'd like to book:`,`Car: ${c.name} (${c.trim})`,`Service: ${S.mode==='drv'?'With driver':'Self-drive'}`,`City: ${S.city}`,
+    `Pickup: ${fmtDT(S.pd,S.pt)}`,`Return: ${fmtDT(S.rd,S.rt)} (${q.D.d} day${q.D.d>1?'s':''})`, ex.length?`Extras: ${ex.join(', ')}`:'', S.mode==='drv'&&S.hrs?`Extra hours: ${S.hrs} per day`:'',
+    `Estimated total: ${money(q.total)}`+(q.dep?` + ${money(q.dep)} refundable deposit`:''), $('nm').value.trim()?`Name: ${$('nm').value.trim()}`:'', $('ph').value.trim()?`Phone: ${$('ph').value.trim()}`:''].filter(Boolean).join('\n'); }
+$('waBtn').addEventListener('click',()=>toast('Opening WhatsApp with your booking'));
+$('copyBtn').onclick=()=>{ const t=message(quote()); navigator.clipboard&&navigator.clipboard.writeText(t).then(()=>toast('Booking details copied'),()=>toast('Copy blocked here, use the WhatsApp button')); };
+
+renderFilters(); syncHero(); paintCur();
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { Reflector } from 'three/addons/objects/Reflector.js';
+
+const $=id=>document.getElementById(id);
+const host=$('hero3d'), canvas=$('gl'), hint=$('hint3d');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const LITE=matchMedia('(pointer: coarse)').matches||innerWidth<860||location.search.includes('lite');
+let renderer; try{ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'}); }catch(e){ hint.textContent='3D needs WebGL'; throw e; }
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05; renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.setClearColor(0,0);
+const scene=new THREE.Scene();
+scene.environment=new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(),.04).texture;
+const cam=new THREE.PerspectiveCamera(30,1,.1,60);
+const keyL=new THREE.DirectionalLight(0xfff1dc,1.6); keyL.position.set(-3,6,4); scene.add(keyL);
+const rimL=new THREE.DirectionalLight(0xd2ae6d,1.2); rimL.position.set(4,2,-5); scene.add(rimL);
+
+const ctx2=(w,h,f)=>{ const c=document.createElement('canvas'); c.width=w; c.height=h; f(c.getContext('2d'),w,h); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; };
+const radial=(stops)=>ctx2(256,256,(x,w,h)=>{ const g=x.createRadialGradient(w/2,h/2,0,w/2,h/2,w/2); stops.forEach(s=>g.addColorStop(...s)); x.fillStyle=g; x.fillRect(0,0,w,h); });
+if(!LITE){ const m=new Reflector(new THREE.PlaneGeometry(30,30),{clipBias:.003,textureWidth:Math.round(innerWidth*.5),textureHeight:Math.round(innerHeight*.5),color:0x7d8088}); m.rotation.x=-Math.PI/2; m.position.y=-.002; scene.add(m); }
+const glaze=new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.MeshBasicMaterial({map:radial([[0,LITE?'rgba(20,20,24,.0)':'rgba(10,11,13,.55)'],[.2,'rgba(10,11,13,.8)'],[.5,'rgba(10,11,13,1)'],[1,'rgba(10,11,13,1)']]),transparent:true,depthWrite:false,toneMapped:false}));
+glaze.rotation.x=-Math.PI/2; scene.add(glaze);
+const spot=new THREE.Mesh(new THREE.PlaneGeometry(9,9),new THREE.MeshBasicMaterial({map:radial([[0,'rgba(210,174,109,.32)'],[.4,'rgba(210,174,109,.08)'],[1,'rgba(210,174,109,0)']]),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));
+spot.rotation.x=-Math.PI/2; spot.position.y=.004; scene.add(spot);
+const contact=new THREE.Mesh(new THREE.PlaneGeometry(3.3,5.8),new THREE.MeshBasicMaterial({map:radial([[0,'rgba(0,0,0,.85)'],[.6,'rgba(0,0,0,.4)'],[1,'rgba(0,0,0,0)']]),transparent:true,depthWrite:false}));
+contact.rotation.x=-Math.PI/2; contact.position.y=.006;
+const turn=new THREE.Group(); scene.add(turn); turn.add(contact);
+
+let car=null, doors=[], doorT=0, doorTarget=0, rotY=-.6, vel=0, dragging=false, lx=0, visible=true, needs=true;
+const B64=3515712;
+(async()=>{
+  try{
+    const res=await fetch('safar-car.txt'); if(!res.ok) throw new Error('HTTP '+res.status);
+    let txt=''; if(res.body&&res.body.getReader){ const rd=res.body.getReader(), dec=new TextDecoder(); for(;;){ const {done,value}=await rd.read(); if(done)break; txt+=dec.decode(value,{stream:true}); hint.textContent=`Loading showroom · ${Math.min(99,Math.round(txt.length/B64*100))}%`; } } else txt=await res.text();
+    const bin=atob(txt.trim()), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+    new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parse(u.buffer,'',setup,e=>{ console.error(e); hint.textContent='Showroom unavailable on this device'; });
+  }catch(e){ console.error(e); hint.textContent='Showroom unavailable on this device'; }
+})();
+function setup(g){
+  car=g.scene; car.position.z=-.24; turn.add(car);
+  ['License_Plate','InteriorSteeringEmblem'].forEach(n=>{ const o=car.getObjectByName(n); if(o) o.visible=false; });
+  const meshes=[]; car.traverse(o=>{ if(o.isMesh){ meshes.push(o); o.material.envMapIntensity=1.1; } });
+  const pend=[];
+  meshes.forEach(o=>{ const ext=o.userData.gltfExtensions&&o.userData.gltfExtensions.KHR_materials_variants; if(!ext) return; o.userData.vm={};
+    ext.mappings.forEach(mp=>pend.push(g.parser.getDependency('material',mp.material).then(m=>{ m.envMapIntensity=1.2; mp.variants.forEach(v=>o.userData.vm[v]=m); }))); });
+  Promise.all(pend).then(()=>{ setPaint(2); });
+  doors=[['BodyDoorLColor1',-1.1],['BodyDoorRColor1',1.1]].map(([n,a])=>{ const o=car.getObjectByName(n); return o?{o,z0:o.rotation.z,a}:null; }).filter(Boolean);
+  function setPaint(v){ meshes.forEach(o=>{ const m=o.userData.vm&&o.userData.vm[v]; if(m) o.material=m; }); needs=true; }
+  document.querySelectorAll('#paint [data-v]').forEach(b=>b.onclick=()=>{ setPaint(+b.dataset.v); document.querySelectorAll('#paint [data-v]').forEach(x=>x.setAttribute('aria-pressed',x===b)); });
+  hint.textContent='Drag to rotate';
+}
+$('doorsBtn').onclick=()=>{ doorTarget=doorTarget?0:1; $('doorsBtn').setAttribute('aria-pressed',!!doorTarget); $('doorsBtn').querySelector('span').textContent=doorTarget?'Close doors':'Open doors'; };
+canvas.addEventListener('pointerdown',e=>{ dragging=true; lx=e.clientX; vel=0; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointermove',e=>{ if(!dragging) return; const dx=e.clientX-lx; lx=e.clientX; rotY+=dx*.008; vel=dx*.008; });
+const end=()=>dragging=false; canvas.addEventListener('pointerup',end); canvas.addEventListener('pointercancel',end);
+new IntersectionObserver(es=>{ visible=es[0].isIntersecting; },{threshold:.02}).observe(host);
+
+let W=0,H=0;
+function size(){ const r=host.getBoundingClientRect(); W=Math.max(1,r.width); H=Math.max(1,r.height); renderer.setPixelRatio(Math.min(devicePixelRatio,LITE?1.5:2)); renderer.setSize(W,H,false);
+  cam.aspect=W/H; const wide=W>860; cam.fov=wide?28:34;
+  const dist=wide?8.2:Math.min(10,Math.max(7.2,9.4/Math.max(.6,W/H))); const k=dist/8.2; cam.position.set(4.6*k,1.55*k+.3,6.6*k); cam.lookAt(0,.5,0);
+  cam.updateProjectionMatrix(); if(wide) cam.setViewOffset(W,H,-W*.2,-H*.02,W,H); else cam.clearViewOffset(); needs=true; }
+addEventListener('resize',size); size();
+let last=performance.now();
+function loop(now){ requestAnimationFrame(loop); const dt=Math.min(.05,(now-last)/1000); last=now;
+  if(!visible||document.hidden) return;
+  if(!dragging){ vel*=.93; rotY+=vel+(reduce?0:dt*.16); }
+  turn.rotation.y=rotY;
+  doorT+=(doorTarget-doorT)*Math.min(1,dt*3.5); doors.forEach(d=>d.o.rotation.z=d.z0+d.a*doorT);
+  renderer.render(scene,cam); }
+requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>
